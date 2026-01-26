@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { generateSlug } from '../utils/slugUtils';
 
 const ProductTabs = ({ productId, product }) => {
     const [activeTab, setActiveTab] = useState('overview');
@@ -83,7 +85,23 @@ const OverviewTab = ({ product }) => (
                     <h4 style={{ fontSize: '0.9rem', color: '#666', marginBottom: '8px' }}>Categories</h4>
                     <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
                         {product.categories.map((cat, idx) => (
-                            <span key={idx} style={{ padding: '6px 12px', background: '#f3f4f6', borderRadius: '6px', fontSize: '0.85rem' }}>{cat}</span>
+                            <Link
+                                key={idx}
+                                to={`/category/${generateSlug(cat)}`}
+                                style={{
+                                    padding: '6px 12px',
+                                    background: '#f3f4f6',
+                                    borderRadius: '6px',
+                                    fontSize: '0.85rem',
+                                    textDecoration: 'none',
+                                    color: '#1a1a1a',
+                                    transition: 'background 0.2s'
+                                }}
+                                onMouseEnter={(e) => e.target.style.background = '#e5e7eb'}
+                                onMouseLeave={(e) => e.target.style.background = '#f3f4f6'}
+                            >
+                                {cat}
+                            </Link>
                         ))}
                     </div>
                 </div>
@@ -94,7 +112,23 @@ const OverviewTab = ({ product }) => (
                     <h4 style={{ fontSize: '0.9rem', color: '#666', marginBottom: '8px' }}>Tags</h4>
                     <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
                         {product.tags.map((tag, idx) => (
-                            <span key={idx} style={{ padding: '6px 12px', background: '#e0e7ff', borderRadius: '6px', fontSize: '0.85rem', color: '#3730a3' }}>{tag}</span>
+                            <Link
+                                key={idx}
+                                to={`/tag/${generateSlug(tag)}`}
+                                style={{
+                                    padding: '6px 12px',
+                                    background: '#e0e7ff',
+                                    borderRadius: '6px',
+                                    fontSize: '0.85rem',
+                                    color: '#3730a3',
+                                    textDecoration: 'none',
+                                    transition: 'background 0.2s'
+                                }}
+                                onMouseEnter={(e) => e.target.style.background = '#c7d2fe'}
+                                onMouseLeave={(e) => e.target.style.background = '#e0e7ff'}
+                            >
+                                {tag}
+                            </Link>
                         ))}
                     </div>
                 </div>

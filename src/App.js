@@ -27,6 +27,7 @@ import LoginOTP from './pages/LoginOTP';
 import ChangePassword from './pages/ChangePassword';
 import FounderDashboard from './pages/FounderDashboard';
 import SearchResults from './pages/SearchResults';
+import TagPage from './pages/TagPage';
 import './index.css';
 
 function App() {
@@ -57,6 +58,7 @@ function App() {
                                 {/* Admin Route Removed */}
 
                                 <Route path="/category/:slug" element={<CategoryPage />} />
+                                <Route path="/tag/:slug" element={<TagPage />} />
                                 <Route path="/product/:id" element={<ProductDetails />} />
                                 <Route path="/create-product" element={<CreateProduct />} />
                                 <Route path="/boost/:productId" element={<BoostProduct />} />
