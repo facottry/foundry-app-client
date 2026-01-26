@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import api from '../utils/api';
+import { getOrCreateSessionId } from '../utils/sessionUtils';
 import Breadcrumbs from '../components/Breadcrumbs';
 import ProductTabs from '../components/ProductTabs';
 
@@ -15,8 +16,9 @@ const ProductDetails = () => {
                 const res = await api.get(`/products/${id}`);
                 setProduct(res.data);
 
-                // Track view
-                api.post(`/stats/view/${id}`).catch(err => console.error('View tracking failed:', err));
+                // Track view with session
+                const sessionId = getOrCreateSessionId();
+                api.post('/track/view', { productId: id, sessionId }).catch(err => console.error('View tracking failed:', err));
             } catch (error) {
                 console.error('Error fetching product:', error);
             }

@@ -69,8 +69,8 @@ function App() {
                         <Footer />
                     </div>
                 </Router>
+            </HelmetProvider>
         </AuthProvider>
-        </HelmetProvider >
     );
 }
 
