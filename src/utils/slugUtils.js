@@ -36,5 +36,3 @@ export const slugToText = (slug) => {
 export const isValidSlug = (slug) => {
     return /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug);
 };
-
-export default { generateSlug, slugToText, isValidSlug };

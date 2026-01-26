@@ -107,10 +107,3 @@ export const OrganizationSchema = () => {
         </Helmet>
     );
 };
-
-export default {
-    SoftwareApplicationSchema,
-    BreadcrumbListSchema,
-    CollectionPageSchema,
-    OrganizationSchema
-};

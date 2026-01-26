@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../utils/api';
-import ErrorState from '../components/common/ErrorState';
 
 const CreateProduct = () => {
     const [formData, setFormData] = useState({
