@@ -17,6 +17,7 @@ import CookiePolicy from './pages/CookiePolicy';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import DashboardFounder from './pages/DashboardFounder';
+import FounderProductAnalytics from './pages/FounderProductAnalytics';
 import DashboardCustomer from './pages/DashboardCustomer';
 import CategoryPage from './pages/CategoryPage';
 import ProductDetails from './pages/ProductDetails';
@@ -55,7 +56,9 @@ function App() {
                                 <Route path="/signup" element={<Signup />} />
 
                                 {/* Protected Routes Handling inside components or wrappers usually, but simplifying here */}
+                                {/* Protected Routes Handling inside components or wrappers usually, but simplifying here */}
                                 <Route path="/dashboard/founder" element={<DashboardFounder />} />
+                                <Route path="/founder/products/:id/analytics" element={<FounderProductAnalytics />} />
                                 <Route path="/dashboard/customer" element={<DashboardCustomer />} />
                                 {/* Admin Route Removed */}
                                 <Route path="/profile" element={<ProfileView />} />

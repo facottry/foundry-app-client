@@ -114,6 +114,21 @@ const FounderDashboard = () => {
                                     <td style={{ padding: '16px 20px', textAlign: 'right' }}>
                                         <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end' }}>
                                             <button
+                                                onClick={() => navigate(`/founder/products/${product._id}/analytics`)}
+                                                style={{
+                                                    padding: '6px 12px',
+                                                    background: '#e0f2fe',
+                                                    color: '#0369a1',
+                                                    border: 'none',
+                                                    borderRadius: '6px',
+                                                    cursor: 'pointer',
+                                                    fontSize: '0.85rem',
+                                                    fontWeight: '600'
+                                                }}
+                                            >
+                                                Analytics
+                                            </button>
+                                            <button
                                                 onClick={() => navigate(`/founder/products/${product._id}/edit`)}
                                                 style={{
                                                     padding: '6px 12px',
