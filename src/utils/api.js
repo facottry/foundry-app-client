@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: process.env.REACT_APP_API_URL || 'http://localhost:5000/api',
+    baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api',
     headers: {
         'Content-Type': 'application/json'
     }
@@ -27,6 +27,11 @@ api.interceptors.response.use(
         return response.data; // This will return { success, data }
     },
     error => {
+        // Check for request cancellation
+        if (axios.isCancel(error)) {
+            return Promise.reject(error);
+        }
+
         // Network Error / Server Down
         if (!error.response) {
             return Promise.reject({
@@ -49,5 +54,9 @@ api.interceptors.response.use(
         return Promise.reject(backendError);
     }
 );
+
+// Profile APIs
+export const getProfile = () => api.get('/profile/me');
+export const updateProfile = (data) => api.put('/profile/me', data);
 
 export default api;

@@ -4,6 +4,7 @@ import api from '../utils/api';
 import { getOrCreateSessionId } from '../utils/sessionUtils';
 import Breadcrumbs from '../components/Breadcrumbs';
 import ProductTabs from '../components/ProductTabs';
+import ReviewForm from '../components/ReviewForm';
 
 const ProductDetails = () => {
     const { id } = useParams();
@@ -18,7 +19,15 @@ const ProductDetails = () => {
 
                 // Track view with session
                 const sessionId = getOrCreateSessionId();
-                api.post('/track/view', { productId: id, sessionId }).catch(err => console.error('View tracking failed:', err));
+                // New Event Tracking API
+                api.post('/events/track', {
+                    productId: id,
+                    eventType: 'VIEW',
+                    sessionId
+                }).catch(err => console.error('View tracking failed:', err));
+
+                // Legacy tracking (keep for now if needed, or remove if fully migrated)
+                // api.post('/track/view', { productId: id, sessionId }).catch(err => console.error('View tracking failed:', err));
             } catch (error) {
                 console.error('Error fetching product:', error);
             }
@@ -26,6 +35,19 @@ const ProductDetails = () => {
         };
         fetchProduct();
     }, [id]);
+
+    const handleVisitWebsite = () => {
+        const sessionId = getOrCreateSessionId();
+        api.post('/events/track', {
+            productId: id,
+            eventType: 'CLICK',
+            sessionId
+        }).catch(err => console.error('Click tracking failed:', err));
+
+        // Also trigger legacy redirect or let the backend handle it?
+        // The link is /r/:id which handles the redirect and legacy billing tracking.
+        // We just add this side effect for analytics.
+    };
 
     if (loading) return <div style={{ padding: '40px', textAlign: 'center' }}>Loading...</div>;
     if (!product) return <div style={{ padding: '40px', textAlign: 'center' }}>Product not found</div>;
@@ -65,6 +87,7 @@ const ProductDetails = () => {
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="btn btn-primary"
+                                onClick={handleVisitWebsite}
                                 style={{ padding: '12px 24px', fontSize: '1rem' }}
                             >
                                 Visit Website →
@@ -76,6 +99,13 @@ const ProductDetails = () => {
 
             {/* Product Tabs */}
             <ProductTabs productId={product._id} product={product} />
+
+            {/* Review Section */}
+            <div style={{ marginTop: '60px' }}>
+                <div style={{ maxWidth: '600px' }}>
+                    <ReviewForm productId={product._id} />
+                </div>
+            </div>
         </div>
     );
 };

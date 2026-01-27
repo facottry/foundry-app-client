@@ -27,9 +27,12 @@ import LoginOTP from './pages/LoginOTP';
 import ChangePassword from './pages/ChangePassword';
 import SearchResults from './pages/SearchResults';
 import TagPage from './pages/TagPage';
+import ProfileView from './pages/ProfileView';
+import ProfileEdit from './pages/ProfileEdit';
 import './index.css';
 
 function App() {
+    console.log('App component rendering...');
     return (
         <AuthProvider>
             <HelmetProvider>
@@ -55,6 +58,8 @@ function App() {
                                 <Route path="/dashboard/founder" element={<DashboardFounder />} />
                                 <Route path="/dashboard/customer" element={<DashboardCustomer />} />
                                 {/* Admin Route Removed */}
+                                <Route path="/profile" element={<ProfileView />} />
+                                <Route path="/profile/edit" element={<ProfileEdit />} />
 
                                 <Route path="/category/:slug" element={<CategoryPage />} />
                                 <Route path="/tag/:slug" element={<TagPage />} />

@@ -14,12 +14,7 @@ const Home = () => {
 
             <div style={{ paddingBottom: '40px' }}>
                 {/* Hero Section */}
-                <div style={{
-                    textAlign: 'center',
-                    padding: '100px 20px 80px',
-                    maxWidth: '900px',
-                    margin: '0 auto'
-                }}>
+                <div className="hero-section">
                     <div style={{
                         display: 'inline-block',
                         padding: '6px 16px',
@@ -33,14 +28,7 @@ const Home = () => {
                     }}>
                         For Independent Builders
                     </div>
-                    <h1 style={{
-                        fontSize: '3.5rem',
-                        fontWeight: '800',
-                        lineHeight: '1.1',
-                        color: 'var(--text-primary)',
-                        marginBottom: '24px',
-                        letterSpacing: '-0.03em'
-                    }}>
+                    <h1 className="hero-title">
                         Discover tools built with <span style={{ color: 'var(--accent-primary)' }}>clarity and intent</span>
                     </h1>
                     <p style={{
@@ -63,7 +51,7 @@ const Home = () => {
                         No hype. No noise. Just products presented with context, categories, and signals that help you understand what matters.
                     </p>
 
-                    <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
+                    <div className="hero-buttons">
                         <Link to="/category/all" className="btn btn-primary" style={{ padding: '16px 32px', fontSize: '1.1rem' }}>
                             Explore Products
                         </Link>
@@ -74,7 +62,7 @@ const Home = () => {
                 </div>
 
                 {/* Categories Grid */}
-                <div style={{ marginTop: '80px', maxWidth: '1200px', margin: '80px auto 0' }}>
+                <div style={{ marginTop: '80px', maxWidth: '1200px', margin: '80px auto 0' }} className="container">
                     <div style={{ marginBottom: '40px', textAlign: 'center' }}>
                         <h2 style={{ fontSize: '2rem', marginBottom: '12px' }}>Browse by Category</h2>
                         <p style={{ fontSize: '1.1rem', color: 'var(--text-secondary)' }}>
@@ -82,11 +70,7 @@ const Home = () => {
                         </p>
                     </div>
 
-                    <div style={{
-                        display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
-                        gap: '24px'
-                    }}>
+                    <div className="category-grid">
                         {['DevTools', 'Productivity', 'Marketing', 'AI', 'SaaS'].map(cat => (
                             <Link to={`/category/${cat}`} key={cat} style={{ textDecoration: 'none' }}>
                                 <div className="card" style={{
@@ -111,16 +95,11 @@ const Home = () => {
                 </div>
 
                 {/* Value Props */}
-                <div style={{
-                    marginTop: '120px',
-                    padding: '80px 40px',
-                    background: 'var(--bg-secondary)',
-                    borderRadius: '16px'
-                }}>
+                <div className="value-props-section">
                     <h2 style={{ fontSize: '2rem', textAlign: 'center', marginBottom: '60px' }}>
                         Built for Long-Term Credibility
                     </h2>
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '48px', maxWidth: '1000px', margin: '0 auto' }}>
+                    <div className="value-props-grid">
                         <div style={{ textAlign: 'center' }}>
                             <div style={{ fontSize: '2.5rem', marginBottom: '16px' }}>🎯</div>
                             <h3 style={{ fontSize: '1.25rem', marginBottom: '12px' }}>Structured Discovery</h3>

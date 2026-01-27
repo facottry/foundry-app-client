@@ -4,6 +4,7 @@ import api from '../utils/api';
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
+    console.log('AuthProvider initializing...');
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -32,6 +33,11 @@ export const AuthProvider = ({ children }) => {
         return res.data.user;
     };
 
+    const updateUser = (userData) => {
+        setUser(userData);
+        localStorage.setItem('user', JSON.stringify(userData));
+    };
+
     const loginWithOTP = async (email, otp) => {
         const res = await api.post('/auth/login-otp', { email, otp });
         localStorage.setItem('token', res.data.token);
@@ -55,7 +61,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ user, login, loginWithOTP, signup, logout, loading }}>
+        <AuthContext.Provider value={{ user, login, loginWithOTP, signup, logout, loading, updateUser }}>
             {children}
         </AuthContext.Provider>
     );

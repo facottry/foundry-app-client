@@ -17,22 +17,29 @@ const CategoryPage = () => {
     const [sortBy, setSortBy] = useState('trending');
 
     useEffect(() => {
+        const controller = new AbortController();
         const fetchProducts = async () => {
             setLoading(true);
             setError(null);
             try {
                 const [orgRes, promRes] = await Promise.all([
-                    api.get(`/products/category/${slug}?sort=${sortBy}`),
-                    api.get(`/boost/promoted/${slug}`)
+                    api.get(`/products/category/${slug}?sort=${sortBy}`, { signal: controller.signal }),
+                    api.get(`/boost/promoted/${slug}`, { signal: controller.signal })
                 ]);
                 setOrganic(orgRes.data);
                 setPromoted(promRes.data.map(c => c.product_id));
             } catch (err) {
-                setError(err);
+                if (err.name !== 'CanceledError' && err.code !== 'ERR_CANCELED') {
+                    setError(err);
+                }
             }
-            setLoading(false);
+            if (!controller.signal.aborted) {
+                setLoading(false);
+            }
         };
         fetchProducts();
+
+        return () => controller.abort();
     }, [slug, sortBy]);
 
     if (loading) return <LoadingState />;
