@@ -55,7 +55,7 @@ const Navbar = () => {
                     {user ? (
                         <>
                             {user.role === 'FOUNDER' && <Link to="/dashboard/founder">Dashboard</Link>}
-                            {user.role === 'CUSTOMER' && <Link to="/dashboard/customer">Dashboard</Link>}
+                            <Link to="/saved">Saved</Link>
                             <Link to="/profile">My Profile</Link>
                             <span onClick={handleLogout} style={{ cursor: 'pointer', marginLeft: '32px', fontWeight: '500', color: '#595959' }}>Logout</span>
                         </>
@@ -66,8 +66,8 @@ const Navbar = () => {
                         </>
                     )}
                 </div>
-            </div>
-        </nav>
+            </div >
+        </nav >
     );
 };
 

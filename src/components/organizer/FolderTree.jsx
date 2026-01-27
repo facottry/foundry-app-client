@@ -37,7 +37,24 @@ const FolderTree = ({ folders, activeFolder, onSelect, onCreate, onRename, onDel
                                     display: 'flex', alignItems: 'center', gap: '8px', padding: '6px 8px',
                                     borderRadius: '6px', cursor: 'pointer',
                                     background: isActive ? '#e0f2fe' : 'transparent',
-                                    color: isActive ? '#0369a1' : '#374151'
+                                    color: isActive ? '#0369a1' : '#374151',
+                                    border: '2px solid transparent' // Placeholder for drag highlight
+                                }}
+                                onDragOver={(e) => {
+                                    e.preventDefault();
+                                    e.currentTarget.style.borderColor = '#3b82f6';
+                                    e.currentTarget.style.background = '#eff6ff';
+                                }}
+                                onDragLeave={(e) => {
+                                    e.currentTarget.style.borderColor = 'transparent';
+                                    e.currentTarget.style.background = isActive ? '#e0f2fe' : 'transparent';
+                                }}
+                                onDrop={(e) => {
+                                    e.preventDefault();
+                                    e.currentTarget.style.borderColor = 'transparent';
+                                    e.currentTarget.style.background = isActive ? '#e0f2fe' : 'transparent';
+                                    const productId = e.dataTransfer.getData('productId');
+                                    if (productId) onDrop(productId, folder._id);
                                 }}
                             >
                                 <span
@@ -97,7 +114,21 @@ const FolderTree = ({ folders, activeFolder, onSelect, onCreate, onRename, onDel
                         background: !activeFolder ? '#e0f2fe' : 'transparent',
                         fontWeight: !activeFolder ? '600' : 'normal',
                         color: !activeFolder ? '#0369a1' : '#374151',
-                        display: 'flex', alignItems: 'center', gap: '8px'
+                        display: 'flex', alignItems: 'center', gap: '8px',
+                        border: '2px solid transparent'
+                    }}
+                    onDragOver={(e) => {
+                        e.preventDefault();
+                        e.currentTarget.style.borderColor = '#3b82f6';
+                    }}
+                    onDragLeave={(e) => {
+                        e.currentTarget.style.borderColor = 'transparent';
+                    }}
+                    onDrop={(e) => {
+                        e.preventDefault();
+                        e.currentTarget.style.borderColor = 'transparent';
+                        const productId = e.dataTransfer.getData('productId');
+                        if (productId) onDrop(productId, null); // Null for root
                     }}
                 >
                     <span>🏠</span> All Saved Items

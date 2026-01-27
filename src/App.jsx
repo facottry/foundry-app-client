@@ -29,6 +29,7 @@ import ChangePassword from './pages/ChangePassword';
 import SearchResults from './pages/SearchResults';
 import TagPage from './pages/TagPage';
 import ProfileView from './pages/ProfileView';
+import SavedProductsPage from './pages/SavedProductsPage';
 import ProfileEdit from './pages/ProfileEdit';
 import ProtectedRoute from './components/ProtectedRoute';
 import NotFound from './pages/NotFound';
@@ -79,6 +80,11 @@ function App() {
                                 <Route path="/profile" element={
                                     <ProtectedRoute>
                                         <ProfileView />
+                                    </ProtectedRoute>
+                                } />
+                                <Route path="/saved" element={
+                                    <ProtectedRoute>
+                                        <SavedProductsPage />
                                     </ProtectedRoute>
                                 } />
                                 <Route path="/profile/edit" element={

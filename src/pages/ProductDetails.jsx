@@ -93,16 +93,27 @@ const ProductDetails = () => {
                         </div>
                         <div style={{ display: 'flex', gap: '16px', marginTop: '24px' }}>
                             <a
-                                href={`/r/${product._id}`}
+                                href={`http://localhost:5000/r/${product._id}`} // TODO: Use env var for base URL
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="btn btn-primary"
                                 onClick={handleVisitWebsite}
                                 style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                             >
-                                Visit Website
+                                Visit Website (Tracked)
                             </a>
-                            <button className="btn btn-secondary" onClick={() => setShowSaveModal(true)} style={{ flex: 1 }}>
+                            <button
+                                className="btn btn-secondary"
+                                onClick={() => {
+                                    const token = localStorage.getItem('token');
+                                    if (!token) {
+                                        window.location.href = '/login';
+                                        return;
+                                    }
+                                    setShowSaveModal(true);
+                                }}
+                                style={{ flex: 1 }}
+                            >
                                 ❤️ Save
                             </button>
                         </div>

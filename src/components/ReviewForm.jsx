@@ -9,6 +9,26 @@ const ReviewForm = ({ productId, onReviewSubmitted }) => {
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(false);
 
+    // Check auth on render
+    const token = localStorage.getItem('token');
+
+    // Auth Guard: Show Login Prompt if not logged in
+    if (!token) {
+        return (
+            <div style={{ background: '#fff', padding: '24px', borderRadius: '12px', border: '1px solid #e5e7eb', textAlign: 'center' }}>
+                <h3 style={{ marginTop: 0, marginBottom: '16px' }}>Write a Review</h3>
+                <p style={{ color: '#666', marginBottom: '20px' }}>Please log in to share your experience with this product.</p>
+                <button
+                    onClick={() => window.location.href = '/login'}
+                    className="btn btn-primary"
+                    style={{ padding: '10px 24px' }}
+                >
+                    Log In to Review
+                </button>
+            </div>
+        );
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);

@@ -1,5 +1,11 @@
 import axios from 'axios';
 
+/**
+ * Purpose: Centralized Axios instance for API communication.
+ * Inputs: Requests to VITE_API_BASE_URL.
+ * Outputs: Promises resolving to response data.
+ * Side Effects: Attaches x-auth-token header if present in localStorage.
+ */
 const api = axios.create({
     baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api',
     headers: {

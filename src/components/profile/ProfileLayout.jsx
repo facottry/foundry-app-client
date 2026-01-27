@@ -8,7 +8,7 @@ const ProfileLayout = ({ activeTab, onTabChange, children }) => {
         { id: 'preferences', label: 'Preferences', icon: '⚙️' },
         { id: 'security', label: 'Security', icon: '🛡️' },
         { id: 'activity', label: 'Activity', icon: '🕒' },
-        { id: 'saved', label: 'Saved Items', icon: '💾' },
+        { id: 'activity', label: 'Activity', icon: '🕒' },
         { id: 'founder', label: 'Founder Stats', icon: '🚀', role: 'FOUNDER' }, // Only show if founder
     ];
 

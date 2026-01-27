@@ -35,7 +35,10 @@ const ContentPanel = ({ activeFolder, products, onUnsave, refreshNotesTrigger })
     const handleSaveNote = async (text) => {
         if (!activeFolder) return;
         try {
-            await api.put(`/notes/folder/${activeFolder._id}`, { content: text });
+            await api.post('/notes/folder', {
+                folderId: activeFolder._id,
+                content: text
+            });
         } catch (err) {
             console.error(err);
         }
@@ -77,24 +80,60 @@ const ContentPanel = ({ activeFolder, products, onUnsave, refreshNotesTrigger })
                 <h3 style={{ fontSize: '1rem', color: '#374151', paddingBottom: '12px', borderBottom: '1px solid #e5e7eb' }}>Products</h3>
 
                 {displayProducts.length === 0 ? (
-                    <div style={{ padding: '32px', textAlign: 'center', color: '#9ca3af' }}>No products here.</div>
+                    <div style={{
+                        padding: '60px 20px',
+                        textAlign: 'center',
+                        color: '#9ca3af',
+                        background: '#f9fafb',
+                        borderRadius: '12px',
+                        marginTop: '20px'
+                    }}>
+                        <div style={{ fontSize: '3rem', marginBottom: '16px', opacity: 0.5 }}>📂</div>
+                        <p style={{ fontSize: '1.1rem', fontWeight: '500', color: '#374151' }}>This folder is empty</p>
+                        <p style={{ fontSize: '0.9rem' }}>Save products here to organize your stack.</p>
+                        <Link to="/category/all" className="btn btn-sm btn-primary" style={{ marginTop: '16px', display: 'inline-block' }}>Browse Products</Link>
+                    </div>
                 ) : (
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '16px', paddingTop: '16px' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '24px', paddingTop: '24px' }}>
                         {displayProducts.map(saved => (
-                            <div key={saved._id} className="card" style={{ padding: '16px', position: 'relative' }}>
+                            <div key={saved._id} style={{
+                                border: '1px solid #e5e7eb',
+                                borderRadius: '12px',
+                                overflow: 'hidden',
+                                background: '#fff',
+                                transition: 'all 0.2s',
+                                position: 'relative',
+                                boxShadow: '0 2px 4px rgba(0,0,0,0.02)'
+                            }}
+                                onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-2px)'}
+                                onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
+                            >
                                 <button
                                     onClick={(e) => { e.preventDefault(); if (window.confirm('Remove from saved?')) onUnsave(saved.product_id._id); }}
-                                    style={{ position: 'absolute', top: '8px', right: '8px', border: 'none', background: 'transparent', cursor: 'pointer', color: '#9ca3af' }}
-                                    title="Remove"
+                                    style={{
+                                        position: 'absolute', top: '8px', right: '8px',
+                                        width: '28px', height: '28px',
+                                        borderRadius: '50%', background: 'rgba(255,255,255,0.9)',
+                                        border: '1px solid #e5e7eb', cursor: 'pointer',
+                                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                        color: '#ef4444', zIndex: 10
+                                    }}
+                                    title="Unsave"
                                 >
                                     ✕
                                 </button>
                                 <Link to={`/product/${saved.product_id._id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-                                    <div style={{ height: '40px', width: '40px', background: '#f3f4f6', borderRadius: '8px', marginBottom: '12px' }}>
-                                        {saved.product_id.logo_url && <img src={saved.product_id.logo_url} alt="" style={{ width: '100%', height: '100%', borderRadius: '8px' }} />}
+                                    <div style={{ height: '140px', background: '#f3f4f6', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+                                        {saved.product_id.logo_url ? (
+                                            <img src={saved.product_id.logo_url} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                        ) : (
+                                            <span style={{ fontSize: '2rem', fontWeight: 'bold', color: '#cbd5e1' }}>{saved.product_id.name.charAt(0)}</span>
+                                        )}
                                     </div>
-                                    <div style={{ fontWeight: '600', marginBottom: '4px', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>{saved.product_id.name}</div>
-                                    <div style={{ fontSize: '0.8rem', color: '#6b7280', height: '3em', overflow: 'hidden' }}>{saved.product_id.tagline}</div>
+                                    <div style={{ padding: '16px' }}>
+                                        <div style={{ fontWeight: '600', marginBottom: '4px', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis', color: '#111827' }}>{saved.product_id.name}</div>
+                                        <div style={{ fontSize: '0.85rem', color: '#6b7280', height: '2.8em', overflow: 'hidden', lineHeight: '1.4' }}>{saved.product_id.tagline}</div>
+                                    </div>
                                 </Link>
                             </div>
                         ))}

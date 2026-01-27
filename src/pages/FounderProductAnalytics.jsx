@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import api from '../utils/api';
+import TrafficAnalytics from '../components/founder/TrafficAnalytics';
 import AudienceAnalytics from '../components/AudienceAnalytics';
 
 const FounderProductAnalytics = () => {
@@ -9,21 +10,14 @@ const FounderProductAnalytics = () => {
     const [data, setData] = useState(null);
     const [productName, setProductName] = useState('');
     const [error, setError] = useState(null);
+    const [activeTab, setActiveTab] = useState('audience'); // 'audience' | 'traffic'
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                // Get analytics data
+                // Get audience data
                 const res = await api.get(`/founder/products/${id}/audience`);
                 setData(res.data);
-
-                // We might need product details too if not returned (api wrapper returns res.data)
-                // The analytics endpoint could return product info or we fetch separately.
-                // Assuming endpoint returns structure { summary, distributions }
-                // We'll fetch product name separately or rely on context if needed.
-                // Let's fetch product briefly to get name if analytics doesn't return it.
-                // Actually the analytics endpoint we built relies on product ownership.
-                // Let's modify frontend to expect simple data.
 
                 // Fetch product name for header
                 const productRes = await api.get(`/products/${id}`);
@@ -59,22 +53,43 @@ const FounderProductAnalytics = () => {
                 </div>
             </div>
 
-            {/* Tabs (If we add more analytics later, for now just Audience) */}
-            <div style={{ borderBottom: '1px solid #e5e7eb', marginBottom: '24px' }}>
-                <button style={{
-                    padding: '12px 24px',
-                    background: 'transparent',
-                    border: 'none',
-                    borderBottom: '2px solid #111827',
-                    fontWeight: '600',
-                    color: '#111827',
-                    cursor: 'pointer'
-                }}>
+            {/* Tabs */}
+            <div style={{ borderBottom: '1px solid #e5e7eb', marginBottom: '24px', display: 'flex' }}>
+                <button
+                    onClick={() => setActiveTab('audience')}
+                    style={{
+                        padding: '12px 24px',
+                        background: 'transparent',
+                        border: 'none',
+                        borderBottom: activeTab === 'audience' ? '2px solid #111827' : '2px solid transparent',
+                        fontWeight: '600',
+                        color: activeTab === 'audience' ? '#111827' : '#6b7280',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s ease-in-out'
+                    }}
+                >
                     Audience
+                </button>
+                <button
+                    onClick={() => setActiveTab('traffic')}
+                    style={{
+                        padding: '12px 24px',
+                        background: 'transparent',
+                        border: 'none',
+                        borderBottom: activeTab === 'traffic' ? '2px solid #111827' : '2px solid transparent',
+                        fontWeight: '600',
+                        color: activeTab === 'traffic' ? '#111827' : '#6b7280',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s ease-in-out'
+                    }}
+                >
+                    Traffic
                 </button>
             </div>
 
-            <AudienceAnalytics data={data} />
+            {activeTab === 'audience' && <AudienceAnalytics data={data} />}
+            {activeTab === 'traffic' && <TrafficAnalytics />}
+            {/* Note: TrafficAnalytics uses useParams() internally to get ID */}
         </div>
     );
 };
