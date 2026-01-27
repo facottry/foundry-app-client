@@ -4,12 +4,20 @@ import api from '../utils/api';
 import { getOrCreateSessionId } from '../utils/sessionUtils';
 import Breadcrumbs from '../components/Breadcrumbs';
 import ProductTabs from '../components/ProductTabs';
+import SaveProductModal from '../components/products/SaveProductModal';
 import ReviewForm from '../components/ReviewForm';
+import Toast from '../components/common/Toast';
 
 const ProductDetails = () => {
     const { id } = useParams();
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [showSaveModal, setShowSaveModal] = useState(false);
+    const [toast, setToast] = useState(null); // { message, type }
+
+    const showToast = (message, type = 'success') => {
+        setToast({ message, type });
+    };
 
     useEffect(() => {
         const fetchProduct = async () => {
@@ -82,16 +90,21 @@ const ProductDetails = () => {
                                     <span style={{ color: '#666' }}>({product.ratings_count} reviews)</span>
                                 </div>
                             )}
+                        </div>
+                        <div style={{ display: 'flex', gap: '16px', marginTop: '24px' }}>
                             <a
                                 href={`/r/${product._id}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="btn btn-primary"
                                 onClick={handleVisitWebsite}
-                                style={{ padding: '12px 24px', fontSize: '1rem' }}
+                                style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                             >
-                                Visit Website →
+                                Visit Website
                             </a>
+                            <button className="btn btn-secondary" onClick={() => setShowSaveModal(true)} style={{ flex: 1 }}>
+                                ❤️ Save
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -106,6 +119,22 @@ const ProductDetails = () => {
                     <ReviewForm productId={product._id} />
                 </div>
             </div>
+
+            {showSaveModal && (
+                <SaveProductModal
+                    productId={product._id}
+                    onClose={() => setShowSaveModal(false)}
+                    onShowToast={showToast}
+                />
+            )}
+
+            {toast && (
+                <Toast
+                    message={toast.message}
+                    type={toast.type}
+                    onClose={() => setToast(null)}
+                />
+            )}
         </div>
     );
 };

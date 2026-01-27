@@ -30,6 +30,8 @@ import SearchResults from './pages/SearchResults';
 import TagPage from './pages/TagPage';
 import ProfileView from './pages/ProfileView';
 import ProfileEdit from './pages/ProfileEdit';
+import ProtectedRoute from './components/ProtectedRoute';
+import NotFound from './pages/NotFound';
 import './index.css';
 
 function App() {
@@ -55,24 +57,64 @@ function App() {
                                 <Route path="/login" element={<Login />} />
                                 <Route path="/signup" element={<Signup />} />
 
-                                {/* Protected Routes Handling inside components or wrappers usually, but simplifying here */}
-                                {/* Protected Routes Handling inside components or wrappers usually, but simplifying here */}
-                                <Route path="/dashboard/founder" element={<DashboardFounder />} />
-                                <Route path="/founder/products/:id/analytics" element={<FounderProductAnalytics />} />
-                                <Route path="/dashboard/customer" element={<DashboardCustomer />} />
-                                {/* Admin Route Removed */}
-                                <Route path="/profile" element={<ProfileView />} />
-                                <Route path="/profile/edit" element={<ProfileEdit />} />
+                                {
+                                    /* Protected Routes */
+                                }
+                                <Route path="/dashboard/founder" element={
+                                    <ProtectedRoute allowedRoles={['FOUNDER']}>
+                                        <DashboardFounder />
+                                    </ProtectedRoute>
+                                } />
+                                <Route path="/founder/products/:id/analytics" element={
+                                    <ProtectedRoute allowedRoles={['FOUNDER']}>
+                                        <FounderProductAnalytics />
+                                    </ProtectedRoute>
+                                } />
+                                <Route path="/dashboard/customer" element={
+                                    <ProtectedRoute>
+                                        <DashboardCustomer />
+                                    </ProtectedRoute>
+                                } />
+
+                                <Route path="/profile" element={
+                                    <ProtectedRoute>
+                                        <ProfileView />
+                                    </ProtectedRoute>
+                                } />
+                                <Route path="/profile/edit" element={
+                                    <ProtectedRoute>
+                                        <ProfileEdit />
+                                    </ProtectedRoute>
+                                } />
 
                                 <Route path="/category/:slug" element={<CategoryPage />} />
                                 <Route path="/tag/:slug" element={<TagPage />} />
                                 <Route path="/product/:id" element={<ProductDetails />} />
-                                <Route path="/create-product" element={<CreateProduct />} />
-                                <Route path="/boost/:productId" element={<BoostProduct />} />
-                                <Route path="/wallet" element={<Wallet />} />
+                                <Route path="/create-product" element={
+                                    <ProtectedRoute allowedRoles={['FOUNDER']}>
+                                        <CreateProduct />
+                                    </ProtectedRoute>
+                                } />
+                                <Route path="/boost/:productId" element={
+                                    <ProtectedRoute allowedRoles={['FOUNDER']}>
+                                        <BoostProduct />
+                                    </ProtectedRoute>
+                                } />
+                                <Route path="/wallet" element={
+                                    <ProtectedRoute allowedRoles={['FOUNDER']}>
+                                        <Wallet />
+                                    </ProtectedRoute>
+                                } />
                                 <Route path="/login-otp" element={<LoginOTP />} />
-                                <Route path="/change-password" element={<ChangePassword />} />
+                                <Route path="/change-password" element={
+                                    <ProtectedRoute>
+                                        <ChangePassword />
+                                    </ProtectedRoute>
+                                } />
                                 <Route path="/search" element={<SearchResults />} />
+
+                                {/* Catch-all 404 */}
+                                <Route path="*" element={<NotFound />} />
                             </Routes>
                         </div>
                         <Footer />
