@@ -54,7 +54,12 @@ const Navbar = () => {
 
                     {user ? (
                         <>
-                            {user.role === 'FOUNDER' && <Link to="/dashboard/founder">Dashboard</Link>}
+                            {user.role === 'FOUNDER' && (
+                                <>
+                                    <Link to="/founder/dashboard">Dashboard</Link>
+                                    <Link to="/founder/products">My Products</Link>
+                                </>
+                            )}
                             <Link to="/saved">Saved</Link>
                             <Link to="/profile">My Profile</Link>
                             <span onClick={handleLogout} style={{ cursor: 'pointer', marginLeft: '32px', fontWeight: '500', color: '#595959' }}>Logout</span>

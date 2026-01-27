@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../utils/api';
+import ImageUploader from '../components/common/ImageUploader';
 
 const CreateProduct = () => {
     const [formData, setFormData] = useState({
@@ -10,6 +11,11 @@ const CreateProduct = () => {
     const navigate = useNavigate();
 
     const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
+
+    // Handle Image Upload
+    const handleLogoUpload = (url) => {
+        setFormData(prev => ({ ...prev, logo_url: url }));
+    };
 
     const onSubmit = async e => {
         e.preventDefault();
@@ -21,7 +27,7 @@ const CreateProduct = () => {
                 screenshots: []
             };
             await api.post('/products', payload);
-            navigate('/dashboard/founder');
+            navigate('/founder/dashboard');
         } catch (err) {
             setError(err);
         }
@@ -48,10 +54,17 @@ const CreateProduct = () => {
                     <label>Website URL</label>
                     <input name="website_url" type="url" onChange={onChange} required style={{ width: '100%', padding: '8px' }} />
                 </div>
+
+                {/* Image Upload Integration */}
                 <div style={{ marginBottom: '15px' }}>
-                    <label>Logo URL (Optional)</label>
-                    <input name="logo_url" onChange={onChange} style={{ width: '100%', padding: '8px' }} />
+                    <ImageUploader
+                        label="Product Logo"
+                        type="product_logo"
+                        onUpload={handleLogoUpload}
+                        currentUrl={formData.logo_url}
+                    />
                 </div>
+
                 <div style={{ marginBottom: '15px' }}>
                     <label>Category</label>
                     <select name="category" onChange={onChange} required style={{ width: '100%', padding: '8px' }}>

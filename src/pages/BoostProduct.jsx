@@ -18,7 +18,7 @@ const BoostProduct = () => {
         try {
             await api.post('/boost/create', { product_id: productId, ...formData });
             setSuccess('Campaign created successfully! Redirecting...');
-            setTimeout(() => navigate('/dashboard/founder'), 2000);
+            setTimeout(() => navigate('/founder/dashboard'), 2000);
         } catch (err) {
             setError(err.response?.data?.message || 'Error creating campaign'); // More robust error handling
         }

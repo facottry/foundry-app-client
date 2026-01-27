@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import SEOHead from '../components/SEOHead';
 import { organizationSchema } from '../utils/seo';
+import CategoryDiscoveryGrid from '../components/home/CategoryDiscoveryGrid';
 
 const Home = () => {
     return (
@@ -61,37 +62,9 @@ const Home = () => {
                     </div>
                 </div>
 
-                {/* Categories Grid */}
-                <div style={{ marginTop: '80px', maxWidth: '1200px', margin: '80px auto 0' }} className="container">
-                    <div style={{ marginBottom: '40px', textAlign: 'center' }}>
-                        <h2 style={{ fontSize: '2rem', marginBottom: '12px' }}>Browse by Category</h2>
-                        <p style={{ fontSize: '1.1rem', color: 'var(--text-secondary)' }}>
-                            Structured discovery for every use case
-                        </p>
-                    </div>
-
-                    <div className="category-grid">
-                        {['DevTools', 'Productivity', 'Marketing', 'AI', 'SaaS'].map(cat => (
-                            <Link to={`/category/${cat}`} key={cat} style={{ textDecoration: 'none' }}>
-                                <div className="card" style={{
-                                    padding: '32px',
-                                    textAlign: 'center',
-                                    height: '100%',
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    border: '1px solid var(--border-subtle)',
-                                    background: 'white'
-                                }}>
-                                    <h3 style={{ fontSize: '1.5rem', marginBottom: '8px', color: 'var(--text-primary)' }}>{cat}</h3>
-                                    <p style={{ fontSize: '0.95rem', color: 'var(--text-muted)', margin: 0 }}>
-                                        Explore &rarr;
-                                    </p>
-                                </div>
-                            </Link>
-                        ))}
-                    </div>
+                {/* Categories Grid (Redesigned) */}
+                <div style={{ marginTop: '80px' }}>
+                    <CategoryDiscoveryGrid />
                 </div>
 
                 {/* Value Props */}

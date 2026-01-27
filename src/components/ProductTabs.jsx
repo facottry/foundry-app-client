@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { generateSlug } from '../utils/slugUtils';
+import ReviewList from './reviews/ReviewList';
 
-const ProductTabs = ({ productId, product }) => {
+const ProductTabs = ({ productId, product, user }) => {
     const [activeTab, setActiveTab] = useState('overview');
 
     const tabs = [
@@ -50,7 +51,7 @@ const ProductTabs = ({ productId, product }) => {
             {/* Tab Content */}
             <div>
                 {activeTab === 'overview' && <OverviewTab product={product} />}
-                {activeTab === 'reviews' && <ReviewsTab productId={productId} />}
+                {activeTab === 'reviews' && <ReviewsTab productId={productId} user={user} />}
                 {activeTab === 'alternatives' && <AlternativesTab productId={productId} />}
                 {activeTab === 'team' && <TeamTab productId={productId} />}
                 {activeTab === 'awards' && <AwardsTab productId={productId} />}
@@ -137,12 +138,10 @@ const OverviewTab = ({ product }) => (
     </div>
 );
 
-// Reviews Tab (placeholder - will integrate with Review system)
-const ReviewsTab = ({ productId }) => (
-    <div style={{ padding: '40px', textAlign: 'center', color: '#666' }}>
-        <div style={{ fontSize: '3rem', marginBottom: '16px' }}>⭐</div>
-        <h3 style={{ marginBottom: '8px' }}>Reviews Coming Soon</h3>
-        <p>Review system will be integrated here</p>
+// Reviews Tab (Integrated)
+const ReviewsTab = ({ productId, user }) => (
+    <div style={{ padding: '0 10px' }}>
+        <ReviewList productId={productId} user={user} />
     </div>
 );
 

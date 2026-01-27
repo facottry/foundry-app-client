@@ -39,7 +39,7 @@ const FounderProductAnalytics = () => {
     return (
         <div style={{ paddingTop: '40px', paddingBottom: '60px' }}>
             <div style={{ marginBottom: '30px' }}>
-                <Link to="/dashboard/founder" style={{ color: '#666', textDecoration: 'none', marginBottom: '16px', display: 'inline-block' }}>
+                <Link to="/founder/dashboard" style={{ color: '#666', textDecoration: 'none', marginBottom: '16px', display: 'inline-block' }}>
                     &larr; Back to Dashboard
                 </Link>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>

@@ -5,10 +5,13 @@ import LoadingState from '../components/common/LoadingState';
 import ErrorState from '../components/common/ErrorState';
 import EmptyState from '../components/common/EmptyState';
 
+import EditTeamModal from '../components/products/EditTeamModal';
+
 const DashboardFounder = () => {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [editingTeamProduct, setEditingTeamProduct] = useState(null);
 
     const fetchData = async () => {
         setLoading(true);
@@ -97,6 +100,14 @@ const DashboardFounder = () => {
                                                     }}>
                                                         Boost
                                                     </Link>
+                                                    <button
+                                                        onClick={() => setEditingTeamProduct(product)}
+                                                        className="btn"
+                                                        style={{ padding: '6px 12px', fontSize: '0.85rem', background: '#f3f4f6', color: '#4b5563', border: '1px solid #e5e7eb' }}
+                                                        title="Manage Team"
+                                                    >
+                                                        👥
+                                                    </button>
                                                 </div>
                                             </td>
                                         </tr>
@@ -145,7 +156,25 @@ const DashboardFounder = () => {
                 </div>
 
             </div>
-        </div>
+
+
+
+            {
+                editingTeamProduct && (
+                    <EditTeamModal
+                        product={editingTeamProduct}
+                        onClose={() => setEditingTeamProduct(null)}
+                        onSave={(updatedProduct) => {
+                            // Update local state
+                            const newData = { ...data };
+                            const idx = newData.products.findIndex(p => p._id === updatedProduct._id);
+                            if (idx !== -1) newData.products[idx] = updatedProduct;
+                            setData(newData);
+                        }}
+                    />
+                )
+            }
+        </div >
     );
 };
 

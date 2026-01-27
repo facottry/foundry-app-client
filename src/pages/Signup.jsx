@@ -21,7 +21,7 @@ const Signup = () => {
         setError(null);
         try {
             const user = await signup(name, email, password, role);
-            if (user.role === 'FOUNDER') navigate('/dashboard/founder');
+            if (user.role === 'FOUNDER') navigate('/founder/dashboard');
             else navigate('/dashboard/customer');
         } catch (err) {
             setError(err);

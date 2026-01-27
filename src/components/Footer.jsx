@@ -59,7 +59,7 @@ const Footer = () => {
                         </h5>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
                             <Link to="/" style={{ fontSize: '0.95rem', color: 'var(--text-secondary)' }}>Home</Link>
-                            <Link to="/dashboard/founder" style={{ fontSize: '0.95rem', color: 'var(--text-secondary)' }}>Dashboard</Link>
+                            <Link to="/founder/dashboard" style={{ fontSize: '0.95rem', color: 'var(--text-secondary)' }}>Dashboard</Link>
                             <Link to="/pricing" style={{ fontSize: '0.95rem', color: 'var(--text-secondary)' }}>Pricing</Link>
                             <Link to="/category/all" style={{ fontSize: '0.95rem', color: 'var(--text-secondary)' }}>Explore</Link>
                         </div>

@@ -17,7 +17,8 @@ import CookiePolicy from './pages/CookiePolicy';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import DashboardFounder from './pages/DashboardFounder';
-import FounderProductAnalytics from './pages/FounderProductAnalytics';
+import FounderProductsPage from './pages/FounderProductsPage';
+import ProductAnalyticsPage from './pages/ProductAnalyticsPage';
 import DashboardCustomer from './pages/DashboardCustomer';
 import CategoryPage from './pages/CategoryPage';
 import ProductDetails from './pages/ProductDetails';
@@ -61,16 +62,12 @@ function App() {
                                 {
                                     /* Protected Routes */
                                 }
-                                <Route path="/dashboard/founder" element={
+                                <Route path="/founder/dashboard" element={
                                     <ProtectedRoute allowedRoles={['FOUNDER']}>
                                         <DashboardFounder />
                                     </ProtectedRoute>
                                 } />
-                                <Route path="/founder/products/:id/analytics" element={
-                                    <ProtectedRoute allowedRoles={['FOUNDER']}>
-                                        <FounderProductAnalytics />
-                                    </ProtectedRoute>
-                                } />
+
                                 <Route path="/dashboard/customer" element={
                                     <ProtectedRoute>
                                         <DashboardCustomer />
@@ -99,6 +96,16 @@ function App() {
                                 <Route path="/create-product" element={
                                     <ProtectedRoute allowedRoles={['FOUNDER']}>
                                         <CreateProduct />
+                                    </ProtectedRoute>
+                                } />
+                                <Route path="/founder/products" element={
+                                    <ProtectedRoute allowedRoles={['FOUNDER']}>
+                                        <FounderProductsPage />
+                                    </ProtectedRoute>
+                                } />
+                                <Route path="/analytics/product/:id" element={
+                                    <ProtectedRoute allowedRoles={['FOUNDER']}>
+                                        <ProductAnalyticsPage />
                                     </ProtectedRoute>
                                 } />
                                 <Route path="/boost/:productId" element={

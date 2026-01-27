@@ -31,7 +31,7 @@ const LoginOTP = () => {
         setSuccess(null);
         try {
             const user = await loginWithOTP(email, otp);
-            if (user.role === 'FOUNDER') navigate('/dashboard/founder');
+            if (user.role === 'FOUNDER') navigate('/founder/dashboard');
             else if (user.role === 'CUSTOMER') navigate('/dashboard/customer');
             else navigate('/change-password'); // Default for other roles or forgot password flow
         } catch (err) {

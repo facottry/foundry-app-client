@@ -21,7 +21,7 @@ const Login = () => {
         setError(null);
         try {
             const user = await login(email, password);
-            if (user.role === 'FOUNDER') navigate('/dashboard/founder');
+            if (user.role === 'FOUNDER') navigate('/founder/dashboard');
             else if (user.role === 'ADMIN') navigate('/dashboard/admin'); // Should not happen in public client potentially
             else navigate('/dashboard/customer');
         } catch (err) {

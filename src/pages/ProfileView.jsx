@@ -80,7 +80,7 @@ const ProfileView = () => {
                         <div style={{ fontSize: '3rem', marginBottom: '16px' }}>🚀</div>
                         <h3>Founder Analytics</h3>
                         <p style={{ marginBottom: '24px', color: '#6b7280' }}>View detailed analytics for your products.</p>
-                        <Link to="/dashboard/founder" className="btn btn-primary">Go to Founder Dashboard</Link>
+                        <Link to="/founder/dashboard" className="btn btn-primary">Go to Founder Dashboard</Link>
                     </div>
                 );
             default:

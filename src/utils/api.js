@@ -64,5 +64,7 @@ api.interceptors.response.use(
 // Profile APIs
 export const getProfile = () => api.get('/profile/me');
 export const updateProfile = (data) => api.put('/profile/me', data);
+export const getCategories = () => api.get('/categories');
+export const getCategoryStats = () => api.get('/products/categories/stats');
 
 export default api;
