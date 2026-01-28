@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://appfoundry.vercel.app/founder/6977dedc51bff4449e8b2a88</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2026-01-26</lastmod>
+  </url>
+  <url>
+    <loc>https://appfoundry.vercel.app/founder/6977e24251bff4449e8b2b67</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2026-01-26</lastmod>
+  </url>
+  <url>
+    <loc>https://appfoundry.vercel.app/founder/69786507371f235936201e8a</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2026-01-27</lastmod>
+  </url>
+  <url>
+    <loc>https://appfoundry.vercel.app/founder/697865d3371f235936201e9d</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2026-01-27</lastmod>
+  </url>
+  <url>
+    <loc>https://appfoundry.vercel.app/founder/697865f6371f235936201ea4</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2026-01-27</lastmod>
+  </url>
+</urlset>

@@ -1,87 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- Core Identity -->
-  <url>
-    <loc>https://appfoundry.vercel.app/</loc>
-    <changefreq>daily</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://appfoundry.vercel.app/about</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://appfoundry.vercel.app/pricing</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://appfoundry.vercel.app/contact</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <!-- Content & Updates -->
-  <url>
-    <loc>https://appfoundry.vercel.app/blog</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://appfoundry.vercel.app/changelog</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <!-- Legal -->
-  <url>
-    <loc>https://appfoundry.vercel.app/privacy</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://appfoundry.vercel.app/terms</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://appfoundry.vercel.app/cookies</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-
-  <!-- Auth -->
-  <url>
-    <loc>https://appfoundry.vercel.app/login</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://appfoundry.vercel.app/signup</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <!-- Key Categories -->
-  <url>
-    <loc>https://appfoundry.vercel.app/category/developer-tools</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://appfoundry.vercel.app/category/productivity</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://appfoundry.vercel.app/category/growth</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://appfoundry.vercel.app/category/hiring</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-</urlset>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap>
+    <loc>https://appfoundry.vercel.app/sitemaps/static.xml</loc>
+    <lastmod>2026-01-28T21:35:57.995Z</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://appfoundry.vercel.app/sitemaps/product.xml</loc>
+    <lastmod>2026-01-28T21:35:57.995Z</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://appfoundry.vercel.app/sitemaps/founder.xml</loc>
+    <lastmod>2026-01-28T21:35:57.995Z</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://appfoundry.vercel.app/sitemaps/blog.xml</loc>
+    <lastmod>2026-01-28T21:35:57.995Z</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://appfoundry.vercel.app/sitemaps/writer.xml</loc>
+    <lastmod>2026-01-28T21:35:57.995Z</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://appfoundry.vercel.app/sitemaps/category.xml</loc>
+    <lastmod>2026-01-28T21:35:57.995Z</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://appfoundry.vercel.app/sitemaps/tag.xml</loc>
+    <lastmod>2026-01-28T21:35:57.995Z</lastmod>
+  </sitemap>
+</sitemapindex>
