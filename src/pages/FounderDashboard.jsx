@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../utils/api';
+import { getImageUrl } from '../utils/getImageUrl';
 
 const FounderDashboard = () => {
     const [products, setProducts] = useState([]);
@@ -96,8 +97,8 @@ const FounderDashboard = () => {
                                 <tr key={product._id} style={{ borderBottom: '1px solid #f0f0f0' }}>
                                     <td style={{ padding: '16px 20px' }}>
                                         <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-                                            {product.logo_url && (
-                                                <img src={product.logo_url} alt={product.name} style={{ width: '40px', height: '40px', borderRadius: '6px' }} />
+                                            {getImageUrl(product.logoKey || product.logo_url) && (
+                                                <img src={getImageUrl(product.logoKey || product.logo_url)} alt={product.name} style={{ width: '40px', height: '40px', borderRadius: '6px' }} />
                                             )}
                                             <div>
                                                 <div style={{ fontWeight: '600', marginBottom: '2px' }}>{product.name}</div>

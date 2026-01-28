@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthContext from '../context/AuthContext';
 import { getProfile, updateProfile } from '../utils/api';
+import ImageUploader from '../components/common/ImageUploader';
 import SEOHead from '../components/SEOHead';
 import LoadingState from '../components/common/LoadingState';
 
@@ -108,16 +109,21 @@ const ProfileEdit = () => {
                 </div>
 
                 <div style={formGroupStyle}>
-                    <label style={labelStyle}>Avatar URL (Image Link)</label>
-                    <input
-                        type="url"
-                        name="avatar_url"
-                        value={formData.avatar_url}
-                        onChange={handleChange}
-                        placeholder="https://example.com/me.jpg"
-                        style={inputStyle}
+                    <label style={labelStyle}>Profile Picture</label>
+                    <ImageUploader
+                        label="Avatar"
+                        type="avatar"
+                        currentUrl={formData.avatar_url}
+                        onUpload={(result) => {
+                            const url = result.url || result;
+                            const key = result.key;
+                            setFormData({
+                                ...formData,
+                                avatar_url: url,
+                                profileImageKey: key
+                            });
+                        }}
                     />
-                    <div style={{ fontSize: '0.8rem', color: '#888', marginTop: '4px' }}>Hosted image URL only for now.</div>
                 </div>
 
                 <div style={formGroupStyle}>

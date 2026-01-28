@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../utils/api';
+import { getImageUrl } from '../utils/getImageUrl';
 import LoadingState from '../components/common/LoadingState';
 import ErrorState from '../components/common/ErrorState';
 import EmptyState from '../components/common/EmptyState';
@@ -89,6 +90,7 @@ const DashboardFounder = () => {
                                             <td style={{ textAlign: 'right' }}>
                                                 <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end' }}>
                                                     <Link to={`/product/${product._id}`} className="btn btn-secondary" style={{ padding: '6px 16px', fontSize: '0.85rem', borderRadius: '8px' }}>View</Link>
+                                                    <Link to={`/founder/products/${product._id}/edit`} className="btn btn-secondary" style={{ padding: '6px 16px', fontSize: '0.85rem', borderRadius: '8px', background: '#f3f4f6', color: '#374151' }}>Edit</Link>
                                                     <Link to={`/boost/${product._id}`} style={{
                                                         padding: '6px 16px',
                                                         fontSize: '0.85rem',

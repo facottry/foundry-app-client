@@ -29,9 +29,9 @@ const ImageUploader = ({ label, onUpload, type = 'product_logo', currentUrl = ''
             });
 
             if (res.data.success) {
-                const url = res.data.data.url;
+                const { url, key } = res.data.data;
                 setPreview(url);
-                onUpload(url);
+                onUpload({ url, key }); // Pass object instead of just url
             }
         } catch (err) {
             console.error('Upload failed', err);

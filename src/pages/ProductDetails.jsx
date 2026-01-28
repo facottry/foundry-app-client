@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import api from '../utils/api';
+import { getImageUrl } from '../utils/getImageUrl';
 import { getOrCreateSessionId } from '../utils/sessionUtils';
 import Breadcrumbs from '../components/Breadcrumbs';
 import ProductTabs from '../components/ProductTabs';
@@ -61,6 +62,14 @@ const ProductDetails = () => {
     if (loading) return <div style={{ padding: '40px', textAlign: 'center' }}>Loading...</div>;
     if (!product) return <div style={{ padding: '40px', textAlign: 'center' }}>Product not found</div>;
 
+
+    if (loading) return <div style={{ padding: '40px', textAlign: 'center' }}>Loading...</div>;
+    if (!product) return <div style={{ padding: '40px', textAlign: 'center' }}>Product not found</div>;
+
+    // Use enhanced URLs if available, else derive using helper
+    const logoUrl = product.logoUrl || getImageUrl(product.logoKey || product.logo_url) || '';
+    const screenshotUrls = product.screenshotUrls || (product.screenshotKeys || []).map(k => getImageUrl(k)) || product.screenshots || [];
+
     return (
         <div style={{ paddingTop: '40px', paddingBottom: '60px' }}>
             <Breadcrumbs items={[
@@ -73,8 +82,8 @@ const ProductDetails = () => {
             {/* Product Header */}
             <div style={{ marginBottom: '40px' }}>
                 <div style={{ display: 'flex', gap: '24px', alignItems: 'start', marginBottom: '24px' }}>
-                    {product.logo_url ? (
-                        <img src={product.logo_url} alt="Logo" style={{ width: '96px', height: '96px', borderRadius: '20px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)', objectFit: 'cover' }} />
+                    {logoUrl ? (
+                        <img src={logoUrl} alt="Logo" style={{ width: '96px', height: '96px', borderRadius: '20px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)', objectFit: 'cover' }} />
                     ) : (
                         <div style={{ width: '96px', height: '96px', borderRadius: '20px', background: '#f3f4f6', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem', fontWeight: 'bold', color: '#666' }}>
                             {product.name.charAt(0)}
@@ -83,7 +92,18 @@ const ProductDetails = () => {
                     <div style={{ flex: 1 }}>
                         <h1 style={{ marginBottom: '8px', fontSize: '2.5rem' }}>{product.name}</h1>
                         <p style={{ fontSize: '1.25rem', color: '#666', marginBottom: '16px' }}>{product.tagline}</p>
+
+                        {/* Screenshots Section - New */}
+                        {screenshotUrls.length > 0 && (
+                            <div style={{ marginTop: '24px', marginBottom: '24px', overflowX: 'auto', display: 'flex', gap: '16px', paddingBottom: '16px' }}>
+                                {screenshotUrls.map((url, idx) => (
+                                    <img key={idx} src={url} alt={`Screenshot ${idx + 1}`} style={{ height: '200px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0,0,0,0.1)', flexShrink: 0 }} />
+                                ))}
+                            </div>
+                        )}
+
                         <div style={{ display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap' }}>
+
                             {product.avg_rating > 0 && (
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '1rem' }}>
                                     <span>⭐</span>
@@ -97,17 +117,20 @@ const ProductDetails = () => {
                         {product.team_members && product.team_members.length > 0 && (
                             <div style={{ marginTop: '20px', display: 'flex', alignItems: 'center', gap: '8px' }}>
                                 <div style={{ display: 'flex', paddingLeft: '8px' }}>
-                                    {product.team_members.slice(0, 5).map((member, i) => (
-                                        <div key={i} title={`${member.name} (${member.title || 'Member'})`} style={{ marginLeft: '-8px', width: '32px', height: '32px', borderRadius: '50%', border: '2px solid white', overflow: 'hidden', background: '#e5e7eb' }}>
-                                            {member.avatar_url ? (
-                                                <img src={member.avatar_url} alt={member.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                                            ) : (
-                                                <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.7rem', fontWeight: 'bold', color: '#6b7280' }}>
-                                                    {(member.name || '?').charAt(0)}
-                                                </div>
-                                            )}
-                                        </div>
-                                    ))}
+                                    {product.team_members.slice(0, 5).map((member, i) => {
+                                        const avatar = member.avatar_url || getImageUrl(member.profileImageKey) || '';
+                                        return (
+                                            <div key={i} title={`${member.name} (${member.title || 'Member'})`} style={{ marginLeft: '-8px', width: '32px', height: '32px', borderRadius: '50%', border: '2px solid white', overflow: 'hidden', background: '#e5e7eb' }}>
+                                                {avatar ? (
+                                                    <img src={avatar} alt={member.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                                ) : (
+                                                    <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.7rem', fontWeight: 'bold', color: '#6b7280' }}>
+                                                        {(member.name || '?').charAt(0)}
+                                                    </div>
+                                                )}
+                                            </div>
+                                        )
+                                    })}
                                 </div>
                                 <span style={{ fontSize: '0.9rem', color: '#6b7280' }}>
                                     by <span style={{ color: '#111827', fontWeight: '500' }}>{product.team_members[0].name}</span>
@@ -118,7 +141,7 @@ const ProductDetails = () => {
 
                         <div style={{ display: 'flex', gap: '16px', marginTop: '24px' }}>
                             <a
-                                href={`http://localhost:5000/r/${product._id}`} // TODO: Use env var for base URL
+                                href={`/visit/${product._id}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="btn btn-primary"

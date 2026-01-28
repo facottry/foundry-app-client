@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import api from '../utils/api';
+import { getImageUrl } from '../utils/getImageUrl';
 import LoadingState from '../components/common/LoadingState';
 import ErrorState from '../components/common/ErrorState';
 import EmptyState from '../components/common/EmptyState';
@@ -90,8 +91,8 @@ const FounderProductsPage = () => {
                                     <td style={{ padding: '16px 24px' }}>
                                         <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
                                             <div style={{ width: '48px', height: '48px', borderRadius: '8px', background: '#f3f4f6', overflow: 'hidden' }}>
-                                                {product.logo_url ? (
-                                                    <img src={product.logo_url} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                                {getImageUrl(product.logoKey || product.logo_url) ? (
+                                                    <img src={getImageUrl(product.logoKey || product.logo_url)} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                                 ) : (
                                                     <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', color: '#9ca3af' }}>{product.name.charAt(0)}</div>
                                                 )}
@@ -104,7 +105,7 @@ const FounderProductsPage = () => {
                                     </td>
                                     <td style={{ padding: '16px 24px' }}>
                                         <span className={`badge ${product.status === 'approved' ? 'badge-active' :
-                                                product.status === 'archived' ? 'badge-inactive' : 'badge-warning'
+                                            product.status === 'archived' ? 'badge-inactive' : 'badge-warning'
                                             }`} style={{ textTransform: 'capitalize' }}>
                                             {product.status}
                                         </span>
@@ -117,6 +118,9 @@ const FounderProductsPage = () => {
                                         <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px' }}>
                                             <Link to={`/analytics/product/${product._id}`} className="btn" style={{ fontSize: '0.85rem', padding: '6px 12px', background: '#eff6ff', color: '#1d4ed8' }}>
                                                 Analytics
+                                            </Link>
+                                            <Link to={`/founder/products/${product._id}/edit`} className="btn" style={{ fontSize: '0.85rem', padding: '6px 12px', background: '#f3f4f6', color: '#374151' }}>
+                                                Edit
                                             </Link>
                                             <button
                                                 onClick={() => handleArchive(product._id)}
