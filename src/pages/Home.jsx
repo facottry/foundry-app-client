@@ -1,16 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import SEOHead from '../components/SEOHead';
-import { organizationSchema } from '../utils/seo';
+import SEO from '../components/SEO'; // Changed from SEOHead
+import { organizationSchema } from '../utils/seo'; // Kept for structuredData prop
 import CategoryDiscoveryGrid from '../components/home/CategoryDiscoveryGrid';
 
 const Home = () => {
     return (
         <>
-            <SEOHead
+            <SEO // Changed from SEOHead
                 title="Discovery Platform for Independent Builders"
                 description="Foundry is a modern discovery platform for independent SaaS founders and builders. Find tools built with clarity, usefulness, and intent."
                 structuredData={organizationSchema}
+                canonical="/" // Added canonical prop
             />
 
             <div style={{ paddingBottom: '40px' }}>

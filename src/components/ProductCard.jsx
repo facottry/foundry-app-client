@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const ProductCard = ({ product, promoted }) => {
     return (
-        <Link to={`/product/${product._id}`} style={{ textDecoration: 'none' }}>
+        <Link to={`/product/${product.slug || product._id}`} style={{ textDecoration: 'none' }}>
             <div className="card" style={{
                 display: 'flex',
                 flexDirection: 'column',

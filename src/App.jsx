@@ -13,6 +13,8 @@ import Blog from './pages/Blog';
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
 import BlogPost from './pages/BlogPost';
+import AuthorBlog from './pages/AuthorBlog';
+import AuthorsList from './pages/AuthorsList';
 import Changelog from './pages/Changelog';
 import CookiePolicy from './pages/CookiePolicy';
 import Login from './pages/Login';
@@ -36,6 +38,9 @@ import SavedProductsPage from './pages/SavedProductsPage';
 import ProfileEdit from './pages/ProfileEdit';
 import ProtectedRoute from './components/ProtectedRoute';
 import VisitRedirect from './pages/VisitRedirect';
+import FounderProfile from './pages/FounderProfile';
+import HowItWorks from './pages/HowItWorks';
+import Mission from './pages/Mission';
 import NotFound from './pages/NotFound';
 import './index.css';
 
@@ -53,15 +58,21 @@ function App() {
                                     <Route path="/" element={<Home />} />
                                     <Route path="/pricing" element={<Pricing />} />
                                     <Route path="/about" element={<About />} />
+                                    <Route path="/mission" element={<Mission />} />
+                                    <Route path="/how-it-works" element={<HowItWorks />} />
                                     <Route path="/contact" element={<Contact />} />
                                     <Route path="/blog" element={<Blog />} />
+                                    <Route path="/blog" element={<Blog />} />
                                     <Route path="/blog/:slug" element={<BlogPost />} />
+                                    <Route path="/blog/author" element={<AuthorsList />} />
+                                    <Route path="/blog/author/:authorId" element={<AuthorBlog />} />
                                     <Route path="/changelog" element={<Changelog />} />
                                     <Route path="/cookies" element={<CookiePolicy />} />
                                     <Route path="/privacy" element={<Privacy />} />
                                     <Route path="/terms" element={<Terms />} />
                                     <Route path="/login" element={<Login />} />
                                     <Route path="/signup" element={<Signup />} />
+                                    <Route path="/founder/:founderId" element={<FounderProfile />} />
 
                                     {
                                         /* Protected Routes */
@@ -96,7 +107,7 @@ function App() {
 
                                     <Route path="/category/:slug" element={<CategoryPage />} />
                                     <Route path="/tag/:slug" element={<TagPage />} />
-                                    <Route path="/product/:id" element={<ProductDetails />} />
+                                    <Route path="/product/:slug" element={<ProductDetails />} />
                                     <Route path="/create-product" element={
                                         <ProtectedRoute allowedRoles={['FOUNDER']}>
                                             <CreateProduct />

@@ -1,17 +1,18 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import api from '../utils/api';
 import { getImageUrl } from '../utils/getImageUrl';
 import { getOrCreateSessionId } from '../utils/sessionUtils';
 import Breadcrumbs from '../components/Breadcrumbs';
 import ProductTabs from '../components/ProductTabs';
 import SaveProductModal from '../components/products/SaveProductModal';
-// import ReviewList from '../components/reviews/ReviewList'; // Moved to ProductTabs
 import Toast from '../components/common/Toast';
-import AuthContext from '../context/AuthContext'; // Fix missing import
+import AuthContext from '../context/AuthContext';
+import SEO from '../components/SEO';
+import SimilarProducts from '../components/SimilarProducts';
 
 const ProductDetails = () => {
-    const { id } = useParams();
+    const { slug } = useParams();
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
     const [showSaveModal, setShowSaveModal] = useState(false);
@@ -24,44 +25,39 @@ const ProductDetails = () => {
     useEffect(() => {
         const fetchProduct = async () => {
             try {
-                const res = await api.get(`/products/${id}`);
+                // Fetch by Slug
+                const res = await api.get(`/products/slug/${slug}`);
                 setProduct(res.data);
 
-                // Track view with session
-                const sessionId = getOrCreateSessionId();
-                // New Event Tracking API
-                api.post('/events/track', {
-                    productId: id,
-                    eventType: 'VIEW',
-                    sessionId
-                }).catch(err => console.error('View tracking failed:', err));
-
-                // Legacy tracking (keep for now if needed, or remove if fully migrated)
-                // api.post('/track/view', { productId: id, sessionId }).catch(err => console.error('View tracking failed:', err));
+                // Track view with session - now we have the product object with _id
+                if (res.data && res.data._id) {
+                    const sessionId = getOrCreateSessionId();
+                    // New Event Tracking API
+                    api.post('/events/track', {
+                        productId: res.data._id,
+                        eventType: 'VIEW',
+                        sessionId
+                    }).catch(err => console.error('View tracking failed:', err));
+                }
             } catch (error) {
                 console.error('Error fetching product:', error);
             }
             setLoading(false);
         };
         fetchProduct();
-    }, [id]);
+    }, [slug]);
 
     const handleVisitWebsite = () => {
+        if (!product) return;
         const sessionId = getOrCreateSessionId();
         api.post('/events/track', {
-            productId: id,
+            productId: product._id,
             eventType: 'CLICK',
             sessionId
         }).catch(err => console.error('Click tracking failed:', err));
 
-        // Also trigger legacy redirect or let the backend handle it?
-        // The link is /r/:id which handles the redirect and legacy billing tracking.
-        // We just add this side effect for analytics.
+        // Use direct redirect if desired, but we usually open target `_blank` from the <a> tag
     };
-
-    if (loading) return <div style={{ padding: '40px', textAlign: 'center' }}>Loading...</div>;
-    if (!product) return <div style={{ padding: '40px', textAlign: 'center' }}>Product not found</div>;
-
 
     if (loading) return <div style={{ padding: '40px', textAlign: 'center' }}>Loading...</div>;
     if (!product) return <div style={{ padding: '40px', textAlign: 'center' }}>Product not found</div>;
@@ -70,8 +66,35 @@ const ProductDetails = () => {
     const logoUrl = product.logoUrl || getImageUrl(product.logoKey || product.logo_url) || '';
     const screenshotUrls = product.screenshotUrls || (product.screenshotKeys || []).map(k => getImageUrl(k)) || product.screenshots || [];
 
+    const productSchema = {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": product.name,
+        "applicationCategory": "DeveloperTool",
+        "operatingSystem": "Web",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "description": product.description || product.tagline,
+        "aggregateRating": product.avg_rating > 0 ? {
+            "@type": "AggregateRating",
+            "ratingValue": product.avg_rating,
+            "reviewCount": product.ratings_count
+        } : undefined,
+        "url": `https://appfoundry.vercel.app/product/${product.slug}`
+    };
+
     return (
         <div style={{ paddingTop: '40px', paddingBottom: '60px' }}>
+            <SEO
+                title={`${product.name} - ${product.tagline}`}
+                description={product.description?.substring(0, 160) || product.tagline}
+                canonical={`/product/${product.slug}`}
+                jsonLd={productSchema}
+                type="SoftwareApplication"
+            />
             <Breadcrumbs items={[
                 { label: 'Home', href: '/' },
                 { label: 'Products', href: '/category/all' },
@@ -133,7 +156,16 @@ const ProductDetails = () => {
                                     })}
                                 </div>
                                 <span style={{ fontSize: '0.9rem', color: '#6b7280' }}>
-                                    by <span style={{ color: '#111827', fontWeight: '500' }}>{product.team_members[0].name}</span>
+                                    by {product.team_members[0].user_id ? (
+                                        <Link
+                                            to={`/founder/${product.team_members[0].user_id._id || product.team_members[0].user_id}`}
+                                            style={{ color: '#111827', fontWeight: '500', textDecoration: 'underline', cursor: 'pointer' }}
+                                        >
+                                            {product.team_members[0].name}
+                                        </Link>
+                                    ) : (
+                                        <span style={{ color: '#111827', fontWeight: '500' }}>{product.team_members[0].name}</span>
+                                    )}
                                     {product.team_members.length > 1 && <span> + {product.team_members.length - 1} more</span>}
                                 </span>
                             </div>
@@ -171,6 +203,9 @@ const ProductDetails = () => {
 
             {/* Product Tabs */}
             <ProductTabs productId={product._id} product={product} user={useContext(AuthContext).user} />
+
+            {/* Similar Products (Internal Linking) */}
+            <SimilarProducts currentProduct={product} />
 
             {/* Save Modal and Toast... */}
 

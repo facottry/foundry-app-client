@@ -4,7 +4,7 @@ import AuthContext from '../context/AuthContext';
 import SearchBox from './SearchBox';
 
 const Navbar = () => {
-    console.log('Navbar rendering...');
+
     const { user, logout } = useContext(AuthContext);
     const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(false);

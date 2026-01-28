@@ -2,11 +2,26 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Breadcrumbs = ({ items }) => {
+    // Generate Breadcrumb Schema
+    const breadcrumbSchema = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": items.map((item, index) => ({
+            "@type": "ListItem",
+            "position": index + 1,
+            "name": item.label,
+            "item": item.href ? `https://appfoundry.vercel.app${item.href}` : undefined
+        }))
+    };
+
     return (
         <nav aria-label="Breadcrumb" style={{
             marginBottom: '32px',
             fontSize: '0.9rem'
         }}>
+            <script type="application/ld+json">
+                {JSON.stringify(breadcrumbSchema)}
+            </script>
             <ol style={{
                 display: 'flex',
                 listStyle: 'none',

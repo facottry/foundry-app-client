@@ -6,6 +6,7 @@ import LoadingState from '../components/common/LoadingState';
 import ErrorState from '../components/common/ErrorState';
 import EmptyState from '../components/common/EmptyState';
 import Breadcrumbs from '../components/Breadcrumbs';
+import SEO from '../components/SEO';
 import { CATEGORY_INTROS, CATEGORY_TITLES } from '../constants/categories';
 
 const CategoryPage = () => {
@@ -47,8 +48,33 @@ const CategoryPage = () => {
 
     if (organic.length === 0 && promoted.length === 0) return <EmptyState title={`No products in ${slug}`} subtext="Be the first to list here!" />;
 
+    const categoryTitle = CATEGORY_TITLES[slug] || (slug === 'all' ? 'All Products' : slug);
+    const categoryDesc = CATEGORY_INTROS[slug] || `Discover the best ${slug} products for startups and builders.`;
+
+    const categorySchema = {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": categoryTitle,
+        "description": categoryDesc,
+        "url": `https://appfoundry.vercel.app/category/${slug}`,
+        "hasPart": organic.map(p => ({
+            "@type": "SoftwareApplication",
+            "name": p.name,
+            "applicationCategory": "DeveloperTool",
+            "operatingSystem": "Web",
+            "url": `https://appfoundry.vercel.app/product/${p.slug || p._id}`
+        }))
+    };
+
     return (
         <div style={{ paddingTop: '40px' }}>
+            <SEO
+                title={categoryTitle}
+                description={categoryDesc}
+                canonical={`/category/${slug}`}
+                jsonLd={categorySchema}
+                type="CollectionPage"
+            />
             {/* Breadcrumbs */}
             <Breadcrumbs items={[
                 { label: 'Home', href: '/' },

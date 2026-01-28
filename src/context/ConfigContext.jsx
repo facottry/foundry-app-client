@@ -16,7 +16,7 @@ export const ConfigProvider = ({ children }) => {
                 // We use a direct fetch or axio for initial config.
                 // Assuming api.js is configured for /api base.
                 const configData = await api.get('/app/initial-config');
-                console.log('Config response:', configData);
+
                 if (configData) {
                     setConfig(configData);
                 }

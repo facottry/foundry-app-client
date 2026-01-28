@@ -1,101 +1,120 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import SEO from '../components/SEO';
 
-const Pricing = () => {
+const About = () => {
     return (
-        <div style={{ paddingTop: '60px', paddingBottom: '60px' }}>
-            <div style={{ maxWidth: '900px', margin: '0 auto' }}>
-                <div style={{ textAlign: 'center', marginBottom: '60px' }}>
-                    <h1 style={{ marginBottom: '24px', fontSize: '2.5rem' }}>Simple Pricing. No Guesswork.</h1>
-                    <p style={{ fontSize: '1.2rem', color: 'var(--text-secondary)', maxWidth: '700px', margin: '0 auto', lineHeight: '1.7' }}>
-                        Foundry pricing is designed to stay predictable as you grow. No forced upgrades, no hidden fees, and no artificial limits that block progress.
+        <div style={{ paddingBottom: '80px', paddingTop: '40px' }}>
+            <SEO
+                title="About AppFoundry - Our Mission & Standards"
+                description="AppFoundry is the curated decision layer for startup tools. Learn about our editorial standards, neutrality commitment, and the team behind the platform."
+                canonical="/about"
+            />
+
+            <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+                <h1 style={{ fontSize: '2.5rem', fontWeight: '800', marginBottom: '24px' }}>
+                    The Decision Layer for Builders.
+                </h1>
+                <p style={{ fontSize: '1.25rem', color: 'var(--text-secondary)', lineHeight: '1.6', marginBottom: '48px' }}>
+                    AppFoundry is a curated discovery and comparison platform for software tools, helping founders, developers, and startups make better tool decisions without the noise.
+                </p>
+
+                <hr style={{ border: 'none', borderTop: '1px solid #eee', margin: '40px 0' }} />
+
+                <section style={{ marginBottom: '60px' }}>
+                    <h2 style={{ fontSize: '1.75rem', marginBottom: '24px' }}>Why We Built This</h2>
+                    <p style={{ marginBottom: '16px', lineHeight: '1.7' }}>
+                        Software discovery is broken. G2 is pay-to-play. ProductHunt is a popularity contest.
+                        Founders need clarity, not hype.
                     </p>
-                    <p style={{ fontSize: '1.1rem', color: 'var(--text-muted)', marginTop: '16px' }}>
-                        Start free. Pay only when visibility matters.
+                    <p style={{ marginBottom: '16px', lineHeight: '1.7' }}>
+                        We built AppFoundry to be the <strong>neutral ground</strong> where independent tools can shine based on merit, utility, and user intent.
                     </p>
-                </div>
+                </section>
 
-                {/* Pricing Philosophy */}
-                <div style={{
-                    background: 'var(--bg-secondary)',
-                    padding: '48px',
-                    borderRadius: '16px',
-                    marginBottom: '60px',
-                    border: '1px solid var(--border-subtle)'
-                }}>
-                    <h2 style={{ fontSize: '1.5rem', marginBottom: '32px', textAlign: 'center' }}>Pricing Philosophy</h2>
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '32px' }}>
-                        <div>
-                            <div style={{ fontSize: '2rem', marginBottom: '12px' }}>✓</div>
-                            <h3 style={{ fontSize: '1.1rem', marginBottom: '8px' }}>Free listing for all products</h3>
-                            <p style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', margin: 0 }}>Every product gets a permanent, crawlable page</p>
-                        </div>
-                        <div>
-                            <div style={{ fontSize: '2rem', marginBottom: '12px' }}>✓</div>
-                            <h3 style={{ fontSize: '1.1rem', marginBottom: '8px' }}>Credits-based boosts</h3>
-                            <p style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', margin: 0 }}>Pay only for controlled visibility when you need it</p>
-                        </div>
-                        <div>
-                            <div style={{ fontSize: '2rem', marginBottom: '12px' }}>✓</div>
-                            <h3 style={{ fontSize: '1.1rem', marginBottom: '8px' }}>No subscription lock-in</h3>
-                            <p style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', margin: 0 }}>Credits never expire. Use them when ready</p>
-                        </div>
-                        <div>
-                            <div style={{ fontSize: '2rem', marginBottom: '12px' }}>✓</div>
-                            <h3 style={{ fontSize: '1.1rem', marginBottom: '8px' }}>Transparent tracking</h3>
-                            <p style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', margin: 0 }}>See exactly where every click comes from</p>
-                        </div>
+                <section style={{ marginBottom: '60px' }}>
+                    <h2 style={{ fontSize: '1.75rem', marginBottom: '24px' }}>Editorial Standards & Neutrality</h2>
+                    <div style={{ background: '#F9FAFB', padding: '32px', borderRadius: '12px' }}>
+                        <ul style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                            <li><strong>✅ Merit First:</strong> Tools are ranked by engagement (clicks, views) and verified utility, not ad spend.</li>
+                            <li><strong>✅ No Pay-to-Rank:</strong> You cannot buy organic ranking positions. Promoted spots are strictly labeled as "Promoted".</li>
+                            <li><strong>✅ Transparency:</strong> We verify founder identities and tool functionality before approval.</li>
+                        </ul>
                     </div>
-                </div>
+                </section>
 
-                {/* Main Pricing Card */}
-                <div className="card" style={{ padding: '60px 40px', maxWidth: '550px', margin: '0 auto', textAlign: 'center' }}>
-                    <div style={{ fontSize: '0.9rem', color: 'var(--text-muted)', marginBottom: '16px', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: '600' }}>
-                        Pay As You Go
-                    </div>
-                    <div style={{ fontSize: '4rem', fontWeight: '800', color: 'var(--text-primary)', lineHeight: '1', marginBottom: '8px' }}>
-                        1 <span style={{ fontSize: '2rem', color: 'var(--text-secondary)' }}>credit</span>
-                    </div>
-                    <div style={{ fontSize: '1.25rem', color: 'var(--text-secondary)', marginBottom: '48px' }}>
-                        = 1 Qualified Outbound Click
-                    </div>
-
-                    <div style={{
-                        background: 'var(--bg-secondary)',
-                        padding: '32px',
-                        borderRadius: '12px',
-                        marginBottom: '40px',
-                        textAlign: 'left'
-                    }}>
-                        <div style={{ marginBottom: '16px', paddingBottom: '16px', borderBottom: '1px solid var(--border-subtle)' }}>
-                            <strong>1000 Starter Credits</strong>
-                            <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', marginTop: '4px' }}>Free on signup</div>
-                        </div>
-                        <div style={{ marginBottom: '16px', paddingBottom: '16px', borderBottom: '1px solid var(--border-subtle)' }}>
-                            <strong>Full analytics dashboard</strong>
-                            <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', marginTop: '4px' }}>Track clicks, saves, and performance</div>
-                        </div>
-                        <div style={{ marginBottom: '16px', paddingBottom: '16px', borderBottom: '1px solid var(--border-subtle)' }}>
-                            <strong>Credits never expire</strong>
-                            <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', marginTop: '4px' }}>Use them at your own pace</div>
-                        </div>
-                        <div>
-                            <strong>No monthly fees</strong>
-                            <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', marginTop: '4px' }}>Pay only for what you use</div>
-                        </div>
-                    </div>
-
-                    <Link to="/signup" className="btn btn-primary" style={{ width: '100%', padding: '16px', fontSize: '1.1rem' }}>
-                        Get Started Free
-                    </Link>
-
-                    <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', marginTop: '24px', fontStyle: 'italic' }}>
-                        Use Foundry when you want discovery to feel intentional — not transactional.
+                <section style={{ marginBottom: '60px' }}>
+                    <h2 style={{ fontSize: '1.75rem', marginBottom: '24px' }}>Monetization Disclosure</h2>
+                    <p style={{ lineHeight: '1.7', color: 'var(--text-secondary)' }}>
+                        AppFoundry is a sustainable business. We make money through:
                     </p>
-                </div>
+                    <ul style={{ listStyle: 'disc', paddingLeft: '20px', marginTop: '12px', lineHeight: '1.6' }}>
+                        <li><strong>Performance Marketing:</strong> Founders pay only when a verified user clicks to visit their site.</li>
+                        <li><strong>Promoted Visibility:</strong> Clearly marked sponsored placements that do not affect organic search results.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2 style={{ fontSize: '1.75rem', marginBottom: '32px' }}>Meet the Core Team</h2>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '32px' }}>
+
+                        {/* Arun Gupta */}
+                        <div style={{ background: '#fff', padding: '24px', borderRadius: '12px', border: '1px solid #eee' }}>
+                            <div style={{ fontSize: '2.5rem', marginBottom: '16px' }}>🚀</div>
+                            <h3 style={{ fontSize: '1.25rem', fontWeight: '700', marginBottom: '4px' }}>Arun Gupta</h3>
+                            <p style={{ color: 'var(--primary-color)', fontWeight: '600', fontSize: '0.9rem', marginBottom: '12px' }}>Founder & CEO</p>
+                            <p style={{ fontSize: '0.95rem', lineHeight: '1.6', color: 'var(--text-secondary)', marginBottom: '16px' }}>
+                                A visionary leader with a deep passion for building scalable technology ecosystems. Arun drives the strategic direction of AppFoundry, focusing on democratizing software discovery and empowering the next generation of builders.
+                            </p>
+                            <a href="https://www.linkedin.com/in/arun-gupta-tech/" target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.9rem', color: '#0077b5', textDecoration: 'none', fontWeight: '500' }}>
+                                Connect on LinkedIn &rarr;
+                            </a>
+                        </div>
+
+                        {/* Vinod Gaur */}
+                        <div style={{ background: '#fff', padding: '24px', borderRadius: '12px', border: '1px solid #eee' }}>
+                            <div style={{ fontSize: '2.5rem', marginBottom: '16px' }}>⚙️</div>
+                            <h3 style={{ fontSize: '1.25rem', fontWeight: '700', marginBottom: '4px' }}>Vinod Gaur</h3>
+                            <p style={{ color: 'var(--primary-color)', fontWeight: '600', fontSize: '0.9rem', marginBottom: '12px' }}>Chief Technology Officer (CTO)</p>
+                            <p style={{ fontSize: '0.95rem', lineHeight: '1.6', color: 'var(--text-secondary)', marginBottom: '16px' }}>
+                                A veteran technologist specializing in high-performance architecture and AI integration. Vinod ensures the platform's infrastructure is enterprise-grade, secure, and ready for massive scale.
+                            </p>
+                            <a href="https://www.linkedin.com/in/vinodiiitm/" target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.9rem', color: '#0077b5', textDecoration: 'none', fontWeight: '500' }}>
+                                Connect on LinkedIn &rarr;
+                            </a>
+                        </div>
+
+                        {/* Manish Jaiswal */}
+                        <div style={{ background: '#fff', padding: '24px', borderRadius: '12px', border: '1px solid #eee' }}>
+                            <div style={{ fontSize: '2.5rem', marginBottom: '16px' }}>💡</div>
+                            <h3 style={{ fontSize: '1.25rem', fontWeight: '700', marginBottom: '4px' }}>Manish Jaiswal</h3>
+                            <p style={{ color: 'var(--primary-color)', fontWeight: '600', fontSize: '0.9rem', marginBottom: '12px' }}>Head of Product</p>
+                            <p style={{ fontSize: '0.95rem', lineHeight: '1.6', color: 'var(--text-secondary)', marginBottom: '16px' }}>
+                                Orchestrating the user experience and product lifecycle. Manish bridges the gap between complex user needs and intuitive design, ensuring AppFoundry delivers tangible value to every visitor.
+                            </p>
+                            <a href="https://www.linkedin.com/in/manish-jaiswal-49701b4a/" target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.9rem', color: '#0077b5', textDecoration: 'none', fontWeight: '500' }}>
+                                Connect on LinkedIn &rarr;
+                            </a>
+                        </div>
+
+                        {/* Shobhit Jaiswal */}
+                        <div style={{ background: '#fff', padding: '24px', borderRadius: '12px', border: '1px solid #eee' }}>
+                            <div style={{ fontSize: '2.5rem', marginBottom: '16px' }}>💻</div>
+                            <h3 style={{ fontSize: '1.25rem', fontWeight: '700', marginBottom: '4px' }}>Shobhit Jaiswal</h3>
+                            <p style={{ color: 'var(--primary-color)', fontWeight: '600', fontSize: '0.9rem', marginBottom: '12px' }}>Tech Lead</p>
+                            <p style={{ fontSize: '0.95rem', lineHeight: '1.6', color: 'var(--text-secondary)', marginBottom: '16px' }}>
+                                Full-stack engineering expert focused on code quality, performance optimization, and robust development standards. Shobhit leads the engineering efforts to deliver a seamless, bug-free experience.
+                            </p>
+                            <a href="https://www.linkedin.com/in/shobhit-jaiswal-962995145/" target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.9rem', color: '#0077b5', textDecoration: 'none', fontWeight: '500' }}>
+                                Connect on LinkedIn &rarr;
+                            </a>
+                        </div>
+
+                    </div>
+                </section>
+
             </div>
         </div>
     );
 };
 
-export default Pricing;
+export default About;

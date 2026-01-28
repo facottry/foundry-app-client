@@ -61,6 +61,7 @@ const Footer = () => {
                             <Link to="/" style={{ fontSize: '0.95rem', color: 'var(--text-secondary)' }}>Home</Link>
                             <Link to="/founder/dashboard" style={{ fontSize: '0.95rem', color: 'var(--text-secondary)' }}>Dashboard</Link>
                             <Link to="/pricing" style={{ fontSize: '0.95rem', color: 'var(--text-secondary)' }}>Pricing</Link>
+                            <Link to="/how-it-works" style={{ fontSize: '0.95rem', color: 'var(--text-secondary)' }}>How It Works</Link>
                             <Link to="/category/all" style={{ fontSize: '0.95rem', color: 'var(--text-secondary)' }}>Explore</Link>
                         </div>
                     </div>
@@ -79,6 +80,7 @@ const Footer = () => {
                         </h5>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
                             <Link to="/about" style={{ fontSize: '0.95rem', color: 'var(--text-secondary)' }}>About</Link>
+                            <Link to="/mission" style={{ fontSize: '0.95rem', color: 'var(--text-secondary)' }}>Mission</Link>
                             <Link to="/contact" style={{ fontSize: '0.95rem', color: 'var(--text-secondary)' }}>Contact</Link>
                             <Link to="/blog" style={{ fontSize: '0.95rem', color: 'var(--text-secondary)' }}>Blog</Link>
                             <Link to="/changelog" style={{ fontSize: '0.95rem', color: 'var(--text-secondary)' }}>Changelog</Link>

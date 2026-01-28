@@ -1,41 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import SEOHead from '../components/SEOHead';
-
-const blogPosts = [
-    {
-        slug: 'how-to-get-early-users-for-saas',
-        title: 'How to Get Early Users for Your SaaS Without Paid Ads',
-        date: '2026-01-20',
-        excerpt: 'Discovery platforms, communities, and organic channels that actually work for early-stage products.',
-        category: 'Product Discovery',
-        readTime: '6 min read'
-    },
-    {
-        slug: 'launching-as-solo-founder',
-        title: 'Launching as a Solo Founder: What Actually Matters',
-        date: '2026-01-15',
-        excerpt: 'Cut through the noise. Focus on the fundamentals that move the needle when you are building alone.',
-        category: 'Founder Playbooks',
-        readTime: '8 min read'
-    },
-    {
-        slug: 'product-discovery-without-noise',
-        title: 'Product Discovery Without the Noise',
-        date: '2026-01-10',
-        excerpt: 'Why structured discovery beats algorithmic feeds for finding tools that actually solve problems.',
-        category: 'Product Discovery',
-        readTime: '5 min read'
-    },
-    {
-        slug: 'choosing-right-early-tools',
-        title: 'Choosing the Right Early Tools for Your Startup',
-        date: '2026-01-05',
-        excerpt: 'A framework for evaluating tools when you are pre-revenue and every decision counts.',
-        category: 'Founder Playbooks',
-        readTime: '7 min read'
-    }
-];
+import { blogPosts } from '../data/blogData';
 
 const Blog = () => {
     return (
@@ -47,10 +13,24 @@ const Blog = () => {
 
             <div style={{ paddingTop: '60px', paddingBottom: '60px' }}>
                 <div style={{ maxWidth: '900px', margin: '0 auto' }}>
-                    <h1 style={{ marginBottom: '16px' }}>Blog</h1>
-                    <p style={{ fontSize: '1.15rem', color: 'var(--text-secondary)', marginBottom: '60px' }}>
-                        Insights on building, launching, and growing independent SaaS products.
-                    </p>
+                    <div style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'flex-end',
+                        marginBottom: '60px',
+                        flexWrap: 'wrap',
+                        gap: '24px'
+                    }}>
+                        <div>
+                            <h1 style={{ marginBottom: '16px' }}>Blog</h1>
+                            <p style={{ fontSize: '1.15rem', color: 'var(--text-secondary)', margin: 0 }}>
+                                Insights on building, launching, and growing independent SaaS products.
+                            </p>
+                        </div>
+                        <Link to="/blog/author" className="btn btn-secondary">
+                            Meet Our Writers
+                        </Link>
+                    </div>
 
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '40px' }}>
                         {blogPosts.map((post) => (
@@ -60,24 +40,59 @@ const Blog = () => {
                                 style={{ textDecoration: 'none' }}
                             >
                                 <article className="card" style={{
-                                    padding: '32px',
-                                    transition: 'transform 0.2s ease, box-shadow 0.2s ease'
+                                    padding: '0',
+                                    transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+                                    overflow: 'hidden',
+                                    display: 'flex',
+                                    flexDirection: 'column'
                                 }}>
-                                    <div style={{ display: 'flex', gap: '16px', marginBottom: '16px', fontSize: '0.9rem', color: 'var(--text-muted)' }}>
-                                        <span>{post.date}</span>
-                                        <span>•</span>
-                                        <span>{post.category}</span>
-                                        <span>•</span>
-                                        <span>{post.readTime}</span>
-                                    </div>
-                                    <h2 style={{ fontSize: '1.75rem', marginBottom: '12px', color: 'var(--text-primary)' }}>
-                                        {post.title}
-                                    </h2>
-                                    <p style={{ fontSize: '1.05rem', color: 'var(--text-secondary)', lineHeight: '1.6', margin: 0 }}>
-                                        {post.excerpt}
-                                    </p>
-                                    <div style={{ marginTop: '20px', color: 'var(--accent-primary)', fontWeight: '600', fontSize: '0.95rem' }}>
-                                        Read more →
+                                    {/* Hero Image */}
+                                    <div style={{
+                                        width: '100%',
+                                        height: '240px',
+                                        backgroundColor: '#f3f4f6',
+                                        backgroundImage: `url(${post.image})`,
+                                        backgroundSize: 'cover',
+                                        backgroundPosition: 'center',
+                                        borderBottom: '1px solid #eee'
+                                    }} />
+
+                                    <div style={{ padding: '32px' }}>
+                                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', marginBottom: '16px' }}>
+                                            {/* Tags */}
+                                            {post.tags && post.tags.map(tag => (
+                                                <span key={tag} style={{
+                                                    fontSize: '0.75rem',
+                                                    fontWeight: '600',
+                                                    color: 'var(--text-secondary)',
+                                                    background: '#f3f4f6',
+                                                    padding: '4px 12px',
+                                                    borderRadius: '20px',
+                                                    textTransform: 'uppercase',
+                                                    letterSpacing: '0.05em'
+                                                }}>
+                                                    {tag}
+                                                </span>
+                                            ))}
+                                        </div>
+
+                                        <div style={{ display: 'flex', gap: '16px', marginBottom: '12px', fontSize: '0.9rem', color: 'var(--text-muted)' }}>
+                                            <span>{post.date}</span>
+                                            <span>•</span>
+                                            <span>{post.category}</span>
+                                            <span>•</span>
+                                            <span>{post.readTime}</span>
+                                        </div>
+
+                                        <h2 style={{ fontSize: '1.75rem', marginBottom: '12px', color: 'var(--text-primary)' }}>
+                                            {post.title}
+                                        </h2>
+                                        <p style={{ fontSize: '1.05rem', color: 'var(--text-secondary)', lineHeight: '1.6', margin: 0 }}>
+                                            {post.excerpt}
+                                        </p>
+                                        <div style={{ marginTop: '20px', color: 'var(--accent-primary)', fontWeight: '600', fontSize: '0.95rem' }}>
+                                            Read more →
+                                        </div>
                                     </div>
                                 </article>
                             </Link>
