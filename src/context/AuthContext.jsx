@@ -46,6 +46,14 @@ export const AuthProvider = ({ children }) => {
         return res.data.user;
     };
 
+    const loginWithPhone = async (phone, otp) => {
+        const res = await api.post('/auth/login-phone', { phone, otp });
+        localStorage.setItem('token', res.data.token);
+        localStorage.setItem('user', JSON.stringify(res.data.user));
+        setUser(res.data.user);
+        return res.data.user;
+    };
+
     const signup = async (name, email, password, role) => {
         const res = await api.post('/auth/signup', { name, email, password, role });
         localStorage.setItem('token', res.data.token);
@@ -61,7 +69,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ user, login, loginWithOTP, signup, logout, loading, updateUser }}>
+        <AuthContext.Provider value={{ user, login, loginWithOTP, loginWithPhone, signup, logout, loading, updateUser }}>
             {children}
         </AuthContext.Provider>
     );

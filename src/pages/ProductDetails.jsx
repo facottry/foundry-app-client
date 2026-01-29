@@ -158,7 +158,7 @@ const ProductDetails = () => {
                                 <span style={{ fontSize: '0.9rem', color: '#6b7280' }}>
                                     by {product.team_members[0].user_id ? (
                                         <Link
-                                            to={`/founder/${product.team_members[0].user_id._id || product.team_members[0].user_id}`}
+                                            to={`/founder/${product.team_members[0].user_id.slug || product.team_members[0].user_id._id || product.team_members[0].user_id}`}
                                             style={{ color: '#111827', fontWeight: '500', textDecoration: 'underline', cursor: 'pointer' }}
                                         >
                                             {product.team_members[0].name}

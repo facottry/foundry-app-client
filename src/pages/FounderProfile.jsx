@@ -5,7 +5,7 @@ import SEO from '../components/SEO';
 import { getImageUrl } from '../utils/getImageUrl';
 
 const FounderProfile = () => {
-    const { founderId } = useParams();
+    const { founderId } = useParams(); // Note: Route param might be named founderId but can be slug
     const [profile, setProfile] = useState(null);
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -15,6 +15,7 @@ const FounderProfile = () => {
         const fetchFounder = async () => {
             try {
                 setLoading(true);
+                // founderId here captures the URL slug/id
                 const res = await api.get(`/founder/public/${founderId}`);
                 setProfile(res.data.profile);
                 setProducts(res.data.products);

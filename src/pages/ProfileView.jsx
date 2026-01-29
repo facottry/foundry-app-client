@@ -66,7 +66,7 @@ const ProfileView = () => {
                 return <PersonalInfoSection user={profile} onUpdate={handleProfileUpdate} />;
             case 'account':
             case 'security': // Shared for now
-                return <AccountSection user={profile} />;
+                return <AccountSection user={profile} onUpdate={handleProfileUpdate} />;
             case 'preferences':
                 return <PreferencesSection user={profile} />;
             case 'activity':

@@ -11,6 +11,7 @@ const PersonalInfoSection = ({ user, authToken, onUpdate }) => {
         timezone: user.timezone || '',
         website: user.website || '',
         linkedin: user.linkedin || '',
+        slug: user.slug || '',
         twitter: user.twitter || ''
     });
     const [loading, setLoading] = useState(false);
@@ -37,7 +38,7 @@ const PersonalInfoSection = ({ user, authToken, onUpdate }) => {
         }
     };
 
-    const InputGroup = ({ label, name, type = 'text', placeholder }) => (
+    const InputGroup = ({ label, name, type = 'text', placeholder, helpText }) => (
         <div style={{ marginBottom: '20px' }}>
             <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500', color: '#374151' }}>{label}</label>
             {type === 'textarea' ? (
@@ -59,6 +60,7 @@ const PersonalInfoSection = ({ user, authToken, onUpdate }) => {
                     style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid #d1d5db' }}
                 />
             )}
+            {helpText && <div style={{ marginTop: '4px', fontSize: '0.85rem', color: '#6b7280' }}>{helpText}</div>}
         </div>
     );
 
@@ -68,6 +70,14 @@ const PersonalInfoSection = ({ user, authToken, onUpdate }) => {
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
                 <InputGroup label="Full Name" name="name" placeholder="Your name" />
+                <InputGroup
+                    label="Profile Slug"
+                    name="slug"
+                    placeholder="firstname-lastname"
+                    helpText={`Public profile: foundry.io/founder/${formData.slug || '...'}`}
+                />
+            </div>
+            <div style={{ marginBottom: '20px' }}>
                 <InputGroup label="Role / Title" name="role_title" placeholder="e.g. CEO, Developer" />
             </div>
 

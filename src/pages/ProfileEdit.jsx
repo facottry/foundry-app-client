@@ -5,6 +5,7 @@ import { getProfile, updateProfile } from '../utils/api';
 import ImageUploader from '../components/common/ImageUploader';
 import SEOHead from '../components/SEOHead';
 import LoadingState from '../components/common/LoadingState';
+import PhoneMapper from '../components/PhoneMapper';
 
 const ProfileEdit = () => {
     const { updateUser } = useContext(AuthContext);
@@ -41,7 +42,8 @@ const ProfileEdit = () => {
                     website: p.website || '',
                     twitter: p.twitter || '',
                     linkedin: p.linkedin || '',
-                    timezone: p.timezone || ''
+                    timezone: p.timezone || '',
+                    phone: p.phone || ''
                 });
             } catch (err) {
                 console.error('Error fetching profile:', err);
@@ -187,6 +189,16 @@ const ProfileEdit = () => {
                         style={inputStyle}
                     />
                 </div>
+
+                {/* Account Security / Phone */}
+                <h3 style={{ marginBottom: '20px', marginTop: '30px', fontSize: '1.2rem', paddingBottom: '10px', borderBottom: '1px solid #eee' }}>Account Security</h3>
+                <PhoneMapper
+                    currentPhone={formData.phone}
+                    onUpdate={(updatedUser) => {
+                        setFormData({ ...formData, phone: updatedUser.phone });
+                        updateUser(updatedUser);
+                    }}
+                />
 
                 {/* Social Links */}
                 <h3 style={{ marginBottom: '20px', marginTop: '30px', fontSize: '1.2rem', paddingBottom: '10px', borderBottom: '1px solid #eee' }}>Social Links</h3>

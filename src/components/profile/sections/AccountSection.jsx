@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthContext from '../../../context/AuthContext';
+import PhoneMapper from '../../PhoneMapper';
 
-const AccountSection = ({ user }) => {
+const AccountSection = ({ user, onUpdate }) => {
     const { logout } = useContext(AuthContext);
     const navigate = useNavigate();
 
@@ -35,6 +36,15 @@ const AccountSection = ({ user }) => {
                     Log Out
                 </button>
             </div>
+
+            {/* Account Security / Phone */}
+            <PhoneMapper
+                currentPhone={user.phone}
+                onUpdate={(updatedUser) => {
+                    // We need to call onUpdate from parent to update global state
+                    if (onUpdate) onUpdate(updatedUser);
+                }}
+            />
         </div>
     );
 };

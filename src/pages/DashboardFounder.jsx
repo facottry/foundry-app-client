@@ -42,9 +42,14 @@ const DashboardFounder = () => {
                     <h1 style={{ marginBottom: '8px' }}>Founder Dashboard</h1>
                     <p style={{ fontSize: '1.05rem' }}>Welcome back. Here's how your products are performing.</p>
                 </div>
-                <Link to="/create-product" className="btn btn-primary" style={{ padding: '14px 28px', fontSize: '1rem' }}>
-                    + Launch Product
-                </Link>
+                <div style={{ display: 'flex', gap: '16px' }}>
+                    <Link to={`/founder/${data?.user?.slug || data?.user?._id}`} target="_blank" className="btn btn-secondary" style={{ padding: '14px 28px', fontSize: '1rem' }}>
+                        View Public Profile
+                    </Link>
+                    <Link to="/create-product" className="btn btn-primary" style={{ padding: '14px 28px', fontSize: '1rem' }}>
+                        + Launch Product
+                    </Link>
+                </div>
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 2fr) minmax(0, 1fr)', gap: '32px', alignItems: 'start' }}>
