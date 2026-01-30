@@ -15,7 +15,7 @@ const Unsubscribe = () => {
 
         const unsubscribeUser = async () => {
             try {
-                const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+                const apiUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
                 await axios.get(`${apiUrl}/subscribe/unsubscribe?id=${id}`);
                 setStatus('success');
             } catch (error) {
