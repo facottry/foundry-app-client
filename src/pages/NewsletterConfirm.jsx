@@ -18,7 +18,7 @@ const NewsletterConfirm = () => {
 
         const confirmSubscription = async () => {
             try {
-                const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+                const apiUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
                 const res = await axios.get(`${apiUrl}/subscribe/confirm?token=${token}&id=${id}`);
 
                 if (res.data.message.includes('Already confirmed')) {

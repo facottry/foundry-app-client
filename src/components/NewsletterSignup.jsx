@@ -13,7 +13,7 @@ const NewsletterSignup = () => {
         setMessage('');
 
         try {
-            const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+            const apiUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
             await axios.post(`${apiUrl}/subscribe`, { email, source: 'landing_page' });
 
             setStatus('success');

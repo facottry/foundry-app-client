@@ -13,7 +13,8 @@ const NewsletterPage = () => {
             if (!user) return;
             try {
                 const token = localStorage.getItem('token');
-                const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+                // Use consistent env var or just rely on relative path if proxy, but here use the standard var.
+                const apiUrl = import.meta.env.VITE_API_BASE_URL;
                 const res = await fetch(`${apiUrl}/subscribe/status`, {
                     headers: { 'x-auth-token': token }
                 });
@@ -79,7 +80,7 @@ const NewsletterArchiveList = ({ activeSlug }) => {
     useEffect(() => {
         const fetchArchives = async () => {
             try {
-                const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+                const apiUrl = import.meta.env.VITE_API_BASE_URL;
                 const response = await fetch(`${apiUrl}/newsletters`);
                 const data = await response.json();
                 if (Array.isArray(data)) setNewsletters(data);
@@ -118,7 +119,7 @@ const NewsletterContent = ({ slug }) => {
         const fetchNewsletter = async () => {
             setLoading(true);
             try {
-                const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+                const apiUrl = import.meta.env.VITE_API_BASE_URL;
                 const response = await fetch(`${apiUrl}/newsletters/${slug}`);
                 if (!response.ok) throw new Error('Not found');
                 const data = await response.json();

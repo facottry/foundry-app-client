@@ -11,7 +11,7 @@ const NewsletterRead = () => {
     useEffect(() => {
         const fetchNewsletter = async () => {
             try {
-                const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+                const apiUrl = import.meta.env.VITE_API_BASE_URL;
                 const response = await fetch(`${apiUrl}/newsletters/${slug}`);
 
                 if (!response.ok) {
