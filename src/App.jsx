@@ -42,6 +42,10 @@ import FounderProfile from './pages/FounderProfile';
 import HowItWorks from './pages/HowItWorks';
 import Mission from './pages/Mission';
 import NotFound from './pages/NotFound';
+import NewsletterConfirm from './pages/NewsletterConfirm';
+import NewsletterPage from './pages/NewsletterPage';
+import NewsletterRead from './pages/NewsletterRead';
+import Unsubscribe from './pages/Unsubscribe';
 import './index.css';
 
 function App() {
@@ -145,6 +149,10 @@ function App() {
                                         </ProtectedRoute>
                                     } />
                                     <Route path="/search" element={<SearchResults />} />
+                                    <Route path="/newsletter" element={<NewsletterPage />} />
+                                    <Route path="/newsletter/:slug" element={<NewsletterPage />} />
+                                    <Route path="/newsletter/confirm" element={<NewsletterConfirm />} />
+                                    <Route path="/newsletter/unsubscribe" element={<Unsubscribe />} />
 
                                     <Route path="/visit/:id" element={<VisitRedirect />} />
 
