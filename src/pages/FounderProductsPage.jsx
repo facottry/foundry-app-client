@@ -7,11 +7,13 @@ import ErrorState from '../components/common/ErrorState';
 import EmptyState from '../components/common/EmptyState';
 import EditTeamModal from '../components/products/EditTeamModal';
 
+import ProductVerificationModal from '../components/products/ProductVerificationModal';
+
 const FounderProductsPage = () => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [stats, setStats] = useState({}); // Mapping productId -> { views, clicks }
+    const [verifyingProduct, setVerifyingProduct] = useState(null); // Product being verified
 
     const navigate = useNavigate();
 
@@ -20,10 +22,6 @@ const FounderProductsPage = () => {
         try {
             const res = await api.get('/founder/products');
             setProducts(res.data);
-
-            // TODO: Fetch light stats if not included in /products
-            // Assuming /products returns basics, we might need a separate call or update endpoint
-            // For now, listing is enough.
         } catch (err) {
             setError(err);
         }
@@ -51,6 +49,11 @@ const FounderProductsPage = () => {
         } catch (err) {
             alert('Failed to update status');
         }
+    };
+
+    const handleVerificationSuccess = (productId) => {
+        // Refetch or update local state
+        setProducts(products.map(p => p._id === productId ? { ...p, verified_status: 'verified' } : p));
     };
 
     if (loading) return <LoadingState />;
@@ -98,8 +101,23 @@ const FounderProductsPage = () => {
                                                 )}
                                             </div>
                                             <div>
-                                                <div style={{ fontWeight: '600', color: '#111827' }}>{product.name}</div>
-                                                <a href={`/product/${product._id}`} target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.85rem', color: '#3b82f6', textDecoration: 'none' }}>View Public Page</a>
+                                                <div style={{ fontWeight: '600', color: '#111827', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                                    {product.name}
+                                                    {product.verified_status === 'verified' && (
+                                                        <span title="Verified" style={{ color: '#10B981', fontSize: '1rem' }}>✓</span>
+                                                    )}
+                                                </div>
+                                                <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                                                    <a href={`/product/${product._id}`} target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.85rem', color: '#3b82f6', textDecoration: 'none' }}>View Public Page</a>
+                                                    {product.verified_status !== 'verified' && (
+                                                        <button
+                                                            onClick={() => setVerifyingProduct(product)}
+                                                            style={{ background: 'none', border: 'none', color: '#F59E0B', fontSize: '0.8rem', cursor: 'pointer', padding: 0, textDecoration: 'underline' }}
+                                                        >
+                                                            Verify Now
+                                                        </button>
+                                                    )}
+                                                </div>
                                             </div>
                                         </div>
                                     </td>
@@ -111,7 +129,6 @@ const FounderProductsPage = () => {
                                         </span>
                                     </td>
                                     <td style={{ padding: '16px 24px', textAlign: 'right', color: '#6b7280', fontSize: '0.9rem' }}>
-                                        {/* Placeholder stats until joined */}
                                         ---
                                     </td>
                                     <td style={{ padding: '16px 24px', textAlign: 'right' }}>
@@ -145,6 +162,14 @@ const FounderProductsPage = () => {
                         </tbody>
                     </table>
                 </div>
+            )}
+
+            {verifyingProduct && (
+                <ProductVerificationModal
+                    product={verifyingProduct}
+                    onClose={() => setVerifyingProduct(null)}
+                    onSuccess={handleVerificationSuccess}
+                />
             )}
         </div>
     );
