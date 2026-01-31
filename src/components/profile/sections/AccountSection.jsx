@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthContext from '../../../context/AuthContext';
 import PhoneMapper from '../../PhoneMapper';
+import EmailVerification from '../../EmailVerification';
 
 const AccountSection = ({ user, onUpdate }) => {
     const { logout } = useContext(AuthContext);
@@ -42,6 +43,14 @@ const AccountSection = ({ user, onUpdate }) => {
                 currentPhone={user.phone}
                 onUpdate={(updatedUser) => {
                     // We need to call onUpdate from parent to update global state
+                    if (onUpdate) onUpdate(updatedUser);
+                }}
+            />
+
+            {/* Email Verification */}
+            <EmailVerification
+                user={user}
+                onUpdate={(updatedUser) => {
                     if (onUpdate) onUpdate(updatedUser);
                 }}
             />
