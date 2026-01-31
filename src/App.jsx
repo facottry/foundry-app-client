@@ -46,6 +46,8 @@ import NewsletterConfirm from './pages/NewsletterConfirm';
 import NewsletterPage from './pages/NewsletterPage';
 import NewsletterRead from './pages/NewsletterRead';
 import Unsubscribe from './pages/Unsubscribe';
+import AIAssistants from './pages/AIAssistants';
+import BotSDKLoader from './components/BotSDKLoader';
 import './index.css';
 
 function App() {
@@ -57,6 +59,7 @@ function App() {
                     <Router>
                         <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
                             <Navbar />
+                            <BotSDKLoader />
                             <div className="container" style={{ flex: 1, paddingBottom: '60px' }}>
                                 <Routes>
                                     <Route path="/" element={<Home />} />
@@ -125,6 +128,11 @@ function App() {
                                     <Route path="/founder/products" element={
                                         <ProtectedRoute allowedRoles={['FOUNDER']}>
                                             <FounderProductsPage />
+                                        </ProtectedRoute>
+                                    } />
+                                    <Route path="/founder/ai-assistants" element={
+                                        <ProtectedRoute allowedRoles={['FOUNDER']}>
+                                            <AIAssistants />
                                         </ProtectedRoute>
                                     } />
                                     <Route path="/analytics/product/:id" element={

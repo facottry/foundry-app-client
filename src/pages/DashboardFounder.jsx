@@ -160,6 +160,28 @@ const DashboardFounder = () => {
                             Products with active Boost campaigns get 3x more visibility on category pages.
                         </p>
                     </div>
+
+                    {/* AI Assistants Card */}
+                    <div style={{ padding: '20px', background: 'linear-gradient(135deg, #f0f0ff 0%, #e8f4f8 100%)', borderRadius: '12px', marginTop: '24px', border: '1px solid #e2e8f0' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
+                            <span style={{ fontSize: '24px' }}>🤖</span>
+                            <h4 style={{ fontSize: '1rem', color: '#1e1e2e', marginBottom: '0' }}>AI Assistants</h4>
+                        </div>
+                        <p style={{ fontSize: '0.85rem', color: '#64748b', marginBottom: '16px' }}>
+                            AIRA & REX - Your record keeper and decision advisor.
+                        </p>
+                        <Link to="/founder/ai-assistants" className="btn" style={{
+                            width: '100%',
+                            background: '#6366f1',
+                            color: 'white',
+                            justifyContent: 'center',
+                            fontWeight: '600',
+                            borderRadius: '8px',
+                            padding: '10px 16px'
+                        }}>
+                            Manage AI Assistants
+                        </Link>
+                    </div>
                 </div>
 
             </div>
