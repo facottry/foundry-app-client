@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
 import AuthContext from '../context/AuthContext';
 import { getProfile } from '../utils/api';
 import SEOHead from '../components/SEOHead';
@@ -15,7 +15,7 @@ import SavedProductsSection from '../components/profile/sections/SavedProductsSe
 // Note: Security section is currently merged into Account or can be added separate.
 // For now we map Security -> Account or a simple password change helper.
 
-import { Link } from 'react-router-dom';
+import AIAssistants from './AIAssistants';
 
 const ProfileView = () => {
     const { user, updateUser } = useContext(AuthContext);
@@ -29,7 +29,7 @@ const ProfileView = () => {
     useEffect(() => {
         if (location.hash) {
             const tab = location.hash.replace('#', '');
-            if (['overview', 'personal', 'account', 'preferences', 'activity'].includes(tab)) {
+            if (['overview', 'personal', 'account', 'preferences', 'activity', 'ai-assistants'].includes(tab)) {
                 setActiveTab(tab);
             }
         }
@@ -73,6 +73,8 @@ const ProfileView = () => {
                 return <ActivitySection />;
             case 'saved':
                 return <SavedProductsSection />;
+            case 'ai-assistants':
+                return <AIAssistants isEmbedded={true} />;
             case 'founder':
                 // Redirect or show detailed stats
                 return (
@@ -93,7 +95,7 @@ const ProfileView = () => {
             <SEOHead title="Account Settings" />
             <h1 style={{ marginBottom: '32px' }}>Account Control Center</h1>
 
-            <ProfileLayout activeTab={activeTab} onTabChange={setActiveTab}>
+            <ProfileLayout activeTab={activeTab} onTabChange={setActiveTab} userRole={user?.role}>
                 {renderSection()}
             </ProfileLayout>
         </div>

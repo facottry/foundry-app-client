@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import api from '../utils/api';
 import './AIAssistants.css';
 
-const AIAssistants = () => {
+const AIAssistants = ({ isEmbedded = false }) => {
     const navigate = useNavigate();
     const [status, setStatus] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -13,7 +13,7 @@ const AIAssistants = () => {
     const fetchStatus = useCallback(async () => {
         try {
             setLoading(true);
-            const res = await api.get('/founder/botvos/status');
+            const res = await api.get('/founder/botvas/status');
             setStatus(res.data);
             setError(null);
         } catch (err) {
@@ -30,7 +30,7 @@ const AIAssistants = () => {
     const handleEnable = async () => {
         try {
             setActionLoading(true);
-            await api.post('/founder/botvos/enable');
+            await api.post('/founder/botvas/enable');
             await fetchStatus();
         } catch (err) {
             setError(err.response?.data?.error || 'Failed to enable');
@@ -45,7 +45,7 @@ const AIAssistants = () => {
         }
         try {
             setActionLoading(true);
-            await api.post('/founder/botvos/disable');
+            await api.post('/founder/botvas/disable');
             await fetchStatus();
         } catch (err) {
             setError(err.response?.data?.error || 'Failed to disable');
@@ -72,11 +72,13 @@ const AIAssistants = () => {
     }
 
     return (
-        <div className="ai-assistants-page">
-            <div className="page-header">
-                <h1>AI Assistants</h1>
-                <p className="page-desc">Manage your Founder AI Bot subscription</p>
-            </div>
+        <div className="ai-assistants-page" style={isEmbedded ? { padding: 0 } : {}}>
+            {!isEmbedded && (
+                <div className="page-header">
+                    <h1>AI Assistants</h1>
+                    <p className="page-desc">Manage your Founder AI Bot subscription</p>
+                </div>
+            )}
 
             {error && (
                 <div className="error-banner">{error}</div>

@@ -1,13 +1,14 @@
 import React from 'react';
 
-const ProfileLayout = ({ activeTab, onTabChange, children }) => {
+const ProfileLayout = ({ activeTab, onTabChange, children, userRole }) => {
     const tabs = [
         { id: 'overview', label: 'Overview', icon: '📊' },
         { id: 'personal', label: 'Personal Info', icon: '👤' },
         { id: 'account', label: 'Account', icon: '🔒' },
         { id: 'preferences', label: 'Preferences', icon: '⚙️' },
         { id: 'activity', label: 'Activity', icon: '🕒' },
-        { id: 'founder', label: 'Founder Stats', icon: '🚀', role: 'FOUNDER' }, // Only show if founder
+        { id: 'founder', label: 'Founder Stats', icon: '🚀', role: 'FOUNDER' },
+        { id: 'ai-assistants', label: 'AI Assistants', icon: '🤖', role: 'FOUNDER' },
     ];
 
     return (
@@ -18,30 +19,35 @@ const ProfileLayout = ({ activeTab, onTabChange, children }) => {
                     Profile Settings
                 </div>
                 <nav style={{ display: 'flex', flexDirection: 'column' }}>
-                    {tabs.map(tab => (
-                        <button
-                            key={tab.id}
-                            onClick={() => onTabChange(tab.id)}
-                            className={activeTab === tab.id ? 'active' : ''}
-                            style={{
-                                display: tab.role && tab.role !== 'FOUNDER' ? 'none' : 'flex', // Logic handled in parent, but simple filter here
-                                alignItems: 'center',
-                                gap: '12px',
-                                padding: '16px 20px',
-                                background: activeTab === tab.id ? '#f3f4f6' : 'transparent',
-                                border: 'none',
-                                borderLeft: activeTab === tab.id ? '3px solid #2563eb' : '3px solid transparent',
-                                textAlign: 'left',
-                                fontSize: '0.95rem',
-                                color: activeTab === tab.id ? '#1d4ed8' : '#4b5563',
-                                cursor: 'pointer',
-                                transition: 'all 0.2s'
-                            }}
-                        >
-                            <span>{tab.icon}</span>
-                            {tab.label}
-                        </button>
-                    ))}
+                    {tabs.map(tab => {
+                        // Hide tab if it requires a role and user doesn't have it
+                        if (tab.role && tab.role !== userRole) return null;
+
+                        return (
+                            <button
+                                key={tab.id}
+                                onClick={() => onTabChange(tab.id)}
+                                className={activeTab === tab.id ? 'active' : ''}
+                                style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '12px',
+                                    padding: '16px 20px',
+                                    background: activeTab === tab.id ? '#f3f4f6' : 'transparent',
+                                    border: 'none',
+                                    borderLeft: activeTab === tab.id ? '3px solid #2563eb' : '3px solid transparent',
+                                    textAlign: 'left',
+                                    fontSize: '0.95rem',
+                                    color: activeTab === tab.id ? '#1d4ed8' : '#4b5563',
+                                    cursor: 'pointer',
+                                    transition: 'all 0.2s'
+                                }}
+                            >
+                                <span>{tab.icon}</span>
+                                {tab.label}
+                            </button>
+                        );
+                    })}
                 </nav>
             </div>
 
