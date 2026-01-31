@@ -7,7 +7,7 @@ import SEOHead from '../components/SEOHead';
 import LoadingState from '../components/common/LoadingState';
 import PhoneMapper from '../components/PhoneMapper';
 
-const ProfileEdit = () => {
+const ProfileEdit = ({ isEmbedded = false }) => {
     const { updateUser } = useContext(AuthContext);
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
@@ -64,7 +64,8 @@ const ProfileEdit = () => {
         try {
             const res = await updateProfile(formData);
             updateUser(res.data.user); // Update context
-            navigate('/profile');
+            if (!isEmbedded) navigate('/profile');
+            // If embedded, maybe show toast? For now just stay on page.
         } catch (err) {
             console.error('Error updating profile:', err);
             // Could add toast notification here
@@ -80,19 +81,21 @@ const ProfileEdit = () => {
     if (loading) return <LoadingState />;
 
     return (
-        <div style={{ paddingTop: '40px', paddingBottom: '80px', maxWidth: '600px', margin: '0 auto' }}>
+        <div style={isEmbedded ? {} : { paddingTop: '40px', paddingBottom: '80px', maxWidth: '600px', margin: '0 auto' }}>
             <SEOHead title="Edit Profile" />
 
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
-                <h1 style={{ fontSize: '2rem', margin: 0 }}>Edit Profile</h1>
-                <button
-                    type="button"
-                    onClick={() => navigate('/profile')}
-                    className="btn btn-secondary"
-                >
-                    Cancel
-                </button>
-            </div>
+            {!isEmbedded && (
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
+                    <h1 style={{ fontSize: '2rem', margin: 0 }}>Edit Profile</h1>
+                    <button
+                        type="button"
+                        onClick={() => navigate('/profile')}
+                        className="btn btn-secondary"
+                    >
+                        Cancel
+                    </button>
+                </div>
+            )}
 
             <form onSubmit={handleSubmit} className="card">
                 {/* Basic Info */}

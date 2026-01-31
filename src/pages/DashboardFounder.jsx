@@ -170,7 +170,7 @@ const DashboardFounder = () => {
                         <p style={{ fontSize: '0.85rem', color: '#64748b', marginBottom: '16px' }}>
                             AIRA & REX - Your record keeper and decision advisor.
                         </p>
-                        <Link to="/founder/ai-assistants" className="btn" style={{
+                        <Link to="/profile#ai-assistants" className="btn" style={{
                             width: '100%',
                             background: '#6366f1',
                             color: 'white',

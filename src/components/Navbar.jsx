@@ -2,6 +2,26 @@ import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import AuthContext from '../context/AuthContext';
 import SearchBox from './SearchBox';
+import { useBot } from '../context/BotContext';
+
+const REXLink = () => {
+    const { isEligible } = useBot();
+
+    if (!isEligible) return null;
+
+    return (
+        <Link to="/founder/rex" style={{
+            color: '#6366f1',
+            fontWeight: '600',
+            marginRight: '16px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '6px'
+        }}>
+            REX
+        </Link>
+    );
+};
 
 const Navbar = () => {
 
@@ -57,6 +77,7 @@ const Navbar = () => {
                             {user.role === 'FOUNDER' && (
                                 <>
                                     <Link to="/founder/dashboard">Dashboard</Link>
+                                    <REXLink />
                                     <Link to="/founder/products">My Products</Link>
                                 </>
                             )}
