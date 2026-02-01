@@ -22,9 +22,29 @@ const getColorFromHash = (str) => {
     return colors[Math.abs(hash) % colors.length];
 };
 
+// Helper for very subtle card backgrounds
+const getCardGradient = (str) => {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+        hash = str.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    const gradients = [
+        'bg-gradient-to-br from-white via-slate-100/50 group-hover:via-slate-200/60 to-white',
+        'bg-gradient-to-br from-white via-orange-100/40 group-hover:via-orange-200/50 to-white',
+        'bg-gradient-to-br from-white via-blue-100/40 group-hover:via-blue-200/50 to-white',
+        'bg-gradient-to-br from-white via-emerald-100/40 group-hover:via-emerald-200/50 to-white',
+        'bg-gradient-to-br from-white via-violet-100/40 group-hover:via-violet-200/50 to-white',
+        'bg-gradient-to-br from-white via-rose-100/40 group-hover:via-rose-200/50 to-white',
+        'bg-gradient-to-br from-white via-amber-100/40 group-hover:via-amber-200/50 to-white',
+        'bg-gradient-to-br from-white via-cyan-100/40 group-hover:via-cyan-200/50 to-white'
+    ];
+    return gradients[Math.abs(hash) % gradients.length];
+};
+
 const ProductCard = ({ product, promoted }) => {
     const logoUrl = product.logoUrl || getImageUrl(product.logoKey || product.logo_url);
     const initialColorClass = getColorFromHash(product.name || '?');
+    const cardGradientClass = getCardGradient(product.name || '?');
 
     // Category mapping (similar to backend metadata if needed, or just use string)
     const category = (product.categories && product.categories[0]) || 'Tool';
@@ -36,7 +56,8 @@ const ProductCard = ({ product, promoted }) => {
             className="group block h-full outline-none"
         >
             <div className={`
-                relative flex flex-col h-full bg-white rounded-2xl p-6 border transition-all duration-200 ease-out
+                relative flex flex-col h-full rounded-2xl p-6 border transition-all duration-200 ease-out
+                ${cardGradientClass} animate-gradient-slow
                 ${promoted ? 'border-orange-200 shadow-orange-100/20' : 'border-gray-100'}
                 hover:-translate-y-1 hover:shadow-xl hover:shadow-gray-200/50 hover:border-orange-200/50
                 focus-within:ring-2 focus-within:ring-orange-500/20
