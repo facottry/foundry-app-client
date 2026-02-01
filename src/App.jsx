@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { HelmetProvider } from 'react-helmet-async';
 import { AuthProvider } from './context/AuthContext';
 import { ConfigProvider } from './context/ConfigContext';
+import ScrollToTop from './components/ScrollToTop';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -60,6 +61,7 @@ function App() {
                 <BotProvider>
                     <HelmetProvider>
                         <Router>
+                            <ScrollToTop />
                             <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
                                 <Navbar />
                                 <div className="container" style={{ flex: 1, paddingBottom: '60px' }}>
