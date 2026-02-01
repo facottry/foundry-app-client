@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import CategoryTopProducts from './CategoryTopProducts';
 
 const CategoryDiscoveryCard = ({ category }) => {
-    // category: { name, slug, tagline, icon, subtags, productCount, isTrending }
+    // category: { name, slug, tagline, icon, subtags, productCount, isTrending, topProducts, selectionMode }
 
     return (
         <Link
@@ -44,6 +45,12 @@ const CategoryDiscoveryCard = ({ category }) => {
                         </span>
                     ))}
                 </div>
+
+                {/* Top Products (Pills) */}
+                <CategoryTopProducts
+                    products={category.topProducts}
+                    selectionMode={category.selectionMode}
+                />
 
                 {/* Bottom Row */}
                 <div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-50">
