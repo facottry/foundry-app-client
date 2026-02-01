@@ -101,28 +101,45 @@ export const BotProvider = ({ children }) => {
     }, [dynamicServerUrl]);
 
     // Load the script
-    const loadSDK = useCallback((url, serverUrl) => {
+    const loadSDK = useCallback((url, serverUrl, isRetry = false) => {
         if (!url) return;
+
+        // Define fallback URL
+        const FALLBACK_URL = 'https://foundry-bot-client.vercel.app/clickysdk.js';
+
+        // Prevent duplicate loading of the SAME url
         if (document.querySelector(`script[src="${url}"]`)) {
-            // Script exists, but maybe instance not created if we just navigated context?
-            // If window.ClickyBot exists, just init.
             setLoaded(true);
             initBot(serverUrl);
             return;
         }
 
-        console.log('[BotSDK] Loading SDK from:', url);
+        console.log(`[BotSDK] Loading SDK from: ${url} (Retry: ${isRetry})`);
         const script = document.createElement('script');
         script.src = url;
         script.async = true;
+
         script.onload = () => {
-            console.log('[BotSDK] Script loaded');
+            console.log('[BotSDK] Script loaded successfully:', url);
             setLoaded(true);
             initBot(serverUrl);
         };
+
         script.onerror = () => {
             console.error('[BotSDK] Script failed to load:', url);
+
+            // Remove the failed script tag to clean up
+            script.remove();
+
+            if (!isRetry && url !== FALLBACK_URL) {
+                console.log('[BotSDK] Attempting fallback to:', FALLBACK_URL);
+                // Try fallback
+                loadSDK(FALLBACK_URL, serverUrl, true);
+            } else {
+                console.error('[BotSDK] All SDK load attempts failed.');
+            }
         };
+
         document.body.appendChild(script);
     }, [initBot]);
 

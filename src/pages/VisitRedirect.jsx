@@ -16,27 +16,8 @@ const VisitRedirect = () => {
         const performRedirect = async () => {
             try {
                 // Tracking Logic
-                const trackUrl = getTrackUrl('/track/visit-confirm');
-                if (trackUrl) {
-                    try {
-                        // Await confirmation from Track Server (Ingestion Success)
-                        // User requirement: "Get a Confirmation... then actually open"
-                        await fetch(trackUrl, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ visit_id: id })
-                        });
-                        console.log('Tracking confirmed by server.');
-                    } catch (e) {
-                        console.error('Tracking failed (Network Error)', e);
-                        // We proceed to redirect anyway so user isn't stuck ???
-                        // User said "Track event Success then we should actually open"
-                        // But blocking completely on tracking failure might be bad UX.
-                        // For now, I will Log and Proceed, assuming "Success" means "Attempt Completed".
-                        // If strict success is needed, we would throw here.
-                        // I'll proceed for robustness.
-                    }
-                }
+                // Tracking Logic: Handled by server on redirect (appserver/r/:id)
+                console.log('Redirecting to product...');
 
                 // Redirect Logic
                 const apiBase = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';

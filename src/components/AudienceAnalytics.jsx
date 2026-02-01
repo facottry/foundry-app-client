@@ -1,11 +1,11 @@
 import React from 'react';
 
-const AudienceAnalytics = ({ data }) => {
+const AudienceAnalytics = ({ data, onFilter }) => {
     if (!data || !data.distributions) return <div style={{ padding: '20px' }}>No audience data available yet.</div>;
 
     const { summary, distributions } = data;
 
-    const DistributionTable = ({ title, data, label = 'Metric' }) => (
+    const DistributionTable = ({ title, data, label = 'Metric', filterKey }) => (
         <div style={{ background: '#fff', borderRadius: '8px', border: '1px solid #e5e7eb', overflow: 'hidden', marginBottom: '24px' }}>
             <div style={{ padding: '16px', borderBottom: '1px solid #e5e7eb', background: '#f9fafb' }}>
                 <h4 style={{ margin: 0, fontSize: '1rem', fontWeight: '600', color: '#1f2937' }}>{title}</h4>
@@ -20,7 +20,13 @@ const AudienceAnalytics = ({ data }) => {
                 <tbody>
                     {data && data.length > 0 ? (
                         data.map((item, idx) => (
-                            <tr key={idx} style={{ borderBottom: '1px solid #e5e7eb' }}>
+                            <tr
+                                key={idx}
+                                style={{ borderBottom: '1px solid #e5e7eb', cursor: 'pointer', transition: 'background 0.1s' }}
+                                onClick={() => onFilter && onFilter(filterKey, item._id)}
+                                onMouseEnter={(e) => e.currentTarget.style.background = '#f0f9ff'}
+                                onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
+                            >
                                 <td style={{ padding: '12px 16px', color: '#1f2937' }}>{item._id || 'Unknown'}</td>
                                 <td style={{ padding: '12px 16px', textAlign: 'right', color: '#1f2937', fontWeight: '500' }}>{item.count}</td>
                             </tr>
@@ -53,10 +59,10 @@ const AudienceAnalytics = ({ data }) => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <DistributionTable title="Views by Country" data={distributions.views.country} label="Country" />
-                <DistributionTable title="Views by City" data={distributions.views.city} label="City" />
-                <DistributionTable title="Views by Browser" data={distributions.views.browser} label="Browser" />
-                <DistributionTable title="Device Breakdown (All Events)" data={distributions.all.device} label="Device Type" />
+                <DistributionTable title="Views by Country" data={distributions.views.country} label="Country" filterKey="country" />
+                <DistributionTable title="Views by City" data={distributions.views.city} label="City" filterKey="city" />
+                <DistributionTable title="Views by Browser" data={distributions.views.browser} label="Browser" filterKey="browser" />
+                <DistributionTable title="Device Breakdown (All Events)" data={distributions.all.device} label="Device Type" filterKey="device" />
             </div>
         </div>
     );
