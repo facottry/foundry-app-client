@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import AuthContext from '../context/AuthContext';
 import SearchBox from './SearchBox';
 import { useBot } from '../context/BotContext';
+import BRAND from '../config/brand';
 
 const REXLink = () => {
     const { isEligible } = useBot();
@@ -38,7 +39,7 @@ const Navbar = () => {
         <nav className="navbar">
             <div className="container navbar-container">
                 <Link to="/" className="navbar-brand">
-                    Foundry
+                    {BRAND.publicName}
                 </Link>
 
                 <button

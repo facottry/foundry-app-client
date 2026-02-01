@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import NewsletterSignup from '../components/NewsletterSignup';
 import { useAuth } from '../context/AuthContext';
+import BRAND from '../config/brand';
 
 const NewsletterPage = () => {
     const { slug } = useParams();
@@ -33,7 +34,7 @@ const NewsletterPage = () => {
             <div className="w-1/3 min-w-[320px] bg-white border-r border-gray-200 overflow-y-auto h-[calc(100vh-64px)] sticky top-[64px] hidden md:block">
                 <div className="p-6 border-b border-gray-100">
                     <Link to="/newsletter" className="hover:opacity-75 transition">
-                        <h2 className="text-xl font-bold text-gray-900">Foundry Signal</h2>
+                        <h2 className="text-xl font-bold text-gray-900">{BRAND.publicName} Signal</h2>
                         <p className="text-sm text-gray-500">Past Issues Archive</p>
                     </Link>
                 </div>
@@ -51,7 +52,7 @@ const NewsletterPage = () => {
                                 Weekly Intelligence
                             </span>
                             <h1 className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight text-gray-900">
-                                The <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Foundry</span> Signal.
+                                The <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">{BRAND.publicName}</span> Signal.
                             </h1>
                             <p className="text-lg text-gray-500 leading-relaxed mb-8">
                                 Join 10,000+ founders receiving curated product discovery tips, hidden gems, and market signals. No fluff, just alpha.

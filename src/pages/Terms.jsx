@@ -1,4 +1,5 @@
 import React from 'react';
+import BRAND from '../config/brand';
 
 const Terms = () => {
     return (
@@ -12,12 +13,12 @@ const Terms = () => {
                 <div style={{ lineHeight: '1.8', color: 'var(--text-primary)' }}>
                     <h2 style={{ fontSize: '1.5rem', marginTop: '40px', marginBottom: '20px' }}>Acceptance of Terms</h2>
                     <p style={{ marginBottom: '20px' }}>
-                        By accessing and using Foundry, you accept and agree to be bound by the terms and provisions of this agreement.
+                        By accessing and using {BRAND.publicName}, you accept and agree to be bound by the terms and provisions of this agreement.
                     </p>
 
                     <h2 style={{ fontSize: '1.5rem', marginTop: '40px', marginBottom: '20px' }}>Use of Service</h2>
                     <p style={{ marginBottom: '20px' }}>
-                        You agree to use Foundry only for lawful purposes and in accordance with these Terms.
+                        You agree to use {BRAND.publicName} only for lawful purposes and in accordance with these Terms.
                         You agree not to use the service in any way that could damage, disable, or impair the service.
                     </p>
 

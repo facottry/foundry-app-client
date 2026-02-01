@@ -1,12 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
+import BRAND from '../config/brand';
 
 const Mission = () => {
     return (
         <div style={{ paddingBottom: '80px', paddingTop: '40px' }}>
             <SEO
-                title="Our Mission - Why We Built AppFoundry"
+                title={`Our Mission - Why We Built ${BRAND.publicName}`}
                 description="We are building the most honest place to find software. No fake reviews, no paid rankings. Just good tools."
                 canonical="/mission"
             />
@@ -64,7 +65,7 @@ const Mission = () => {
 
                     <h2 style={{ fontSize: '1.8rem', fontWeight: '700', color: '#111827', marginBottom: '20px', marginTop: '40px' }}>So, we decided to change it.</h2>
                     <p style={{ marginBottom: '24px' }}>
-                        We built AppFoundry with one simple rule: <strong>Honesty.</strong>
+                        We built {BRAND.publicName} with one simple rule: <strong>Honesty.</strong>
                     </p>
                     <p style={{ marginBottom: '24px' }}>
                         Here, you cannot buy a ranking. You cannot pay us to say your product is "the best" if it isn't.

@@ -2,42 +2,42 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
-    <loc>https://appfoundry.vercel.app/</loc>
+    <loc>https://clicktory.in/</loc>
     <priority>1</priority>
     <changefreq>daily</changefreq>
   </url>
   <url>
-    <loc>https://appfoundry.vercel.app/pricing</loc>
+    <loc>https://clicktory.in/pricing</loc>
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
   </url>
   <url>
-    <loc>https://appfoundry.vercel.app/about</loc>
+    <loc>https://clicktory.in/about</loc>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://appfoundry.vercel.app/mission</loc>
+    <loc>https://clicktory.in/mission</loc>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://appfoundry.vercel.app/how-it-works</loc>
+    <loc>https://clicktory.in/how-it-works</loc>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://appfoundry.vercel.app/contact</loc>
+    <loc>https://clicktory.in/contact</loc>
     <priority>0.5</priority>
     <changefreq>yearly</changefreq>
   </url>
   <url>
-    <loc>https://appfoundry.vercel.app/login</loc>
+    <loc>https://clicktory.in/login</loc>
     <priority>0.4</priority>
     <changefreq>yearly</changefreq>
   </url>
   <url>
-    <loc>https://appfoundry.vercel.app/signup</loc>
+    <loc>https://clicktory.in/signup</loc>
     <priority>0.6</priority>
     <changefreq>yearly</changefreq>
   </url>

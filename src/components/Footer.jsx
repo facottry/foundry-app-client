@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import BRAND from '../config/brand';
 
 const Footer = () => {
     return (
@@ -25,7 +26,7 @@ const Footer = () => {
                             fontWeight: '700',
                             letterSpacing: '-0.02em'
                         }}>
-                            Foundry.
+                            {BRAND.publicName}.
                         </h4>
                         <p style={{
                             maxWidth: '280px',
@@ -34,7 +35,7 @@ const Footer = () => {
                             color: 'var(--text-secondary)',
                             marginBottom: '8px'
                         }}>
-                            A modern discovery platform for independent SaaS founders and builders.
+                            {BRAND.tagline}
                         </p>
                         <p style={{
                             fontSize: '0.85rem',
@@ -116,7 +117,7 @@ const Footer = () => {
                     color: '#999',
                     fontSize: '0.85rem'
                 }}>
-                    &copy; {new Date().getFullYear()} Foundry Inc. All rights reserved.
+                    &copy; {new Date().getFullYear()} {BRAND.legalName}. All rights reserved.
                 </div>
             </div>
         </footer>

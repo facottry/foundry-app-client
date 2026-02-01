@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import SEOHead from '../components/SEOHead';
 import Breadcrumbs from '../components/Breadcrumbs';
 import { authors } from '../data/blogData';
+import BRAND from '../config/brand';
 
 const AuthorsList = () => {
     const authorList = Object.entries(authors).map(([id, author]) => ({
@@ -13,8 +14,8 @@ const AuthorsList = () => {
     return (
         <>
             <SEOHead
-                title="Our Writers - Foundry Blog"
-                description="Meet the industry experts, founders, and engineers behind the Foundry blog."
+                title={`Our Writers - ${BRAND.publicName} Blog`}
+                description={`Meet the industry experts, founders, and engineers behind the ${BRAND.publicName} blog.`}
             />
 
             <div style={{ paddingTop: '40px', paddingBottom: '80px' }}>

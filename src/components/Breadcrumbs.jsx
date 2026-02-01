@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import BRAND from '../config/brand';
 
 const Breadcrumbs = ({ items }) => {
     // Generate Breadcrumb Schema
@@ -10,7 +11,7 @@ const Breadcrumbs = ({ items }) => {
             "@type": "ListItem",
             "position": index + 1,
             "name": item.label,
-            "item": item.href ? `https://appfoundry.vercel.app${item.href}` : undefined
+            "item": item.href ? `https://${BRAND.domain}${item.href}` : undefined
         }))
     };
 

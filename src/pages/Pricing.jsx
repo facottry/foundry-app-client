@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import BRAND from '../config/brand';
 
 const About = () => {
     return (
@@ -9,19 +10,19 @@ const About = () => {
 
                 <div style={{ fontSize: '1.1rem', lineHeight: '1.8', color: 'var(--text-primary)' }}>
                     <p style={{ marginBottom: '28px' }}>
-                        Foundry is a modern discovery platform designed for independent SaaS founders, developers, and builders who want visibility without noise.
+                        {BRAND.publicName} is a modern discovery platform designed for independent SaaS founders, developers, and builders who want visibility without noise.
                     </p>
 
                     <p style={{ marginBottom: '28px' }}>
-                        We believe good products deserve to be found based on clarity, usefulness, and intent — not hype, aggressive marketing, or inflated claims. Foundry helps early-stage and growing products surface to the right audience at the right time.
+                        We believe good products deserve to be found based on clarity, usefulness, and intent — not hype, aggressive marketing, or inflated claims. {BRAND.publicName} helps early-stage and growing products surface to the right audience at the right time.
                     </p>
 
                     <p style={{ marginBottom: '28px' }}>
-                        Unlike traditional directories or ad-heavy platforms, Foundry focuses on structured discovery. Products are presented with context, categories, and signals that help users understand what they are exploring and why it matters.
+                        Unlike traditional directories or ad-heavy platforms, {BRAND.publicName} focuses on structured discovery. Products are presented with context, categories, and signals that help users understand what they are exploring and why it matters.
                     </p>
 
                     <p style={{ marginBottom: '28px' }}>
-                        Foundry is built for long-term credibility. Clean URLs, transparent metrics, and simple tools that respect both founders and users.
+                        {BRAND.publicName} is built for long-term credibility. Clean URLs, transparent metrics, and simple tools that respect both founders and users.
                     </p>
 
                     <div style={{
@@ -32,7 +33,7 @@ const About = () => {
                         borderLeft: '4px solid var(--accent-primary)'
                     }}>
                         <p style={{ fontSize: '1.25rem', fontWeight: '600', margin: 0, color: 'var(--text-primary)' }}>
-                            Foundry is where serious builders show up — and get discovered.
+                            {BRAND.publicName} is where serious builders show up — and get discovered.
                         </p>
                     </div>
 

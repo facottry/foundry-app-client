@@ -1,4 +1,5 @@
 import React from 'react';
+import BRAND from '../config/brand';
 
 const CookiePolicy = () => {
     return (
@@ -25,7 +26,7 @@ const CookiePolicy = () => {
                             <strong>Essential Cookies:</strong> Required for the platform to function properly, including authentication and session management
                         </li>
                         <li style={{ marginBottom: '12px' }}>
-                            <strong>Analytics Cookies:</strong> Help us understand how users interact with Foundry to improve the experience
+                            <strong>Analytics Cookies:</strong> Help us understand how users interact with {BRAND.publicName} to improve the experience
                         </li>
                         <li style={{ marginBottom: '12px' }}>
                             <strong>Preference Cookies:</strong> Remember your settings and preferences

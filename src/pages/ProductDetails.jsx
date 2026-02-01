@@ -8,6 +8,7 @@ import ProductTabs from '../components/ProductTabs';
 import SaveProductModal from '../components/products/SaveProductModal';
 import Toast from '../components/common/Toast';
 import AuthContext from '../context/AuthContext';
+import BRAND from '../config/brand';
 import SEO from '../components/SEO';
 import SimilarProducts from '../components/SimilarProducts';
 
@@ -83,7 +84,7 @@ const ProductDetails = () => {
             "ratingValue": product.avg_rating,
             "reviewCount": product.ratings_count
         } : undefined,
-        "url": `https://appfoundry.vercel.app/product/${product.slug}`
+        "url": `https://${BRAND.domain}/product/${product.slug}`
     };
 
     return (

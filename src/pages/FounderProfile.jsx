@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import api from '../utils/api';
 import SEO from '../components/SEO';
 import { getImageUrl } from '../utils/getImageUrl';
+import BRAND from '../config/brand';
 
 const FounderProfile = () => {
     const { founderId } = useParams(); // Note: Route param might be named founderId but can be slug
@@ -45,7 +46,7 @@ const FounderProfile = () => {
         <div style={{ paddingBottom: '80px' }}>
             <SEO
                 title={`${profile.name} - Founder Profile`}
-                description={`Check out products built by ${profile.name} on Foundry.`}
+                description={`Check out products built by ${profile.name} on ${BRAND.publicName}.`}
             />
 
             {/* Profile Header */}

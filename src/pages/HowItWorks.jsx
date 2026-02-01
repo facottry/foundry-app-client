@@ -1,20 +1,21 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
+import BRAND from '../config/brand';
 
 const HowItWorks = () => {
     return (
         <div style={{ paddingBottom: '80px', paddingTop: '40px' }}>
             <SEO
-                title="How Foundry Works - The Rules of the Game"
-                description="Understand the core economic laws, discovery philosophy, and business rules that govern AppFoundry."
+                title={`How ${BRAND.publicName} Works - The Rules of the Game`}
+                description={`Understand the core economic laws, discovery philosophy, and business rules that govern ${BRAND.publicName}.`}
                 canonical="/how-it-works"
             />
 
             <div style={{ maxWidth: '800px', margin: '0 auto' }}>
                 <div style={{ textAlign: 'center', marginBottom: '60px' }}>
                     <h1 style={{ fontSize: '3rem', fontWeight: '800', marginBottom: '16px', letterSpacing: '-0.02em' }}>
-                        How Foundry Works
+                        How {BRAND.publicName} Works
                     </h1>
                     <p style={{ fontSize: '1.25rem', color: 'var(--text-secondary)', maxWidth: '600px', margin: '0 auto' }}>
                         No black boxes. No vanity metrics. Just a simple, transparent system for software discovery.

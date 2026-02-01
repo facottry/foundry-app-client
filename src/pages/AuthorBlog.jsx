@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import SEOHead from '../components/SEOHead';
 import { blogPosts, authors } from '../data/blogData';
 import Breadcrumbs from '../components/Breadcrumbs';
+import BRAND from '../config/brand';
 
 const AuthorBlog = () => {
     const { authorId } = useParams();
@@ -31,8 +32,8 @@ const AuthorBlog = () => {
     return (
         <>
             <SEOHead
-                title={`${author.name} - Blog Posts | Foundry`}
-                description={`Read articles by ${author.name}, ${author.role} at Foundry. ${author.bio}`}
+                title={`${author.name} - Blog Posts | ${BRAND.publicName}`}
+                description={`Read articles by ${author.name}, ${author.role} at ${BRAND.publicName}. ${author.bio}`}
             />
 
             <div style={{ paddingTop: '40px', paddingBottom: '60px' }}>

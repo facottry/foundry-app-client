@@ -8,6 +8,7 @@ import EmptyState from '../components/common/EmptyState';
 import Breadcrumbs from '../components/Breadcrumbs';
 import SEO from '../components/SEO';
 import { CATEGORY_INTROS, CATEGORY_TITLES } from '../constants/categories';
+import BRAND from '../config/brand';
 
 const CategoryPage = () => {
     const { slug } = useParams();
@@ -56,13 +57,13 @@ const CategoryPage = () => {
         "@type": "CollectionPage",
         "name": categoryTitle,
         "description": categoryDesc,
-        "url": `https://appfoundry.vercel.app/category/${slug}`,
+        "url": `https://${BRAND.domain}/category/${slug}`,
         "hasPart": organic.map(p => ({
             "@type": "SoftwareApplication",
             "name": p.name,
             "applicationCategory": "DeveloperTool",
             "operatingSystem": "Web",
-            "url": `https://appfoundry.vercel.app/product/${p.slug || p._id}`
+            "url": `https://${BRAND.domain}/product/${p.slug || p._id}`
         }))
     };
 

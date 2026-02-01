@@ -5,6 +5,7 @@ import { slugToText } from '../utils/slugUtils';
 import SEOHead from '../components/SEOHead';
 import { CollectionPageSchema, BreadcrumbListSchema } from '../components/SchemaMarkup';
 import ProductCard from '../components/ProductCard';
+import BRAND from '../config/brand';
 
 const TagPage = () => {
     const { slug } = useParams();
@@ -27,7 +28,7 @@ const TagPage = () => {
 
     // SEO content for tag
     const getSEODescription = () => {
-        return `Discover the best ${tagName.toLowerCase()} tools and software. Browse ${products.length} products tagged with ${tagName.toLowerCase()} on Foundry.`;
+        return `Discover the best ${tagName.toLowerCase()} tools and software. Browse ${products.length} products tagged with ${tagName.toLowerCase()} on ${BRAND.publicName}.`;
     };
 
     const getSEOIntro = () => {
