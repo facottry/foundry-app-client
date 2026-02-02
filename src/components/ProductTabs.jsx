@@ -51,7 +51,7 @@ const ProductTabs = ({ productId, product, user }) => {
             {/* Tab Content */}
             <div>
                 {activeTab === 'overview' && <OverviewTab product={product} />}
-                {activeTab === 'reviews' && <ReviewsTab productId={productId} user={user} />}
+                {activeTab === 'reviews' && <ReviewsTab productId={productId} user={user} product={product} slug={product.slug} />}
                 {activeTab === 'alternatives' && <AlternativesTab productId={productId} />}
                 {activeTab === 'team' && <TeamTab productId={productId} />}
                 {activeTab === 'awards' && <AwardsTab productId={productId} />}
@@ -138,10 +138,9 @@ const OverviewTab = ({ product }) => (
     </div>
 );
 
-// Reviews Tab (Integrated)
-const ReviewsTab = ({ productId, user }) => (
+const ReviewsTab = ({ productId, user, product, slug }) => (
     <div style={{ padding: '0 10px' }}>
-        <ReviewList productId={productId} user={user} />
+        <ReviewList productId={productId} user={user} productOwnerId={product && product.owner_user_id} slug={slug} isFullPage={false} />
     </div>
 );
 

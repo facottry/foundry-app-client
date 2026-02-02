@@ -11,9 +11,11 @@ import AuthContext from '../context/AuthContext';
 import BRAND from '../config/brand';
 import SEO from '../components/SEO';
 import SimilarProducts from '../components/SimilarProducts';
+import FollowButton from '../components/FollowButton';
 
 const ProductDetails = () => {
     const { slug } = useParams();
+    const { user } = useContext(AuthContext);
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
     const [showSaveModal, setShowSaveModal] = useState(false);
@@ -135,6 +137,15 @@ const ProductDetails = () => {
                                     <span style={{ color: '#666' }}>({product.ratings_count} reviews)</span>
                                 </div>
                             )}
+
+                            {/* Follower Count Display (Hidden if 0) */}
+                            {product.follower_count > 0 && (
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.95rem', background: '#f8f9fa', padding: '4px 10px', borderRadius: '12px', border: '1px solid #eee' }}>
+                                    <span style={{ color: '#666' }}>👥</span>
+                                    <span style={{ fontWeight: '600', color: '#333' }}>{product.follower_count}</span>
+                                    <span style={{ color: '#666' }}>followers</span>
+                                </div>
+                            )}
                         </div>
 
                         {/* Team Cluster (Horizontal) */}
@@ -197,35 +208,40 @@ const ProductDetails = () => {
                             >
                                 ❤️ Save
                             </button>
+                            <FollowButton targetId={product._id} type="product" />
                         </div>
                     </div>
                 </div>
             </div>
 
             {/* Product Tabs */}
-            <ProductTabs productId={product._id} product={product} user={useContext(AuthContext).user} />
+            <ProductTabs productId={product._id} product={product} user={user} slug={product.slug} />
 
             {/* Similar Products (Internal Linking) */}
             <SimilarProducts currentProduct={product} />
 
             {/* Save Modal and Toast... */}
 
-            {showSaveModal && (
-                <SaveProductModal
-                    productId={product._id}
-                    onClose={() => setShowSaveModal(false)}
-                    onShowToast={showToast}
-                />
-            )}
+            {
+                showSaveModal && (
+                    <SaveProductModal
+                        productId={product._id}
+                        onClose={() => setShowSaveModal(false)}
+                        onShowToast={showToast}
+                    />
+                )
+            }
 
-            {toast && (
-                <Toast
-                    message={toast.message}
-                    type={toast.type}
-                    onClose={() => setToast(null)}
-                />
-            )}
-        </div>
+            {
+                toast && (
+                    <Toast
+                        message={toast.message}
+                        type={toast.type}
+                        onClose={() => setToast(null)}
+                    />
+                )
+            }
+        </div >
     );
 };
 

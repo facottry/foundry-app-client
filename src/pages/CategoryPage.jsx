@@ -9,6 +9,7 @@ import Breadcrumbs from '../components/Breadcrumbs';
 import SEO from '../components/SEO';
 import { CATEGORY_INTROS, CATEGORY_TITLES } from '../constants/categories';
 import BRAND from '../config/brand';
+import FollowButton from '../components/FollowButton';
 
 const CategoryPage = () => {
     const { slug } = useParams();
@@ -85,12 +86,21 @@ const CategoryPage = () => {
 
             {/* Category Header */}
             <div style={{ marginBottom: '40px' }}>
-                <h1 style={{ fontSize: '2.5rem', marginBottom: '16px' }}>
-                    {CATEGORY_TITLES[slug] || (slug === 'all' ? 'All Products' : slug)}
-                </h1>
-                <p style={{ fontSize: '1.1rem', color: 'var(--text-secondary)', maxWidth: '700px' }}>
-                    {CATEGORY_INTROS[slug] || `Discover the best ${slug} products`}
-                </p>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', flexWrap: 'wrap', gap: '20px' }}>
+                    <div>
+                        <h1 style={{ fontSize: '2.5rem', marginBottom: '16px', lineHeight: '1.2' }}>
+                            {CATEGORY_TITLES[slug] || (slug === 'all' ? 'All Products' : slug)}
+                        </h1>
+                        <p style={{ fontSize: '1.1rem', color: 'var(--text-secondary)', maxWidth: '700px' }}>
+                            {CATEGORY_INTROS[slug] || `Discover the best ${slug} products`}
+                        </p>
+                    </div>
+                    {slug !== 'all' && (
+                        <div style={{ marginTop: '10px' }}>
+                            <FollowButton targetId={slug} type="category" label="Follow Category" />
+                        </div>
+                    )}
+                </div>
             </div>
 
             {/* Sort Dropdown */}

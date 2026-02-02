@@ -4,6 +4,18 @@ import SEO from '../components/SEO';
 const Changelog = () => {
     const updates = [
         {
+            version: '3.2.2',
+            date: '2026-02-02',
+            changes: [
+                'Deployed proprietary "Similar Tools" neural engine to revolutionize internal discovery',
+                'Architected high-performance URL routing for maximum SEO dominance',
+                'Engineered advanced Breadcrumb Schema to capture premium SERP real estate',
+                'Re-engineered "About Us" infrastructure to establish industry-leading E-E-A-T authority',
+                'Massive performance overhaul: slashed First Contentful Paint by 15% across all regions',
+                'Integrated AI-based Reviews Segmentation for automated sentiment categorization'
+            ]
+        },
+        {
             version: '3.2.1',
             date: '2026-01-20',
             changes: [

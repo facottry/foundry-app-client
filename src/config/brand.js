@@ -24,8 +24,9 @@ export const BRAND = {
 
     // Social links
     socialLinks: {
-        twitter: "https://twitter.com/clicktory",
-        linkedin: "https://linkedin.com/company/clicktory"
+        github: "https://github.com/facottry/clicktory",
+        linkedin: "https://www.linkedin.com/company/clicktory",
+        twitter: "https://twitter.com/clicktory"
     },
 
     // Legal entity name (for terms, privacy)

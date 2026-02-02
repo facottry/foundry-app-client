@@ -44,6 +44,25 @@ const Footer = () => {
                         }}>
                             Find your next tool. Launch your product.
                         </p>
+
+                        {/* Social Links */}
+                        <div style={{ display: 'flex', gap: '12px', marginTop: '16px' }}>
+                            {BRAND.socialLinks.github && (
+                                <a href={BRAND.socialLinks.github} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-muted)', fontSize: '0.9rem', textDecoration: 'none' }}>
+                                    GitHub
+                                </a>
+                            )}
+                            {BRAND.socialLinks.linkedin && (
+                                <a href={BRAND.socialLinks.linkedin} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-muted)', fontSize: '0.9rem', textDecoration: 'none' }}>
+                                    LinkedIn
+                                </a>
+                            )}
+                            {BRAND.socialLinks.twitter && (
+                                <a href={BRAND.socialLinks.twitter} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-muted)', fontSize: '0.9rem', textDecoration: 'none' }}>
+                                    Twitter
+                                </a>
+                            )}
+                        </div>
                     </div>
 
                     {/* Platform Column */}
@@ -80,6 +99,7 @@ const Footer = () => {
                             Company
                         </h5>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                            <Link to="/why-us" style={{ fontSize: '0.95rem', color: 'var(--text-secondary)' }}>Why Us</Link>
                             <Link to="/about" style={{ fontSize: '0.95rem', color: 'var(--text-secondary)' }}>About</Link>
                             <Link to="/mission" style={{ fontSize: '0.95rem', color: 'var(--text-secondary)' }}>Mission</Link>
                             <Link to="/contact" style={{ fontSize: '0.95rem', color: 'var(--text-secondary)' }}>Contact</Link>

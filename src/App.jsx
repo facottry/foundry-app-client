@@ -9,6 +9,7 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import Pricing from './pages/Pricing';
 import About from './pages/About';
+import WhyUs from './pages/WhyUs';
 import Contact from './pages/Contact';
 import Blog from './pages/Blog';
 import Privacy from './pages/Privacy';
@@ -26,6 +27,7 @@ import ProductAnalyticsPage from './pages/ProductAnalyticsPage';
 import DashboardCustomer from './pages/DashboardCustomer';
 import CategoryPage from './pages/CategoryPage';
 import ProductDetails from './pages/ProductDetails';
+import ProductReviewsPage from './pages/ProductReviewsPage';
 import CreateProduct from './pages/CreateProduct';
 import EditProduct from './pages/EditProduct';
 import BoostProduct from './pages/BoostProduct';
@@ -72,6 +74,7 @@ function App() {
                                         <Route path="/about" element={<About />} />
                                         <Route path="/mission" element={<Mission />} />
                                         <Route path="/how-it-works" element={<HowItWorks />} />
+                                        <Route path="/why-us" element={<WhyUs />} />
                                         <Route path="/contact" element={<Contact />} />
                                         <Route path="/blog" element={<Blog />} />
                                         <Route path="/blog/:slug" element={<BlogPost />} />
@@ -118,6 +121,7 @@ function App() {
                                         <Route path="/category/:slug" element={<CategoryPage />} />
                                         <Route path="/tag/:slug" element={<TagPage />} />
                                         <Route path="/product/:slug" element={<ProductDetails />} />
+                                        <Route path="/product/:slug/reviews" element={<ProductReviewsPage />} />
                                         <Route path="/create-product" element={
                                             <ProtectedRoute allowedRoles={['FOUNDER']}>
                                                 <CreateProduct />
