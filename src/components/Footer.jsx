@@ -118,6 +118,7 @@ const Footer = () => {
                     fontSize: '0.85rem'
                 }}>
                     &copy; {new Date().getFullYear()} {BRAND.legalName}. All rights reserved.
+                    <span style={{ marginLeft: '12px', color: '#ccc' }}>• v3.2.3</span>
                 </div>
             </div>
         </footer>
