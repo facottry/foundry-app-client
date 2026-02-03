@@ -11,13 +11,19 @@ const Login = () => {
     const { login, updateUser } = useContext(AuthContext);
     const navigate = useNavigate();
 
-    const GOOGLE_AUTH_MODE = import.meta.env.VITE_GOOGLE_AUTH_MODE || GoogleAuthMode.REDIRECT;
+    const GOOGLE_AUTH_MODE = import.meta.env.VITE_GOOGLE_AUTH_MODE || 'REDIRECT';
     const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+    const ENABLE_GOOGLE_AUTH = import.meta.env.VITE_ENABLE_GOOGLE_AUTH === 'true';
+    const ENABLE_GITHUB_AUTH = import.meta.env.VITE_ENABLE_GITHUB_AUTH === 'true';
+    const ENABLE_LINKEDIN_AUTH = import.meta.env.VITE_ENABLE_LINKEDIN_AUTH === 'true';
+
+    // Production Visibility: Now purely based on Env Var
+    const showGoogleAuth = ENABLE_GOOGLE_AUTH;
 
     // SDK Lazy Loader & Initialization
     useEffect(() => {
         // 1. Strict Mode Check: If not SDK, do absolutely nothing.
-        if (GOOGLE_AUTH_MODE !== GoogleAuthMode.SDK) {
+        if (GOOGLE_AUTH_MODE !== 'SDK') { // Assuming 'SDK' is the string value now
             return;
         }
 

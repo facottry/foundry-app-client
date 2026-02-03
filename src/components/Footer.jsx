@@ -138,7 +138,8 @@ const Footer = () => {
                     fontSize: '0.85rem'
                 }}>
                     &copy; {new Date().getFullYear()} {BRAND.legalName}. All rights reserved.
-                    <span style={{ marginLeft: '12px', color: '#ccc' }}>• v3.2.3</span>
+                    {/* eslint-disable-next-line no-undef */}
+                    <span style={{ marginLeft: '12px', color: '#ccc' }}>• v{__APP_VERSION__}</span>
                 </div>
             </div>
         </footer>
