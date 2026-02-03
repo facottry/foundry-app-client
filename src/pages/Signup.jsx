@@ -19,6 +19,14 @@ const Signup = () => {
     // Internal production testing flag
     const showGoogleAuth = ENABLE_GOOGLE_AUTH && localStorage.getItem('SHOW_GOOGLE_AUTH') === 'true';
 
+    console.log('[Signup Debug] Flags:', {
+        GOOGLE_AUTH_MODE,
+        ENABLE_GOOGLE_AUTH,
+        ENABLE_GITHUB_AUTH,
+        localStorage_SHOW: localStorage.getItem('SHOW_GOOGLE_AUTH'),
+        computed_showGoogleAuth: showGoogleAuth
+    });
+
     // Redirect if authenticated (e.g. from Google SDK)
     useEffect(() => {
         if (authUser) {

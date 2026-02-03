@@ -85,7 +85,7 @@ export const AuthProvider = ({ children }) => {
             console.log('[AuthContext] Google Credential Received:', response);
             try {
                 const res = await api.post('/auth/sso/google', { idToken: response.credential });
-                const { user, accessToken } = res.data;
+                const { user, accessToken } = res;
 
                 localStorage.setItem('token', accessToken);
                 localStorage.setItem('user', JSON.stringify(user));
