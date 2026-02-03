@@ -4,6 +4,16 @@ import SEO from '../components/SEO';
 const Changelog = () => {
     const updates = [
         {
+            version: '3.2.4',
+            date: '2026-02-03',
+            changes: [
+                'Canonical Identity System: Standardized "Email as Single Source of Truth"',
+                'Feature Flags: Added ENABLE_GOOGLE_AUTH and others controlled via .env',
+                'Global Google SDK: Centralized GSI SDK loading with global window callback',
+                'Login Methods Support: Added loginMethods to user profile'
+            ]
+        },
+        {
             version: '3.2.2',
             date: '2026-02-02',
             changes: [
