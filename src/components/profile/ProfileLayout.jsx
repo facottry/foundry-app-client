@@ -5,6 +5,7 @@ const ProfileLayout = ({ activeTab, onTabChange, children, userRole }) => {
         { id: 'overview', label: 'Overview', icon: '📊' },
         { id: 'personal', label: 'Personal Info', icon: '👤' },
         { id: 'account', label: 'Account', icon: '🔒' },
+        { id: 'security', label: 'Security & SSO', icon: '🔑' },
         { id: 'preferences', label: 'Preferences', icon: '⚙️' },
         { id: 'activity', label: 'Activity', icon: '🕒' },
         { id: 'founder', label: 'Founder Stats', icon: '🚀', role: 'FOUNDER' },

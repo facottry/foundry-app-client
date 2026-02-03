@@ -16,6 +16,8 @@ import SavedProductsSection from '../components/profile/sections/SavedProductsSe
 // For now we map Security -> Account or a simple password change helper.
 
 import AIAssistants from './AIAssistants';
+import SecuritySettings from './SecuritySettings'; // Assuming it's in pages, wait, no it's in pages.
+// If ProfileView is in pages, then './SecuritySettings' works.
 
 const ProfileView = () => {
     const { user, updateUser } = useContext(AuthContext);
@@ -65,8 +67,9 @@ const ProfileView = () => {
             case 'personal':
                 return <PersonalInfoSection user={profile} onUpdate={handleProfileUpdate} />;
             case 'account':
-            case 'security': // Shared for now
                 return <AccountSection user={profile} onUpdate={handleProfileUpdate} />;
+            case 'security':
+                return <SecuritySettings />;
             case 'preferences':
                 return <PreferencesSection user={profile} />;
             case 'activity':

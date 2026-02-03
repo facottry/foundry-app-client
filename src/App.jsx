@@ -52,6 +52,8 @@ import Unsubscribe from './pages/Unsubscribe';
 import AIAssistants from './pages/AIAssistants';
 import RexPage from './pages/RexPage';
 import { BotProvider } from './context/BotContext';
+import SecuritySettings from './pages/SecuritySettings';
+import AuthCallback from './pages/AuthCallback';
 
 import './index.css';
 
@@ -162,6 +164,14 @@ function App() {
                                         <Route path="/change-password" element={
                                             <ProtectedRoute>
                                                 <ChangePassword />
+                                            </ProtectedRoute>
+                                        } />
+                                        <Route path="/login" element={<Login />} />
+                                        <Route path="/auth/callback" element={<AuthCallback />} />
+                                        <Route path="/auth/:provider/callback" element={<AuthCallback />} />
+                                        <Route path="/settings/security" element={
+                                            <ProtectedRoute>
+                                                <SecuritySettings />
                                             </ProtectedRoute>
                                         } />
                                         <Route path="/search" element={<SearchResults />} />

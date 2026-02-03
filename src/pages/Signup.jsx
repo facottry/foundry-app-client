@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthContext from '../context/AuthContext';
 import ErrorState from '../components/common/ErrorState';
@@ -8,8 +8,38 @@ const Signup = () => {
     const [formData, setFormData] = useState({ name: '', email: '', password: '', role: 'CUSTOMER' });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-    const { signup } = useContext(AuthContext);
+    const { signup, loginWithProvider, user: authUser, googleLoginSDK } = useContext(AuthContext);
     const navigate = useNavigate();
+
+    const GOOGLE_AUTH_MODE = import.meta.env.VITE_GOOGLE_AUTH_MODE || 'REDIRECT';
+    const ENABLE_GOOGLE_AUTH = import.meta.env.VITE_ENABLE_GOOGLE_AUTH === 'true';
+    const ENABLE_GITHUB_AUTH = import.meta.env.VITE_ENABLE_GITHUB_AUTH === 'true';
+    const ENABLE_LINKEDIN_AUTH = import.meta.env.VITE_ENABLE_LINKEDIN_AUTH === 'true';
+
+    // Internal production testing flag
+    const showGoogleAuth = ENABLE_GOOGLE_AUTH && localStorage.getItem('SHOW_GOOGLE_AUTH') === 'true';
+
+    // Redirect if authenticated (e.g. from Google SDK)
+    useEffect(() => {
+        if (authUser) {
+            if (authUser.role === 'FOUNDER') navigate('/founder/dashboard');
+            else navigate('/dashboard/customer');
+        }
+    }, [authUser, navigate]);
+
+    const handleSocial = (provider) => {
+        if (provider === 'google') {
+            if (GOOGLE_AUTH_MODE === 'SDK') {
+                googleLoginSDK();
+            } else {
+                const apiUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
+                window.location.href = `${apiUrl}/auth/sso/google`;
+            }
+        } else {
+            const apiUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
+            window.location.href = `${apiUrl}/auth/sso/${provider}`;
+        }
+    };
 
     const { name, email, password, role } = formData;
 
@@ -39,6 +69,45 @@ const Signup = () => {
                     <ErrorState error={error} />
                 </div>
             )}
+
+            <div style={{ marginBottom: '20px', display: 'flex', flexDirection: 'row', gap: '10px' }}>
+                {showGoogleAuth && (
+                    <button
+                        type="button"
+                        className="btn"
+                        style={{ backgroundColor: '#DB4437', color: 'white', flex: 1, border: 'none', padding: '10px 0', fontSize: '0.9rem' }}
+                        onClick={() => handleSocial('google')}
+                    >
+                        Google
+                    </button>
+                )}
+                {ENABLE_GITHUB_AUTH && (
+                    <button
+                        type="button"
+                        className="btn"
+                        style={{ backgroundColor: '#333', color: 'white', flex: 1, border: 'none', padding: '10px 0', fontSize: '0.9rem' }}
+                        onClick={() => handleSocial('github')}
+                    >
+                        GitHub
+                    </button>
+                )}
+                {ENABLE_LINKEDIN_AUTH && (
+                    <button
+                        type="button"
+                        className="btn"
+                        style={{ backgroundColor: '#0077b5', color: 'white', flex: 1, border: 'none', padding: '10px 0', fontSize: '0.9rem' }}
+                        onClick={() => handleSocial('linkedin')}
+                    >
+                        LinkedIn
+                    </button>
+                )}
+            </div>
+
+            <div style={{ position: 'relative', margin: '20px 0', textAlign: 'center' }}>
+                <span style={{ background: 'white', padding: '0 10px', color: '#666', position: 'relative', zIndex: 1 }}>Or sign up with Email</span>
+                <div style={{ position: 'absolute', top: '50%', left: 0, right: 0, height: '1px', background: '#ccc', zIndex: 0 }}></div>
+            </div>
+
             <form onSubmit={onSubmit}>
                 <div style={{ marginBottom: '15px' }}>
                     <label>Name</label>

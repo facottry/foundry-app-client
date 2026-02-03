@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import AuthContext from '../context/AuthContext';
 import ErrorState from '../components/common/ErrorState';
@@ -8,11 +8,115 @@ const Login = () => {
     const [formData, setFormData] = useState({ email: '', password: '' });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-    const { login } = useContext(AuthContext);
+    const { login, updateUser } = useContext(AuthContext);
     const navigate = useNavigate();
 
-    const { email, password } = formData;
+    const GOOGLE_AUTH_MODE = import.meta.env.VITE_GOOGLE_AUTH_MODE || GoogleAuthMode.REDIRECT;
+    const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
+    // SDK Lazy Loader & Initialization
+    useEffect(() => {
+        // 1. Strict Mode Check: If not SDK, do absolutely nothing.
+        if (GOOGLE_AUTH_MODE !== GoogleAuthMode.SDK) {
+            return;
+        }
+
+        console.log('[GoogleAuth] Mode: SDK. Loading script...');
+
+        const initGSI = () => {
+            if (window.google && window.google.accounts) {
+                console.log('[GoogleAuth] Initializing GSI...');
+                window.google.accounts.id.initialize({
+                    client_id: GOOGLE_CLIENT_ID,
+                    callback: handleGoogleCredentialResponse,
+                });
+                console.log('[GoogleAuth] GSI Initialized.');
+            } else {
+                console.error('[GoogleAuth] window.google not available after load.');
+            }
+        };
+
+        const scriptUrl = 'https://accounts.google.com/gsi/client';
+        const existingScript = document.querySelector(`script[src="${scriptUrl}"]`);
+
+        if (existingScript) {
+            console.log('[GoogleAuth] Script already exists. Checking window.google...');
+            if (window.google) initGSI();
+            else existingScript.addEventListener('load', initGSI);
+        } else {
+            console.log('[GoogleAuth] Creating script tag...');
+            const script = document.createElement('script');
+            script.src = scriptUrl;
+            script.async = true;
+            script.defer = true;
+            script.onload = initGSI;
+            document.body.appendChild(script);
+        }
+
+        // Cleanup: We generally don't remove the script on unmount to avoid re-downloading, 
+        // but we could if strict cleanup is needed. For now, leaving it is standard SPA practice.
+    }, [GOOGLE_AUTH_MODE, GOOGLE_CLIENT_ID]);
+
+    const handleGoogleCredentialResponse = async (response) => {
+        console.log('[GoogleAuth] Credential Received:', response);
+        try {
+            setLoading(true);
+            const res = await api.post('/auth/sso/google', { idToken: response.credential });
+            const { user, accessToken } = res.data;
+
+            localStorage.setItem('token', accessToken);
+            updateUser(user);
+
+            if (user.role === 'FOUNDER') navigate('/founder/dashboard');
+            else navigate('/dashboard/customer');
+
+        } catch (err) {
+            console.error('[GoogleAuth] Backend Exchange Error', err);
+            setError(err.response?.data?.error || 'Google Sign-In failed');
+            setLoading(false);
+        }
+    };
+
+    const loginWithGoogleSDK = () => {
+        console.log('[GoogleAuth] loginWithGoogleSDK triggered.');
+        if (window.google && window.google.accounts) {
+            console.log('[GoogleAuth] Calling prompt()...');
+
+            // OPTIONAL: Reset state to force prompt if previously closed/suppressed
+            // document.cookie = `g_state=;path=/;expires=Thu, 01 Jan 1970 00:00:01 GMT`;
+
+            window.google.accounts.id.prompt((notification) => {
+                console.log('[GoogleAuth] Prompt notification:', notification);
+                if (notification.isNotDisplayed()) {
+                    console.warn('[GoogleAuth] Prompt Not Displayed. Reason:', notification.getNotDisplayedReason());
+                    if (notification.getNotDisplayedReason() === 'suppressed_by_user') {
+                        alert('Google Sign-In was suppressed. Please check your browser settings or try Incognito.');
+                    }
+                }
+            });
+        } else {
+            console.error('[GoogleAuth] SDK not loaded yet.');
+            alert('Google SDK is loading... please try again in a moment.');
+        }
+    };
+
+    const handleSocial = (provider) => {
+        if (provider === 'google') {
+            if (GOOGLE_AUTH_MODE === GoogleAuthMode.SDK) {
+                loginWithGoogleSDK();
+            } else {
+                // REDIRECT MODE
+                const apiUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
+                window.location.href = `${apiUrl}/auth/sso/google`;
+            }
+        } else {
+            // Other providers
+            const apiUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
+            window.location.href = `${apiUrl}/auth/sso/${provider}`;
+        }
+    };
+
+    const { email, password } = formData;
     const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
     const onSubmit = async e => {
@@ -21,8 +125,12 @@ const Login = () => {
         setError(null);
         try {
             const user = await login(email, password);
+            if (!user) { // user might be undefined if login fails and doesn't throw? AuthContext depends.
+                // Assuming login throws on error
+                return;
+            }
             if (user.role === 'FOUNDER') navigate('/founder/dashboard');
-            else if (user.role === 'ADMIN') navigate('/dashboard/admin'); // Should not happen in public client potentially
+            else if (user.role === 'ADMIN') navigate('/dashboard/admin');
             else navigate('/dashboard/customer');
         } catch (err) {
             setError(err);
@@ -40,6 +148,44 @@ const Login = () => {
                     <ErrorState error={error} />
                 </div>
             )}
+            <div style={{ marginBottom: '20px', display: 'flex', flexDirection: 'row', gap: '10px' }}>
+                {showGoogleAuth && (
+                    <button
+                        type="button"
+                        className="btn"
+                        style={{ backgroundColor: '#DB4437', color: 'white', flex: 1, border: 'none', padding: '10px 0', fontSize: '0.9rem' }}
+                        onClick={() => handleSocial('google')}
+                    >
+                        {GOOGLE_AUTH_MODE === 'SDK' ? 'Google' : 'Google'}
+                    </button>
+                )}
+                {ENABLE_GITHUB_AUTH && (
+                    <button
+                        type="button"
+                        className="btn"
+                        style={{ backgroundColor: '#333', color: 'white', flex: 1, border: 'none', padding: '10px 0', fontSize: '0.9rem' }}
+                        onClick={() => handleSocial('github')}
+                    >
+                        GitHub
+                    </button>
+                )}
+                {ENABLE_LINKEDIN_AUTH && (
+                    <button
+                        type="button"
+                        className="btn"
+                        style={{ backgroundColor: '#0077b5', color: 'white', flex: 1, border: 'none', padding: '10px 0', fontSize: '0.9rem' }}
+                        onClick={() => handleSocial('linkedin')}
+                    >
+                        LinkedIn
+                    </button>
+                )}
+            </div>
+
+            <div style={{ position: 'relative', margin: '20px 0', textAlign: 'center' }}>
+                <span style={{ background: 'white', padding: '0 10px', color: '#666', position: 'relative', zIndex: 1 }}>Or continue with Email</span>
+                <div style={{ position: 'absolute', top: '50%', left: 0, right: 0, height: '1px', background: '#ccc', zIndex: 0 }}></div>
+            </div>
+
             <form onSubmit={onSubmit}>
                 <div style={{ marginBottom: '15px' }}>
                     <label>Email</label>
