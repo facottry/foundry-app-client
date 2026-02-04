@@ -14,10 +14,11 @@ const Signup = () => {
     const GOOGLE_AUTH_MODE = import.meta.env.VITE_GOOGLE_AUTH_MODE || 'REDIRECT';
     const ENABLE_GOOGLE_AUTH = import.meta.env.VITE_ENABLE_GOOGLE_AUTH === 'true';
     const ENABLE_GITHUB_AUTH = import.meta.env.VITE_ENABLE_GITHUB_AUTH === 'true';
+    const GITHUB_CLIENT_ID = import.meta.env.VITE_GITHUB_CLIENT_ID;
     const ENABLE_LINKEDIN_AUTH = import.meta.env.VITE_ENABLE_LINKEDIN_AUTH === 'true';
 
     // Internal production testing flag
-    const showGoogleAuth = ENABLE_GOOGLE_AUTH && localStorage.getItem('SHOW_GOOGLE_AUTH') === 'true';
+    const showGoogleAuth = ENABLE_GOOGLE_AUTH;
 
     console.log('[Signup Debug] Flags:', {
         GOOGLE_AUTH_MODE,
@@ -89,7 +90,7 @@ const Signup = () => {
                         Google
                     </button>
                 )}
-                {ENABLE_GITHUB_AUTH && (
+                {ENABLE_GITHUB_AUTH && GITHUB_CLIENT_ID && (
                     <button
                         type="button"
                         className="btn"

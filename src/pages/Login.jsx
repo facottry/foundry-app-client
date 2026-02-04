@@ -15,6 +15,7 @@ const Login = () => {
     const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
     const ENABLE_GOOGLE_AUTH = import.meta.env.VITE_ENABLE_GOOGLE_AUTH === 'true';
     const ENABLE_GITHUB_AUTH = import.meta.env.VITE_ENABLE_GITHUB_AUTH === 'true';
+    const GITHUB_CLIENT_ID = import.meta.env.VITE_GITHUB_CLIENT_ID;
     const ENABLE_LINKEDIN_AUTH = import.meta.env.VITE_ENABLE_LINKEDIN_AUTH === 'true';
 
     // Production Visibility: Now purely based on Env Var
@@ -108,7 +109,7 @@ const Login = () => {
 
     const handleSocial = (provider) => {
         if (provider === 'google') {
-            if (GOOGLE_AUTH_MODE === GoogleAuthMode.SDK) {
+            if (GOOGLE_AUTH_MODE === 'SDK') {
                 loginWithGoogleSDK();
             } else {
                 // REDIRECT MODE
@@ -165,7 +166,7 @@ const Login = () => {
                         {GOOGLE_AUTH_MODE === 'SDK' ? 'Google' : 'Google'}
                     </button>
                 )}
-                {ENABLE_GITHUB_AUTH && (
+                {ENABLE_GITHUB_AUTH && GITHUB_CLIENT_ID && (
                     <button
                         type="button"
                         className="btn"
