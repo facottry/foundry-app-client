@@ -62,18 +62,6 @@ const ReviewList = ({ productId, user, productOwnerId, slug, isFullPage = false 
 
     const canReview = user && !hasReviewed && (user.role === 'CUSTOMER' || user.role === 'FOUNDER');
 
-    // DEBUG LOGGING
-    console.log('--- ReviewList Debug ---');
-    console.log('User:', user);
-    console.log('ProductId:', productId);
-    console.log('ProductOwnerId:', productOwnerId);
-    console.log('User ID:', user?.id || user?._id);
-    console.log('Reviews:', reviews);
-    console.log('Has Reviewed:', hasReviewed);
-    console.log('Is Owner:', isOwner);
-    console.log('Role:', user?.role);
-    console.log('Can Review:', canReview);
-    console.log('------------------------');
 
     // V1 Integration: Fetch summary
     const [v1Stats, setV1Stats] = useState(null);

@@ -4,7 +4,7 @@ import api from '../utils/api';
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-    console.log('AuthProvider initializing...');
+
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -81,8 +81,7 @@ export const AuthProvider = ({ children }) => {
 
         // Define global callback to ensure Google SDK can reach it
         window.handleGoogleCredentialResponse = async (response) => {
-            console.log('GOOGLE SDK SUCCESS', response);
-            console.log('[AuthContext] Google Credential Received:', response);
+
             try {
                 const res = await api.post('/auth/sso/google', { idToken: response.credential });
                 const { user, accessToken } = res;
@@ -102,12 +101,12 @@ export const AuthProvider = ({ children }) => {
 
         const initGSI = () => {
             if (window.google && window.google.accounts) {
-                console.log('[AuthContext] Initializing GSI...', GOOGLE_CLIENT_ID);
+
                 window.google.accounts.id.initialize({
                     client_id: GOOGLE_CLIENT_ID,
                     callback: window.handleGoogleCredentialResponse, // Use global reference
                 });
-                console.log('[AuthContext] GSI Initialized.');
+
             }
         };
 

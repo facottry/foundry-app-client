@@ -33,7 +33,7 @@ export const BotProvider = ({ children }) => {
                 serverUrl: res.data?.serverUrl
             };
         } catch (err) {
-            console.log('[BotSDK] Eligibility check failed', err);
+
             return { eligible: false };
         }
     }, [user]);
@@ -43,7 +43,7 @@ export const BotProvider = ({ children }) => {
         const finalServerUrl = serverUrlOverride || dynamicServerUrl;
 
         if (!finalServerUrl) {
-            console.log('[BotSDK] Missing server configuration');
+
             return;
         }
 
@@ -51,7 +51,7 @@ export const BotProvider = ({ children }) => {
         const BotClass = window.ClickyBot;
 
         if (!BotClass) {
-            console.log('[BotSDK] Namespace not found immediately. Retrying in 100ms...');
+
             setTimeout(() => {
                 const RetryBotClass = window.ClickyBot;
                 if (RetryBotClass) {
@@ -62,13 +62,13 @@ export const BotProvider = ({ children }) => {
                             mode: 'full',
                             containerId: 'rex-widget-container'
                         });
-                        console.log('[BotSDK] Bot initialized (retry) with server:', finalServerUrl);
+
                         // Store instance on window for debug or ref? 
                         // It attaches itself to DOM, so instance ref is mainly for toggle.
                         // We can attach it to window.clickyInstance for now or use a ref.
                         window.clickyInstance = botInstance;
                         const mounted = botInstance.mount(); // Explicit mount
-                        if (mounted) console.log('[BotSDK] Bot mounted successfully');
+                        if (mounted) { }
                         else console.warn('[BotSDK] Bot init success but mount deferred (Container missing)');
 
                         setIsBotReady(true); // Ready for interactions (like deferred mount)
@@ -76,7 +76,7 @@ export const BotProvider = ({ children }) => {
                         console.error('[BotSDK] Init failed', e);
                     }
                 } else {
-                    console.log('[BotSDK] Namespace still not found');
+
                 }
             }, 100);
             return;
@@ -91,8 +91,11 @@ export const BotProvider = ({ children }) => {
             });
             window.clickyInstance = botInstance;
             const mounted = botInstance.mount(); // Explicit mount
-            if (mounted) console.log('[BotSDK] Bot initialized and mounted with server:', finalServerUrl);
-            else console.warn('[BotSDK] Bot init success but mount deferred (Container missing)');
+            if (mounted) {
+                // Mounted successfully
+            } else {
+                console.warn('[BotSDK] Bot init success but mount deferred (Container missing)');
+            }
 
             setIsBotReady(true);
         } catch (e) {
@@ -114,13 +117,13 @@ export const BotProvider = ({ children }) => {
             return;
         }
 
-        console.log(`[BotSDK] Loading SDK from: ${url} (Retry: ${isRetry})`);
+
         const script = document.createElement('script');
         script.src = url;
         script.async = true;
 
         script.onload = () => {
-            console.log('[BotSDK] Script loaded successfully:', url);
+
             setLoaded(true);
             initBot(serverUrl);
         };
@@ -132,7 +135,7 @@ export const BotProvider = ({ children }) => {
             script.remove();
 
             if (!isRetry && url !== FALLBACK_URL) {
-                console.log('[BotSDK] Attempting fallback to:', FALLBACK_URL);
+
                 // Try fallback
                 loadSDK(FALLBACK_URL, serverUrl, true);
             } else {
@@ -156,7 +159,7 @@ export const BotProvider = ({ children }) => {
         setLoaded(false);
         setIsBotReady(false);
         loadingRef.current = false;
-        console.log('[BotSDK] Bot unloaded');
+
     }, [dynamicSdkUrl]);
 
     // Main Orchestration Effect
@@ -184,7 +187,7 @@ export const BotProvider = ({ children }) => {
                 if (sdkUrl && serverUrl) {
                     loadSDK(sdkUrl, serverUrl);
                 } else {
-                    console.log('[BotSDK] Missing SDK or Server URL from API');
+
                 }
             } else {
                 // Not eligible

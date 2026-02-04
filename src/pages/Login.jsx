@@ -24,24 +24,19 @@ const Login = () => {
     const showGoogleAuth = ENABLE_GOOGLE_AUTH;
 
     // SDK Lazy Loader & Initialization
+    // SDK Lazy Loader & Initialization
     useEffect(() => {
         // 1. Strict Mode Check: If not SDK, do absolutely nothing.
-        if (GOOGLE_AUTH_MODE !== 'SDK') { // Assuming 'SDK' is the string value now
+        if (GOOGLE_AUTH_MODE !== 'SDK') {
             return;
         }
 
-        console.log('[GoogleAuth] Mode: SDK. Loading script...');
-
         const initGSI = () => {
             if (window.google && window.google.accounts) {
-                console.log('[GoogleAuth] Initializing GSI...');
                 window.google.accounts.id.initialize({
                     client_id: GOOGLE_CLIENT_ID,
                     callback: handleGoogleCredentialResponse,
                 });
-                console.log('[GoogleAuth] GSI Initialized.');
-            } else {
-                console.error('[GoogleAuth] window.google not available after load.');
             }
         };
 
@@ -49,11 +44,9 @@ const Login = () => {
         const existingScript = document.querySelector(`script[src="${scriptUrl}"]`);
 
         if (existingScript) {
-            console.log('[GoogleAuth] Script already exists. Checking window.google...');
             if (window.google) initGSI();
             else existingScript.addEventListener('load', initGSI);
         } else {
-            console.log('[GoogleAuth] Creating script tag...');
             const script = document.createElement('script');
             script.src = scriptUrl;
             script.async = true;
@@ -62,12 +55,10 @@ const Login = () => {
             document.body.appendChild(script);
         }
 
-        // Cleanup: We generally don't remove the script on unmount to avoid re-downloading, 
-        // but we could if strict cleanup is needed. For now, leaving it is standard SPA practice.
+        // Cleanup: We generally don't remove the script on unmount to avoid re-downloading
     }, [GOOGLE_AUTH_MODE, GOOGLE_CLIENT_ID]);
 
     const handleGoogleCredentialResponse = async (response) => {
-        console.log('[GoogleAuth] Credential Received:', response);
         try {
             setLoading(true);
             const res = await api.post('/auth/sso/google', { idToken: response.credential });
@@ -87,25 +78,14 @@ const Login = () => {
     };
 
     const loginWithGoogleSDK = () => {
-        console.log('[GoogleAuth] loginWithGoogleSDK triggered.');
         if (window.google && window.google.accounts) {
-            console.log('[GoogleAuth] Calling prompt()...');
-
-            // OPTIONAL: Reset state to force prompt if previously closed/suppressed
-            // document.cookie = `g_state=;path=/;expires=Thu, 01 Jan 1970 00:00:01 GMT`;
-
             window.google.accounts.id.prompt((notification) => {
-                console.log('[GoogleAuth] Prompt notification:', notification);
                 if (notification.isNotDisplayed()) {
-                    console.warn('[GoogleAuth] Prompt Not Displayed. Reason:', notification.getNotDisplayedReason());
                     if (notification.getNotDisplayedReason() === 'suppressed_by_user') {
                         alert('Google Sign-In was suppressed. Please check your browser settings or try Incognito.');
                     }
                 }
             });
-        } else {
-            console.error('[GoogleAuth] SDK not loaded yet.');
-            alert('Google SDK is loading... please try again in a moment.');
         }
     };
 

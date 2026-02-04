@@ -26,39 +26,34 @@ const AuthCallback = () => {
                 let user;
                 let accessToken = token;
 
-                console.log('[AuthCallback Debug] Init. Token:', !!token, 'Code:', !!code, 'Provider:', provider);
+
 
                 // Flow A: Frontend Exchange (SPA) - code provided
                 if (!accessToken && code && provider) {
-                    console.log('[AuthCallback Debug] Starting Flow A (Code Exchange)...');
                     const res = await api.post(`/auth/sso/${provider}/callback`, { code });
                     // api.js unwraps response.data, and backend returns { user, accessToken } directly
                     accessToken = res.accessToken;
                     user = res.user;
-                    console.log('[AuthCallback Debug] Flow A Success. User:', user?.email);
                     updateUser(user);
                     localStorage.setItem('token', accessToken);
                 }
 
                 // Flow B: Backend Redirect (Legacy) - token provided
                 else if (accessToken) {
-                    console.log('[AuthCallback Debug] Starting Flow B (Token Provided)...');
                     localStorage.setItem('token', accessToken);
                     const { default: api } = await import('../utils/api');
                     const res = await api.get('/auth/me');
                     // api.js returns user object directly
                     user = res;
-                    console.log('[AuthCallback Debug] Flow B Success. User:', user?.email);
                     updateUser(user);
                 }
 
                 // Final Navigation
                 if (user) {
-                    console.log('[AuthCallback Debug] Navigating to dashboard for role:', user.role);
                     if (user.role === 'FOUNDER') navigate('/founder/dashboard');
                     else navigate('/dashboard/customer');
                 } else {
-                    console.warn('[AuthCallback Debug] No user resolved. Navigating to login.');
+                    console.warn('No user resolved. Navigating to login.');
                     navigate('/login');
                 }
 

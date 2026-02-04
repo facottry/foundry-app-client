@@ -17,7 +17,7 @@ const VisitRedirect = () => {
             try {
                 // Tracking Logic
                 // Tracking Logic: Handled by server on redirect (appserver/r/:id)
-                console.log('Redirecting to product...');
+
 
                 // Redirect Logic
                 const apiBase = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';

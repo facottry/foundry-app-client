@@ -58,7 +58,7 @@ import AuthCallback from './pages/AuthCallback';
 import './index.css';
 
 function App() {
-    console.log('App component rendering...');
+
     return (
         <AuthProvider>
             <ConfigProvider>
