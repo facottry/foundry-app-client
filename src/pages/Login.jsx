@@ -4,6 +4,7 @@ import AuthContext from '../context/AuthContext';
 import ErrorState from '../components/common/ErrorState';
 import LoadingState from '../components/common/LoadingState';
 import SEO from '../components/SEO';
+import api from '../utils/api';
 
 const Login = () => {
     const [formData, setFormData] = useState({ email: '', password: '' });
