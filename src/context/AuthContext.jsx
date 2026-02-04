@@ -94,7 +94,9 @@ export const AuthProvider = ({ children }) => {
                 // User state change will trigger redirects in components
             } catch (err) {
                 console.error('[AuthContext] Google SSO Error', err);
-                alert('Google Sign-In Failed: ' + (err.response?.data?.error || err.message));
+                // api.js interceptor might return the error string directly
+                const errorMessage = typeof err === 'string' ? err : (err.response?.data?.error || err.message || 'Unknown Error');
+                alert('Google Sign-In Failed: ' + errorMessage);
             }
         };
 
