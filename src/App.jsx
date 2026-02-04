@@ -57,6 +57,23 @@ import AuthCallback from './pages/AuthCallback';
 
 import './index.css';
 
+import { useLocation } from 'react-router-dom';
+
+function Layout({ children }) {
+    const location = useLocation();
+    const isSearchPage = location.pathname === '/search';
+
+    return (
+        <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+            {!isSearchPage && <Navbar />}
+            <div className={isSearchPage ? "" : "container"} style={{ flex: 1, paddingBottom: '60px' }}>
+                {children}
+            </div>
+            <Footer />
+        </div>
+    );
+}
+
 function App() {
 
     return (
@@ -66,133 +83,129 @@ function App() {
                     <HelmetProvider>
                         <Router>
                             <ScrollToTop />
-                            <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-                                <Navbar />
-                                <div className="container" style={{ flex: 1, paddingBottom: '60px' }}>
-                                    <Routes>
-                                        <Route path="/" element={<Home />} />
-                                        {/* ... truncated unchanged routes ... */}
-                                        <Route path="/pricing" element={<Pricing />} />
-                                        <Route path="/about" element={<About />} />
-                                        <Route path="/mission" element={<Mission />} />
-                                        <Route path="/how-it-works" element={<HowItWorks />} />
-                                        <Route path="/why-us" element={<WhyUs />} />
-                                        <Route path="/contact" element={<Contact />} />
-                                        <Route path="/blog" element={<Blog />} />
-                                        <Route path="/blog/:slug" element={<BlogPost />} />
-                                        <Route path="/blog/author" element={<AuthorsList />} />
-                                        <Route path="/blog/author/:authorId" element={<AuthorBlog />} />
-                                        <Route path="/changelog" element={<Changelog />} />
-                                        <Route path="/cookies" element={<CookiePolicy />} />
-                                        <Route path="/privacy" element={<Privacy />} />
-                                        <Route path="/terms" element={<Terms />} />
-                                        <Route path="/login" element={<Login />} />
-                                        <Route path="/signup" element={<Signup />} />
-                                        <Route path="/founder/:founderId" element={<FounderProfile />} />
+                            <Layout>
+                                <Routes>
+                                    <Route path="/" element={<Home />} />
+                                    {/* ... pages ... */}
+                                    <Route path="/pricing" element={<Pricing />} />
+                                    <Route path="/about" element={<About />} />
+                                    <Route path="/mission" element={<Mission />} />
+                                    <Route path="/how-it-works" element={<HowItWorks />} />
+                                    <Route path="/why-us" element={<WhyUs />} />
+                                    <Route path="/contact" element={<Contact />} />
+                                    <Route path="/blog" element={<Blog />} />
+                                    <Route path="/blog/:slug" element={<BlogPost />} />
+                                    <Route path="/blog/author" element={<AuthorsList />} />
+                                    <Route path="/blog/author/:authorId" element={<AuthorBlog />} />
+                                    <Route path="/changelog" element={<Changelog />} />
+                                    <Route path="/cookies" element={<CookiePolicy />} />
+                                    <Route path="/privacy" element={<Privacy />} />
+                                    <Route path="/terms" element={<Terms />} />
+                                    <Route path="/login" element={<Login />} />
+                                    <Route path="/signup" element={<Signup />} />
+                                    <Route path="/founder/:founderId" element={<FounderProfile />} />
 
-                                        {/* Protected Routes */}
-                                        <Route path="/founder/dashboard" element={
-                                            <ProtectedRoute allowedRoles={['FOUNDER']}>
-                                                <DashboardFounder />
-                                            </ProtectedRoute>
-                                        } />
+                                    {/* Protected Routes */}
+                                    <Route path="/founder/dashboard" element={
+                                        <ProtectedRoute allowedRoles={['FOUNDER']}>
+                                            <DashboardFounder />
+                                        </ProtectedRoute>
+                                    } />
 
-                                        <Route path="/dashboard/customer" element={
-                                            <ProtectedRoute>
-                                                <DashboardCustomer />
-                                            </ProtectedRoute>
-                                        } />
+                                    <Route path="/dashboard/customer" element={
+                                        <ProtectedRoute>
+                                            <DashboardCustomer />
+                                        </ProtectedRoute>
+                                    } />
 
-                                        <Route path="/profile" element={
-                                            <ProtectedRoute>
-                                                <ProfileView />
-                                            </ProtectedRoute>
-                                        } />
-                                        <Route path="/saved" element={
-                                            <ProtectedRoute>
-                                                <SavedProductsPage />
-                                            </ProtectedRoute>
-                                        } />
-                                        <Route path="/profile/edit" element={
-                                            <ProtectedRoute>
-                                                <ProfileEdit />
-                                            </ProtectedRoute>
-                                        } />
+                                    <Route path="/profile" element={
+                                        <ProtectedRoute>
+                                            <ProfileView />
+                                        </ProtectedRoute>
+                                    } />
+                                    <Route path="/saved" element={
+                                        <ProtectedRoute>
+                                            <SavedProductsPage />
+                                        </ProtectedRoute>
+                                    } />
+                                    <Route path="/profile/edit" element={
+                                        <ProtectedRoute>
+                                            <ProfileEdit />
+                                        </ProtectedRoute>
+                                    } />
 
 
-                                        <Route path="/category/:slug" element={<CategoryPage />} />
-                                        <Route path="/tag/:slug" element={<TagPage />} />
-                                        <Route path="/product/:slug" element={<ProductDetails />} />
-                                        <Route path="/product/:slug/reviews" element={<ProductReviewsPage />} />
-                                        <Route path="/create-product" element={
-                                            <ProtectedRoute allowedRoles={['FOUNDER']}>
-                                                <CreateProduct />
-                                            </ProtectedRoute>
-                                        } />
-                                        <Route path="/founder/products/:id/edit" element={
-                                            <ProtectedRoute allowedRoles={['FOUNDER']}>
-                                                <EditProduct />
-                                            </ProtectedRoute>
-                                        } />
-                                        <Route path="/founder/products" element={
-                                            <ProtectedRoute allowedRoles={['FOUNDER']}>
-                                                <FounderProductsPage />
-                                            </ProtectedRoute>
-                                        } />
+                                    <Route path="/category/:slug" element={<CategoryPage />} />
+                                    <Route path="/tag/:slug" element={<TagPage />} />
+                                    <Route path="/product/:slug" element={<ProductDetails />} />
+                                    <Route path="/product/:slug/reviews" element={<ProductReviewsPage />} />
+                                    <Route path="/create-product" element={
+                                        <ProtectedRoute allowedRoles={['FOUNDER']}>
+                                            <CreateProduct />
+                                        </ProtectedRoute>
+                                    } />
+                                    <Route path="/founder/products/:id/edit" element={
+                                        <ProtectedRoute allowedRoles={['FOUNDER']}>
+                                            <EditProduct />
+                                        </ProtectedRoute>
+                                    } />
+                                    <Route path="/founder/products" element={
+                                        <ProtectedRoute allowedRoles={['FOUNDER']}>
+                                            <FounderProductsPage />
+                                        </ProtectedRoute>
+                                    } />
 
-                                        {/* Redirect legacy AI Assistants route to Profile Settings */}
-                                        <Route path="/founder/ai-assistants" element={
-                                            <Navigate to="/profile#ai-assistants" replace />
-                                        } />
+                                    {/* Redirect legacy AI Assistants route to Profile Settings */}
+                                    <Route path="/founder/ai-assistants" element={
+                                        <Navigate to="/profile#ai-assistants" replace />
+                                    } />
 
-                                        <Route path="/analytics/product/:id" element={
-                                            <ProtectedRoute allowedRoles={['FOUNDER']}>
-                                                <ProductAnalyticsPage />
-                                            </ProtectedRoute>
-                                        } />
-                                        <Route path="/boost/:productId" element={
-                                            <ProtectedRoute allowedRoles={['FOUNDER']}>
-                                                <BoostProduct />
-                                            </ProtectedRoute>
-                                        } />
-                                        <Route path="/wallet" element={
-                                            <ProtectedRoute allowedRoles={['FOUNDER']}>
-                                                <Wallet />
-                                            </ProtectedRoute>
-                                        } />
-                                        <Route path="/login-otp" element={<LoginOTP />} />
-                                        <Route path="/change-password" element={
-                                            <ProtectedRoute>
-                                                <ChangePassword />
-                                            </ProtectedRoute>
-                                        } />
-                                        <Route path="/login" element={<Login />} />
-                                        <Route path="/auth/callback" element={<AuthCallback />} />
-                                        <Route path="/auth/:provider/callback" element={<AuthCallback />} />
-                                        <Route path="/settings/security" element={
-                                            <ProtectedRoute>
-                                                <SecuritySettings />
-                                            </ProtectedRoute>
-                                        } />
-                                        <Route path="/search" element={<SearchResults />} />
-                                        <Route path="/newsletter" element={<NewsletterPage />} />
-                                        <Route path="/newsletter/:slug" element={<NewsletterPage />} />
-                                        <Route path="/newsletter/confirm" element={<NewsletterConfirm />} />
-                                        <Route path="/newsletter/unsubscribe" element={<Unsubscribe />} />
+                                    <Route path="/analytics/product/:id" element={
+                                        <ProtectedRoute allowedRoles={['FOUNDER']}>
+                                            <ProductAnalyticsPage />
+                                        </ProtectedRoute>
+                                    } />
+                                    <Route path="/boost/:productId" element={
+                                        <ProtectedRoute allowedRoles={['FOUNDER']}>
+                                            <BoostProduct />
+                                        </ProtectedRoute>
+                                    } />
+                                    <Route path="/wallet" element={
+                                        <ProtectedRoute allowedRoles={['FOUNDER']}>
+                                            <Wallet />
+                                        </ProtectedRoute>
+                                    } />
+                                    <Route path="/login-otp" element={<LoginOTP />} />
+                                    <Route path="/change-password" element={
+                                        <ProtectedRoute>
+                                            <ChangePassword />
+                                        </ProtectedRoute>
+                                    } />
+                                    <Route path="/login" element={<Login />} />
+                                    <Route path="/auth/callback" element={<AuthCallback />} />
+                                    <Route path="/auth/:provider/callback" element={<AuthCallback />} />
+                                    <Route path="/settings/security" element={
+                                        <ProtectedRoute>
+                                            <SecuritySettings />
+                                        </ProtectedRoute>
+                                    } />
+                                    <Route path="/search" element={<SearchResults />} />
+                                    <Route path="/newsletter" element={<NewsletterPage />} />
+                                    <Route path="/newsletter/:slug" element={<NewsletterPage />} />
+                                    <Route path="/newsletter/confirm" element={<NewsletterConfirm />} />
+                                    <Route path="/newsletter/unsubscribe" element={<Unsubscribe />} />
 
-                                        <Route path="/visit/:id" element={<VisitRedirect />} />
+                                    <Route path="/visit/:id" element={<VisitRedirect />} />
 
-                                        {/* Catch-all 404 */}
-                                        <Route path="*" element={<NotFound />} />
-                                        <Route path="/founder/rex" element={
-                                            <ProtectedRoute allowedRoles={['FOUNDER']}>
-                                                <RexPage />
-                                            </ProtectedRoute>
-                                        } />
-                                    </Routes>
-                                </div>
-                                <Footer />
-                            </div>
+                                    {/* Catch-all 404 */}
+                                    <Route path="*" element={<NotFound />} />
+                                    <Route path="/founder/rex" element={
+                                        <ProtectedRoute allowedRoles={['FOUNDER']}>
+                                            <RexPage />
+                                        </ProtectedRoute>
+                                    } />
+                                </Routes>
+                            </Layout>
                         </Router>
                     </HelmetProvider>
                 </BotProvider>

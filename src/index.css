@@ -33,6 +33,11 @@
   --radius-md: 12px;
   --radius-lg: 16px;
   --radius-pill: 50px;
+
+  /* Aliases for Search UI */
+  --bg-main: var(--bg-primary);
+  --bg-subtle: #F7F7F5; /* Slightly lighter than secondary */
+  --text-tertiary: #A0A0A0;
 }
 
 body {

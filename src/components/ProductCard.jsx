@@ -41,13 +41,16 @@ const getCardGradient = (str) => {
     return gradients[Math.abs(hash) % gradients.length];
 };
 
-const ProductCard = ({ product, promoted }) => {
+const ProductCard = ({ product, promoted, aspectRatio }) => {
     const logoUrl = product.logoUrl || getImageUrl(product.logoKey || product.logo_url);
     const initialColorClass = getColorFromHash(product.name || '?');
     const cardGradientClass = getCardGradient(product.name || '?');
 
     // Category mapping (similar to backend metadata if needed, or just use string)
     const category = (product.categories && product.categories[0]) || 'Tool';
+
+    // Adjust padding/layout for different aspect ratios
+    const isCompact = aspectRatio === '4/3';
 
     return (
         <Link
@@ -56,7 +59,8 @@ const ProductCard = ({ product, promoted }) => {
             className="group block h-full outline-none"
         >
             <div className={`
-                relative flex flex-col h-full rounded-2xl p-6 border transition-all duration-200 ease-out
+                relative flex flex-col h-full rounded-2xl border transition-all duration-200 ease-out
+                ${isCompact ? 'p-5' : 'p-6'} 
                 ${cardGradientClass} animate-gradient-slow
                 ${promoted ? 'border-orange-200 shadow-orange-100/20' : 'border-gray-100'}
                 hover:-translate-y-1 hover:shadow-xl hover:shadow-gray-200/50 hover:border-orange-200/50

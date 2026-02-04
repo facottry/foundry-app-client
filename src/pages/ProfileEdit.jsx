@@ -19,6 +19,7 @@ const ProfileEdit = ({ isEmbedded = false }) => {
         bio: '',
         company_name: '',
         role_title: '',
+        city: '', // Added city field
         location: '',
         website: '',
         twitter: '',
@@ -38,6 +39,7 @@ const ProfileEdit = ({ isEmbedded = false }) => {
                     bio: p.bio || '',
                     company_name: p.company_name || '',
                     role_title: p.role_title || '',
+                    city: p.city || '',
                     location: p.location || '',
                     website: p.website || '',
                     twitter: p.twitter || '',
@@ -170,16 +172,29 @@ const ProfileEdit = ({ isEmbedded = false }) => {
                     </div>
                 </div>
 
-                <div style={formGroupStyle}>
-                    <label style={labelStyle}>Location</label>
-                    <input
-                        type="text"
-                        name="location"
-                        value={formData.location}
-                        onChange={handleChange}
-                        placeholder="e.g. San Francisco, CA"
-                        style={inputStyle}
-                    />
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+                    <div style={formGroupStyle}>
+                        <label style={labelStyle}>City</label>
+                        <input
+                            type="text"
+                            name="city"
+                            value={formData.city}
+                            onChange={handleChange}
+                            placeholder="e.g. New York"
+                            style={inputStyle}
+                        />
+                    </div>
+                    <div style={formGroupStyle}>
+                        <label style={labelStyle}>Country / Location</label>
+                        <input
+                            type="text"
+                            name="location"
+                            value={formData.location}
+                            onChange={handleChange}
+                            placeholder="e.g. USA"
+                            style={inputStyle}
+                        />
+                    </div>
                 </div>
                 <div style={formGroupStyle}>
                     <label style={labelStyle}>Timezone</label>

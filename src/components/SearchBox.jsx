@@ -7,9 +7,25 @@ const SearchBox = () => {
     const [suggestions, setSuggestions] = useState([]);
     const [showDropdown, setShowDropdown] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [trending, setTrending] = useState([]);
     const navigate = useNavigate();
     const debounceTimer = useRef(null);
     const wrapperRef = useRef(null);
+
+    // Fetch trending on mount
+    useEffect(() => {
+        const loadTrending = async () => {
+            try {
+                const res = await api.get('/search/trending');
+                if (res.data.success) {
+                    setTrending(res.data.data);
+                }
+            } catch (e) {
+                // Silent fail
+            }
+        };
+        loadTrending();
+    }, []);
 
     // Close dropdown when clicking outside
     useEffect(() => {
@@ -45,9 +61,19 @@ const SearchBox = () => {
         const value = e.target.value;
         setQuery(value);
 
-        // Debounce type-ahead API call
         if (debounceTimer.current) {
             clearTimeout(debounceTimer.current);
+        }
+
+        if (value.length < 2) {
+            setSuggestions([]);
+            // Show trending if empty
+            if (value.length === 0) {
+                setShowDropdown(true);
+            } else {
+                setShowDropdown(false);
+            }
+            return;
         }
 
         debounceTimer.current = setTimeout(() => {
@@ -55,10 +81,22 @@ const SearchBox = () => {
         }, 300);
     };
 
-    const handleKeyPress = (e) => {
-        if (e.key === 'Enter' && query.trim()) {
+    const handleFocus = () => {
+        if (!query && trending.length > 0) {
+            setShowDropdown(true);
+        }
+    };
+
+    const handleSearch = () => {
+        if (query.trim()) {
             setShowDropdown(false);
             navigate(`/search?q=${encodeURIComponent(query)}`);
+        }
+    };
+
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            handleSearch();
         }
     };
 
@@ -75,30 +113,39 @@ const SearchBox = () => {
                     type="text"
                     value={query}
                     onChange={handleInputChange}
+                    onFocus={handleFocus}
                     onKeyPress={handleKeyPress}
+                    onClick={() => navigate('/search')}
                     placeholder="Search products..."
                     style={{
                         width: '100%',
                         padding: '10px 40px 10px 16px',
                         borderRadius: '8px',
                         border: '1px solid #E5E5E5',
-                        fontSize: '0.95rem'
+                        fontSize: '0.95rem',
+                        cursor: 'text'
                     }}
                 />
-                <span style={{
-                    position: 'absolute',
-                    right: '12px',
-                    top: '50%',
-                    transform: 'translateY(-50%)',
-                    fontSize: '1.2rem',
-                    color: '#666'
-                }}>
+                <span
+                    onClick={handleSearch}
+                    style={{
+                        position: 'absolute',
+                        right: '12px',
+                        top: '50%',
+                        transform: 'translateY(-50%)',
+                        fontSize: '1.2rem',
+                        color: '#666',
+                        cursor: 'pointer'
+                    }}
+                    role="button"
+                    aria-label="Search"
+                >
                     🔍
                 </span>
             </div>
 
             {/* Type-ahead Dropdown */}
-            {showDropdown && suggestions.length > 0 && (
+            {showDropdown && (
                 <div style={{
                     position: 'absolute',
                     top: '100%',
@@ -113,6 +160,40 @@ const SearchBox = () => {
                     maxHeight: '400px',
                     overflowY: 'auto'
                 }}>
+                    {/* Trending Section (Only if no query) */}
+                    {!query && trending.length > 0 && (
+                        <div>
+                            <div style={{ padding: '8px 16px', fontSize: '0.75rem', fontWeight: '700', color: '#999', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                                Trending Now
+                            </div>
+                            {trending.map((term, i) => (
+                                <div
+                                    key={i}
+                                    onClick={() => {
+                                        setQuery(term);
+                                        setShowDropdown(false);
+                                        navigate(`/search?q=${encodeURIComponent(term)}`);
+                                    }}
+                                    style={{
+                                        padding: '10px 16px',
+                                        cursor: 'pointer',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: '12px',
+                                        borderBottom: '1px solid #f9f9f9',
+                                        fontSize: '0.9rem'
+                                    }}
+                                    onMouseEnter={(e) => e.currentTarget.style.background = '#f9fafb'}
+                                    onMouseLeave={(e) => e.currentTarget.style.background = 'white'}
+                                >
+                                    <span style={{ fontSize: '1rem' }}>🔥</span>
+                                    <span>{term}</span>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+
+                    {/* Product Suggestions */}
                     {suggestions.map((product) => (
                         <div
                             key={product._id}

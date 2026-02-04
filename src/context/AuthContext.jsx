@@ -152,10 +152,22 @@ export const AuthProvider = ({ children }) => {
     };
 
 
-    const logout = () => {
+    const logout = async () => {
+        try {
+            await api.post('/auth/logout');
+        } catch (e) {
+            console.error('Logout API failed', e);
+        }
+
+        if (window.google && window.google.accounts) {
+            window.google.accounts.id.disableAutoSelect();
+            console.log('Google AutoSelect Disabled');
+        }
+
         localStorage.removeItem('token');
         localStorage.removeItem('user');
         setUser(null);
+        window.location.href = '/login';
     };
 
     return (

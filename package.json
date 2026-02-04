@@ -15,7 +15,11 @@
         "build": "vite build",
         "preview": "vite preview",
         "commit": "git add . && git commit -m 'update' && git push origin main",
-        "production": "git push --force-with-lease origin main:PRODUCTION_DEPLOYMENT"
+        "production": "git push --force-with-lease origin main:PRODUCTION_DEPLOYMENT",
+        "development": "git push --force-with-lease origin main:DEVELOPMENT_DEPLOYMENT",
+        "tag": "node -e \"const v=require('./package.json').version; require('child_process').execSync(`git tag -a v${v} -m 'Release v${v}'`, { stdio: 'inherit' })\"",
+        "tagpush": "npm run tag:release && git push origin HEAD && git push origin --tags",
+        "FAST_DEV": "git add . && git commit -m 'FAST_DEV' && node -e \"const d=new Date(); const ts=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}-${String(d.getHours()).padStart(2,'0')}-${String(d.getMinutes()).padStart(2,'0')}`; require('child_process').execSync(`git tag dev-${ts}`, { stdio:'inherit' })\" && git push origin HEAD:DEVELOPMENT_DEPLOYMENT && git push origin --tags"
     },
     "eslintConfig": {
         "extends": [
