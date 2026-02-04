@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../utils/api';
 import AuthContext from '../context/AuthContext';
+import SEO from '../components/SEO';
 
 const LoginOTP = () => {
     const [method, setMethod] = useState('EMAIL'); // EMAIL, PHONE
@@ -76,6 +77,7 @@ const LoginOTP = () => {
 
     return (
         <div className="container" style={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <SEO title="Login with OTP" noindex={true} />
             <div className="card" style={{ width: '100%', maxWidth: '420px', padding: '40px' }}>
                 <div style={{ textAlign: 'center', marginBottom: '24px' }}>
                     <h1 style={{ fontSize: '1.75rem', marginBottom: '8px' }}>Welcome Back</h1>

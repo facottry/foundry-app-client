@@ -93,7 +93,7 @@ export const OrganizationSchema = () => {
     const schema = {
         "@context": "https://schema.org",
         "@type": "Organization",
-        "name": "Foundry",
+        "name": "Clicktory",
         "url": window.location.origin,
         "logo": `${window.location.origin}/logo.png`,
         "description": "Performance-based product discovery platform"

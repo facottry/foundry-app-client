@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import AuthContext from '../context/AuthContext';
 import ErrorState from '../components/common/ErrorState';
 import LoadingState from '../components/common/LoadingState';
+import SEO from '../components/SEO';
 
 const Signup = () => {
     const [formData, setFormData] = useState({ name: '', email: '', password: '', role: 'CUSTOMER' });
@@ -72,6 +73,7 @@ const Signup = () => {
 
     return (
         <div className="card" style={{ maxWidth: '400px', margin: '50px auto' }}>
+            <SEO title="Sign Up" noindex={true} />
             <h2>Sign Up</h2>
             {error && (
                 <div style={{ marginBottom: '15px' }}>

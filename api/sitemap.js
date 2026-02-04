@@ -36,7 +36,7 @@ export default async function handler(req, res) {
     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
       ${urls.map(u => `
         <url>
-          <loc>https://clicktory.in${u}</loc>
+          <loc>https://www.clicktory.in${u}</loc>
           <changefreq>weekly</changefreq>
           <priority>${u === '/' ? '1.0' : u.startsWith('/category') ? '0.8' : '0.6'}</priority>
         </url>

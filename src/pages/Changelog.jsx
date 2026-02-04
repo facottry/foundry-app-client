@@ -100,7 +100,7 @@ const Changelog = () => {
             version: '2.0.0',
             date: '2024-11-01',
             changes: [
-                'MAJOR RELEASE: Foundry 2.0',
+                'MAJOR RELEASE: Clicktory 2.0',
                 'Migrated backend to Node.js/Express micro-services architecture',
                 'Introduced credit-based billing system for traffic',
                 'New "Wallet" UI for managing ad spend',
@@ -153,7 +153,7 @@ const Changelog = () => {
     return (
         <div style={{ paddingBottom: '80px', paddingTop: '40px' }}>
             <SEO
-                title="Changelog - AppFoundry Updates"
+                title="Changelog - AppClicktory Updates"
                 description="A timeline of updates, improvements, and new features as we build the decision layer for software."
                 canonical="/changelog"
             />

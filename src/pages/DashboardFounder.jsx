@@ -5,6 +5,7 @@ import { getImageUrl } from '../utils/getImageUrl';
 import LoadingState from '../components/common/LoadingState';
 import ErrorState from '../components/common/ErrorState';
 import EmptyState from '../components/common/EmptyState';
+import SEO from '../components/SEO';
 
 import EditTeamModal from '../components/products/EditTeamModal';
 
@@ -36,6 +37,7 @@ const DashboardFounder = () => {
 
     return (
         <div style={{ paddingTop: '40px' }}>
+            <SEO title="Founder Dashboard" noindex={true} />
             {/* Header Section */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '40px' }}>
                 <div>

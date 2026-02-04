@@ -12,15 +12,15 @@ export const CATEGORY_SLOGANS = {
 export const CATEGORY_INTROS = {
     'DevTools': 'This category features tools designed for developers, engineers, and technical founders who value clarity, performance, and control. From debugging utilities to infrastructure helpers, these products are built to remove friction from real workflows. No bloated dashboards. No unnecessary abstraction. Just tools that do what they promise. Explore developer tools created by builders who understand production realities.',
 
-    'Productivity': 'Productivity tools on Foundry are built to help founders and teams work with intention. These products focus on simplifying workflows, reducing overhead, and keeping attention where it matters. Whether you are managing tasks, planning work, or organizing ideas, this category highlights tools that prioritize usefulness over complexity.',
+    'Productivity': 'Productivity tools on Clicktory are built to help founders and teams work with intention. These products focus on simplifying workflows, reducing overhead, and keeping attention where it matters. Whether you are managing tasks, planning work, or organizing ideas, this category highlights tools that prioritize usefulness over complexity.',
 
     'Marketing': 'Growth does not have to mean noise. This category includes tools that help founders reach the right audience through structure, clarity, and measurable intent. From discovery platforms to lightweight marketing utilities, these products support growth without aggressive tactics.',
 
-    'AI': 'AI tools on Foundry focus on practical applications that enhance workflows without replacing human judgment. These products use intelligence to serve specific needs — not to create dependency or complexity.',
+    'AI': 'AI tools on Clicktory focus on practical applications that enhance workflows without replacing human judgment. These products use intelligence to serve specific needs — not to create dependency or complexity.',
 
     'SaaS': 'Software as a Service tools that prioritize clarity, reliability, and user respect. These products are built to solve specific problems without unnecessary features or forced upgrades.',
 
-    'all': 'Discover tools, platforms, and services created by builders solving real problems. Every product on Foundry is categorized, searchable, and presented with clarity. Browse by category, explore product pages, and follow what is being built — without distraction.'
+    'all': 'Discover tools, platforms, and services created by builders solving real problems. Every product on Clicktory is categorized, searchable, and presented with clarity. Browse by category, explore product pages, and follow what is being built — without distraction.'
 };
 
 // Category titles for H1

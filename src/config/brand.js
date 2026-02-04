@@ -2,7 +2,7 @@
  * Brand Configuration
  * Single source of truth for customer-facing brand identity.
  * 
- * CRITICAL: Backend/internal systems still reference "Foundry".
+ * CRITICAL: Backend/internal systems still reference "Clicktory".
  * This config is UI/presentation layer only.
  */
 
@@ -11,13 +11,13 @@ export const BRAND = {
     publicName: "Clicktory",
 
     // Internal identifier (backend still uses this)
-    internalName: "Foundry",
+    internalName: "Clicktory",
 
     // Tagline
     tagline: "Discover products. Decide faster.",
 
     // Domain
-    domain: "clicktory.in",
+    domain: "www.clicktory.in",
 
     // Contact
     supportEmail: "support@clicktory.in",

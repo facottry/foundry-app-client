@@ -8,5 +8,18 @@
             "source": "/(.*)",
             "destination": "/index.html"
         }
+    ],
+    "redirects": [
+        {
+            "source": "/:path*",
+            "has": [
+                {
+                    "type": "host",
+                    "value": "clicktory.in"
+                }
+            ],
+            "destination": "https://www.clicktory.in/:path*",
+            "permanent": true
+        }
     ]
 }

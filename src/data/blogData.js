@@ -336,7 +336,7 @@ Here's what actually works.
 
 ## Discovery Platforms
 
-List your product on curated directories like **[Foundry](/category/all)**, Product Hunt alternatives, and niche communities. Focus on platforms that:
+List your product on curated directories like **[Clicktory](/category/all)**, Product Hunt alternatives, and niche communities. Focus on platforms that:
 
 - Have real traffic, not just other founders
 - Allow you to own your listing (permanent URLs)
@@ -454,7 +454,7 @@ This reduces bundle size, improves security, and simplifies the mental model.
 
 ## 2. SEO Out of the Box
 
-For a platform like **Foundry**, SEO is life or death. Next.js gives us semantic HTML, meta tag management via the Metadata API, and dynamic sitemaps with almost zero configuration.
+For a platform like **Clicktory**, SEO is life or death. Next.js gives us semantic HTML, meta tag management via the Metadata API, and dynamic sitemaps with almost zero configuration.
 
 We don't "add" SEO later. It's baked into the architecture.
 
@@ -472,7 +472,7 @@ Deployment is no longer an ops task. It's a git push. Preview deployments change
         image: '/images/blog/growth.png',
         content: `How do you rank for 10,000 keywords without writing 10,000 blog posts?
 
-Programmatic SEO. It is the secret weapon of marketplaces like TripAdvisor, G2, and yes, **Foundry**.
+Programmatic SEO. It is the secret weapon of marketplaces like TripAdvisor, G2, and yes, **Clicktory**.
 
 ## The Formula
 
@@ -570,7 +570,7 @@ People hate making decisions. Tiers simplify the choice.
 
 Usage-based (like Stripe or AWS) aligns capability with cost. It removes the ceiling on your revenue.
 
-For **Foundry**, we use a hybrid. Free to list, pay for performance (clicks). This aligns our incentives with yours.`
+For **Clicktory**, we use a hybrid. Free to list, pay for performance (clicks). This aligns our incentives with yours.`
     },
     'community-led-growth-myth': {
         title: 'The Myth of Community-Led Growth',
@@ -664,7 +664,7 @@ This means you don't *need* $2M seed rounds to get to MVP. You can bootstrap lon
 
 Raise when you have fuel and just need a bigger fire. Don't raise to build the fire pit.
 
-At **AppFoundry**, we believe in sustainable growth. We build tools to help you bootstrap effectively.`
+At **AppClicktory**, we believe in sustainable growth. We build tools to help you bootstrap effectively.`
     },
     'churn-is-a-symptom': {
         title: 'Churn is a Symptom, Not a Disease',
@@ -706,7 +706,7 @@ Relevance means: "I see you have problem X. I solve problem X. Here is proof."
 
 Don't waste 3 sentences faking rapport. Respect their time. Get to the point.
 
-"I noticed your [Foundry](/category/devtools) listing has low click-through rates. We built a tool to fix that."
+"I noticed your [Clicktory](/category/devtools) listing has low click-through rates. We built a tool to fix that."
 
 That gets a reply.`
     },
@@ -729,7 +729,7 @@ In Mongo, you access data together, you store it together.
 - **Embed** if the data is consumed together (e.g., Order + OrderItems).
 - **Reference** if the data is unbound or accessed independently (e.g., Products + Categories).
 
-For **Foundry**, we embed reviews inside products for read speed, but reference owners to keep user data consistent.`
+For **Clicktory**, we embed reviews inside products for read speed, but reference owners to keep user data consistent.`
     },
     'ethics-of-ai-content': {
         title: 'The Ethics of AI-Generated Content in Marketplaces',
@@ -739,7 +739,7 @@ For **Foundry**, we embed reviews inside products for read speed, but reference 
         authorId: 'vinod',
         tags: ['AI', 'Ethics', 'Trust'],
         image: '/images/blog/engineering.png',
-        content: `We use AI at AppFoundry. But we have a rule: **AI assists, Humans decide.**
+        content: `We use AI at AppClicktory. But we have a rule: **AI assists, Humans decide.**
 
 ## The Trust Gap
 
@@ -838,7 +838,7 @@ Pros: Resilient. Cons: First hit is slow.
 App writes DB and Cache same time.
 Pros: Cache always fresh. Cons: Write penalty.
 
-For **Foundry** product listings, we use Cache-Aside with a 5-minute TTL. Perfect balance of freshness and speed.`
+For **Clicktory** product listings, we use Cache-Aside with a 5-minute TTL. Perfect balance of freshness and speed.`
     },
     'mental-health-founders': {
         title: 'Founder Mental Health: The Marathon Mindset',

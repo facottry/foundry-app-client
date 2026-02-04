@@ -74,7 +74,7 @@ const PersonalInfoSection = ({ user, authToken, onUpdate }) => {
                     label="Profile Slug"
                     name="slug"
                     placeholder="firstname-lastname"
-                    helpText={`Public profile: foundry.io/founder/${formData.slug || '...'}`}
+                    helpText={`Public profile: clicktory.in/founder/${formData.slug || '...'}`}
                 />
             </div>
             <div style={{ marginBottom: '20px' }}>

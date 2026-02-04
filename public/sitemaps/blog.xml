@@ -2,38 +2,38 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
-    <loc>https://clicktory.in/blog/how-to-get-early-users-for-saas</loc>
+    <loc>https://www.clicktory.in/blog/how-to-get-early-users-for-saas</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
     <image:image>
-      <image:loc>https://clicktory.in/images/blog/growth.png</image:loc>
+      <image:loc>https://www.clicktory.in/images/blog/growth.png</image:loc>
       <image:title>how-to-get-early-users-for-saas</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://clicktory.in/blog/launching-as-solo-founder</loc>
+    <loc>https://www.clicktory.in/blog/launching-as-solo-founder</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
     <image:image>
-      <image:loc>https://clicktory.in/images/blog/founder.png</image:loc>
+      <image:loc>https://www.clicktory.in/images/blog/founder.png</image:loc>
       <image:title>launching-as-solo-founder</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://clicktory.in/blog/product-discovery-without-noise</loc>
+    <loc>https://www.clicktory.in/blog/product-discovery-without-noise</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
     <image:image>
-      <image:loc>https://clicktory.in/images/blog/product.png</image:loc>
+      <image:loc>https://www.clicktory.in/images/blog/product.png</image:loc>
       <image:title>product-discovery-without-noise</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://clicktory.in/blog/choosing-right-early-tools</loc>
+    <loc>https://www.clicktory.in/blog/choosing-right-early-tools</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
     <image:image>
-      <image:loc>https://clicktory.in/images/blog/engineering.png</image:loc>
+      <image:loc>https://www.clicktory.in/images/blog/engineering.png</image:loc>
       <image:title>choosing-right-early-tools</image:title>
     </image:image>
   </url>

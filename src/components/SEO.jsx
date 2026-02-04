@@ -2,7 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import BRAND from '../config/brand';
 
-const SEO = ({ title, description, canonical, jsonLd, type = 'Organization' }) => {
+const SEO = ({ title, description, canonical, jsonLd, type = 'Organization', noindex = false }) => {
     const siteTitle = BRAND.publicName;
     const finalTitle = title ? `${title} | ${siteTitle}` : siteTitle;
     const finalDescription = description || `${BRAND.tagline} Discover, compare, and evaluate startup products.`;
@@ -25,7 +25,8 @@ const SEO = ({ title, description, canonical, jsonLd, type = 'Organization' }) =
     return (
         <Helmet>
             <title>{finalTitle}</title>
-            <meta name="description" content={finalDescription} />
+            {noindex && <meta name="robots" content="noindex,follow" />}
+            {!noindex && <meta name="description" content={finalDescription} />}
             {canonical && <link rel="canonical" href={`https://${BRAND.domain}${canonical}`} />}
 
             {/* Open Graph / Facebook */}

@@ -3,7 +3,7 @@
  * Session ID persists for 7 days
  */
 export const getOrCreateSessionId = () => {
-    const COOKIE_NAME = 'foundry_session_id';
+    const COOKIE_NAME = 'clicktory_session_id';
     const EXPIRY_DAYS = 7;
 
     // Check if session ID exists in cookie

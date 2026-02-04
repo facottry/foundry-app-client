@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../utils/api';
 import { getImageUrl } from '../utils/getImageUrl';
+import SEO from '../components/SEO';
 
 const FounderDashboard = () => {
     const [products, setProducts] = useState([]);
@@ -59,6 +60,7 @@ const FounderDashboard = () => {
 
     return (
         <div style={{ paddingTop: '40px', paddingBottom: '60px' }}>
+            <SEO title="My Products" noindex={true} />
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px' }}>
                 <div>
                     <h1 style={{ fontSize: '2rem', marginBottom: '8px' }}>My Products</h1>

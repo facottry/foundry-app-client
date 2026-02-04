@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://clicktory.in/sitemap.xml
+Sitemap: https://www.clicktory.in/sitemap.xml
