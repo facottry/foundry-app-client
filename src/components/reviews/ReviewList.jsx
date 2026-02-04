@@ -11,6 +11,7 @@ const ReviewList = ({ productId, user, productOwnerId, slug, isFullPage = false 
     const [stats, setStats] = useState({ avgRating: 0, count: 0, distribution: {} });
     const [sentimentCounts, setSentimentCounts] = useState({ positive: 0, neutral: 0, negative: 0 });
     const [sort, setSort] = useState('newest');
+    const [showForm, setShowForm] = useState(false);
 
     const fetchReviews = async () => {
         setLoading(true);
@@ -59,7 +60,7 @@ const ReviewList = ({ productId, user, productOwnerId, slug, isFullPage = false 
 
     const isOwner = userIdStr && ownerIdStr && userIdStr === ownerIdStr;
 
-    const canReview = user && !hasReviewed && !isOwner && (user.role === 'CUSTOMER' || user.role === 'FOUNDER');
+    const canReview = user && !hasReviewed && (user.role === 'CUSTOMER' || user.role === 'FOUNDER');
 
     // DEBUG LOGGING
     console.log('--- ReviewList Debug ---');
@@ -208,8 +209,27 @@ const ReviewList = ({ productId, user, productOwnerId, slug, isFullPage = false 
                 {/* Right: Reviews List */}
                 <div>
                     {/* Write Review Section */}
-                    {canReview && (
-                        <ReviewForm productId={productId} onReviewSubmitted={fetchReviews} />
+                    {(canReview && showForm) && (
+                        <ReviewForm productId={productId} onReviewSubmitted={() => { setShowForm(false); fetchReviews(); }} />
+                    )}
+                    {canReview && !showForm && reviews.length > 0 && (
+                        <button
+                            onClick={() => setShowForm(true)}
+                            style={{
+                                width: '100%',
+                                padding: '12px 24px',
+                                marginBottom: '16px',
+                                background: '#6366f1',
+                                color: '#fff',
+                                border: 'none',
+                                borderRadius: '8px',
+                                fontSize: '1rem',
+                                fontWeight: '600',
+                                cursor: 'pointer'
+                            }}
+                        >
+                            ✍️ Write a Review
+                        </button>
                     )}
 
                     {/* Sort Control */}
@@ -230,7 +250,24 @@ const ReviewList = ({ productId, user, productOwnerId, slug, isFullPage = false 
                         <div>Loading reviews...</div>
                     ) : reviews.length === 0 ? (
                         <div style={{ textAlign: 'center', padding: '40px', background: '#f9fafb', borderRadius: '12px', color: '#666' }}>
-                            No reviews yet. Be the first to share your thoughts!
+                            No reviews yet. Be the first to{' '}
+                            {canReview ? (
+                                <button
+                                    onClick={() => setShowForm(true)}
+                                    style={{
+                                        color: '#6366f1',
+                                        fontWeight: '600',
+                                        background: 'none',
+                                        border: 'none',
+                                        cursor: 'pointer',
+                                        textDecoration: 'underline'
+                                    }}
+                                >
+                                    share your thoughts!
+                                </button>
+                            ) : (
+                                <span>share your thoughts!</span>
+                            )}
                         </div>
                     ) : (
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>

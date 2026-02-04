@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import api from '../utils/api';
 import ImageUploader from '../components/common/ImageUploader';
 
@@ -8,7 +8,22 @@ const CreateProduct = () => {
         name: '', tagline: '', description: '', website_url: '', logo_url: '', category: ''
     });
     const [error, setError] = useState(null);
+    const [pendingProducts, setPendingProducts] = useState([]);
     const navigate = useNavigate();
+
+    // Fetch user's pending products on mount
+    useEffect(() => {
+        const fetchPending = async () => {
+            try {
+                const res = await api.get('/founder/products');
+                const pending = (res.data || []).filter(p => p.status === 'pending');
+                setPendingProducts(pending);
+            } catch (err) {
+                console.error('Failed to fetch products', err);
+            }
+        };
+        fetchPending();
+    }, []);
 
     const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
@@ -44,6 +59,30 @@ const CreateProduct = () => {
     return (
         <div className="card" style={{ maxWidth: '600px', margin: '0 auto' }}>
             <h1>Launch Your Product</h1>
+
+            {/* Pending Products Warning */}
+            {pendingProducts.length > 0 && (
+                <div style={{
+                    background: '#fef3c7',
+                    border: '1px solid #f59e0b',
+                    borderRadius: '8px',
+                    padding: '16px',
+                    marginBottom: '20px'
+                }}>
+                    <div style={{ fontWeight: '600', color: '#92400e', marginBottom: '8px' }}>
+                        ⏳ You have {pendingProducts.length} product(s) pending approval
+                    </div>
+                    <div style={{ fontSize: '0.9rem', color: '#78350f', marginBottom: '12px' }}>
+                        Please wait for your existing submissions to be reviewed before resubmitting.
+                    </div>
+                    <ul style={{ margin: 0, paddingLeft: '20px', fontSize: '0.85rem', color: '#92400e' }}>
+                        {pendingProducts.map(p => (
+                            <li key={p._id}>{p.name}</li>
+                        ))}
+                    </ul>
+                </div>
+            )}
+
             {error && <div style={{ color: 'red', marginBottom: '15px' }}>{error.message}</div>}
             <form onSubmit={onSubmit}>
                 <div style={{ marginBottom: '15px' }}>

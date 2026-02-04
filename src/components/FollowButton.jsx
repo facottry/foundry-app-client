@@ -2,49 +2,53 @@ import React, { useState, useEffect, useContext } from 'react';
 import api from '../utils/api';
 import AuthContext from '../context/AuthContext';
 
-const FollowButton = ({ targetId, type = 'product', label = 'Follow' }) => {
+const FollowButton = ({ targetId, type = 'product', label = 'Follow', onToggle }) => {
     const { user, loading: authLoading } = useContext(AuthContext);
     const [isFollowing, setIsFollowing] = useState(false);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        // Check local user state initially
-        if (user && user.follows) {
-            const list = type === 'product' ? user.follows.productIds : user.follows.categoryIds;
-            if (list && list.includes(targetId)) {
-                setIsFollowing(true);
+        // If logged in, fetch authoritative state from API
+        const fetchState = async () => {
+            if (user && targetId) {
+                try {
+                    const endpoint = type === 'product'
+                        ? `/products/${targetId}/follow-state`
+                        : `/follows/${type}/${targetId}/state`; // Fallback if other types added later
+
+                    const res = await api.get(endpoint);
+                    setIsFollowing(res.data.isFollowing);
+                } catch (err) {
+                    console.error('Failed to fetch follow state:', err);
+                }
             }
-        }
+        };
+
+        fetchState();
     }, [user, targetId, type]);
 
     const handleFollow = async () => {
         if (!user) {
             // Check auth
-            alert('Please login to follow items.');
-            // distinct visual cue or redirect could be better
+            // Use window.location as strict unauthorized fallback or use a modal if context allowed
+            window.location.href = `/login?redirect=${encodeURIComponent(window.location.pathname)}`;
             return;
         }
 
         try {
             setLoading(true);
-            // API call to toggle follow
-            const endpoint = `/follows/${type}/${targetId}`;
+            const action = isFollowing ? 'unfollow' : 'follow';
+            const endpoint = `/products/${targetId}/${action}`;
+
             const res = await api.post(endpoint);
 
-            setIsFollowing(res.data.isFollowing);
-
-            // Optimistic update of local storage user or context could happen here
-            // but for thin implementations, local state is fine.
-            // Ideally we should update AuthContext user object to reflect new follows
-            // to keep it in sync across components. 
-            if (res.data.success) {
-                // We'd need a method in AuthContext to update user state without full reload
-                // For now, let's just rely on local state.
+            if (res.data) {
+                const newState = res.data.isFollowing;
+                setIsFollowing(newState);
+                if (onToggle) onToggle(newState);
             }
-
         } catch (err) {
             console.error('Follow error:', err);
-            // Revert state if we did optimistic update (we didn't here)
         } finally {
             setLoading(false);
         }
@@ -59,6 +63,7 @@ const FollowButton = ({ targetId, type = 'product', label = 'Follow' }) => {
             style={{
                 display: 'flex',
                 alignItems: 'center',
+                justifyContent: 'center',
                 gap: '6px',
                 padding: '8px 16px',
                 borderRadius: '20px',
@@ -68,7 +73,9 @@ const FollowButton = ({ targetId, type = 'product', label = 'Follow' }) => {
                 fontSize: '0.9rem',
                 fontWeight: '600',
                 cursor: 'pointer',
-                transition: 'all 0.2s'
+                transition: 'all 0.2s',
+                opacity: loading ? 0.7 : 1,
+                minWidth: '120px'
             }}
         >
             <span>{isFollowing ? '✓' : '+'}</span>

@@ -72,6 +72,7 @@ const DashboardFounder = () => {
                                 <thead>
                                     <tr>
                                         <th>Product</th>
+                                        <th style={{ textAlign: 'center' }}>Followers</th>
                                         <th style={{ textAlign: 'right' }}>Clicks (Today/Total)</th>
                                         <th>Status</th>
                                         <th style={{ textAlign: 'right' }}>Actions</th>
@@ -83,6 +84,9 @@ const DashboardFounder = () => {
                                             <td>
                                                 <div style={{ fontWeight: '600', color: 'var(--text-primary)', fontSize: '1rem' }}>{product.name}</div>
                                                 <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '4px' }}>{product.tagline}</div>
+                                            </td>
+                                            <td style={{ textAlign: 'center', fontWeight: 'bold' }}>
+                                                {product.follower_count || 0}
                                             </td>
                                             <td style={{ textAlign: 'right', fontWeight: '500' }}>
                                                 <span style={{ color: 'var(--text-primary)' }}>{product.clicks_today}</span>

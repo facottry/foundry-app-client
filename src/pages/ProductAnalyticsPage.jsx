@@ -40,7 +40,27 @@ const ProductAnalyticsPage = () => {
     useEffect(() => {
         if (activeTab === 'reviews' && !reviewsData) {
             api.get(`/founder/products/${id}/reviews`)
-                .then(res => setReviewsData(res.data.data))
+                .then(res => {
+                    // API returns { data: [...] } - we need to restructure
+                    const reviews = res.data || [];
+                    // Calculate stats on client side
+                    const total = reviews.length;
+                    const avg = total > 0 ? reviews.reduce((acc, r) => acc + r.rating, 0) / total : 0;
+                    const distribution = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
+                    const top_tags_map = {};
+                    const sentiment = { positive: 0, neutral: 0, negative: 0 };
+                    reviews.forEach(r => {
+                        distribution[r.rating] = (distribution[r.rating] || 0) + 1;
+                        if (r.ai_tags) r.ai_tags.forEach(tag => top_tags_map[tag] = (top_tags_map[tag] || 0) + 1);
+                        if (r.sentiment) sentiment[r.sentiment] = (sentiment[r.sentiment] || 0) + 1;
+                    });
+                    const top_tags = Object.entries(top_tags_map).sort((a, b) => b[1] - a[1]).slice(0, 10).map(([tag, count]) => ({ tag, count }));
+
+                    setReviewsData({
+                        reviews,
+                        stats: { total, avg, distribution, top_tags, sentiment }
+                    });
+                })
                 .catch(err => console.error("Reviews fetch error", err));
         }
     }, [activeTab, id, reviewsData]);
@@ -196,6 +216,27 @@ const ProductAnalyticsPage = () => {
                                                 )
                                             })}
                                         </div>
+
+                                        {/* Sentiment Breakdown */}
+                                        {reviewsData.stats.sentiment && (
+                                            <div className="mt-6 pt-4 border-t border-gray-100">
+                                                <div className="text-sm font-medium text-gray-700 mb-3">AI Sentiment Analysis</div>
+                                                <div className="flex justify-around text-center">
+                                                    <div>
+                                                        <div className="text-2xl font-bold text-green-600">{reviewsData.stats.sentiment.positive}</div>
+                                                        <div className="text-xs text-gray-500">😊 Positive</div>
+                                                    </div>
+                                                    <div>
+                                                        <div className="text-2xl font-bold text-gray-500">{reviewsData.stats.sentiment.neutral}</div>
+                                                        <div className="text-xs text-gray-500">😐 Neutral</div>
+                                                    </div>
+                                                    <div>
+                                                        <div className="text-2xl font-bold text-red-600">{reviewsData.stats.sentiment.negative}</div>
+                                                        <div className="text-xs text-gray-500">😞 Negative</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
                                     </div>
 
                                     {/* AI Tag Cloud Card */}
@@ -257,7 +298,7 @@ const ProductAnalyticsPage = () => {
                                                         </td>
                                                         <td className="py-4 text-right">
                                                             <span className={`px-2 py-1 rounded text-xs font-medium ${r.status === 'published' ? 'bg-green-100 text-green-700' :
-                                                                    r.status === 'hidden' ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700'
+                                                                r.status === 'hidden' ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700'
                                                                 }`}>
                                                                 {r.status}
                                                             </span>

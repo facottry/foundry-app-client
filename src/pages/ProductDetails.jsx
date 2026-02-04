@@ -69,25 +69,45 @@ const ProductDetails = () => {
     const logoUrl = product.logoUrl || getImageUrl(product.logoKey || product.logo_url) || '';
     const screenshotUrls = product.screenshotUrls || (product.screenshotKeys || []).map(k => getImageUrl(k)) || product.screenshots || [];
 
+    // Strict Entity SEO Schema
     const productSchema = {
         "@context": "https://schema.org",
         "@type": "SoftwareApplication",
         "name": product.name,
-        "applicationCategory": "DeveloperTool",
+        "description": product.description || product.tagline,
+        "applicationCategory": product.categories?.[0] || "Software",
         "operatingSystem": "Web",
+        "url": `https://${BRAND.domain}/product/${product.slug}`,
         "offers": {
             "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
+            "price": "0", // Default as per rules, since we don't have pricing data yet
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock"
         },
-        "description": product.description || product.tagline,
-        "aggregateRating": product.avg_rating > 0 ? {
+        "publisher": {
+            "@type": "Organization",
+            "name": "Clicktory",
+            "url": `https://${BRAND.domain}`
+        },
+        "sameAs": [
+            product.website_url,
+            product.twitter_url,
+            product.linkedin_url
+        ].filter(Boolean) // Remove empty/null values
+    };
+
+    if (product.avg_rating > 0) {
+        productSchema.aggregateRating = {
             "@type": "AggregateRating",
             "ratingValue": product.avg_rating,
             "reviewCount": product.ratings_count
-        } : undefined,
-        "url": `https://${BRAND.domain}/product/${product.slug}`
-    };
+        };
+    }
+
+    // Entity Data Helpers
+    const entityStatus = product.status === 'approved' ? 'Active' : 'Inactive';
+    const entityPrice = "Free / Contact"; // Default for now
+    const entityCategory = product.categories?.[0] || 'Uncategorized';
 
     return (
         <div style={{ paddingTop: '40px', paddingBottom: '60px' }}>
@@ -101,26 +121,62 @@ const ProductDetails = () => {
             <Breadcrumbs items={[
                 { label: 'Home', href: '/' },
                 { label: 'Products', href: '/category/all' },
-                { label: product.categories && product.categories[0], href: `/category/${product.categories && product.categories[0]}` },
+                { label: entityCategory, href: `/category/${entityCategory}` },
                 { label: product.name }
             ]} />
 
-            {/* Product Header */}
+            {/* Product Header - Entity Node Style */}
             <div style={{ marginBottom: '40px' }}>
                 <div style={{ display: 'flex', gap: '24px', alignItems: 'start', marginBottom: '24px' }}>
                     {logoUrl ? (
-                        <img src={logoUrl} alt="Logo" style={{ width: '96px', height: '96px', borderRadius: '20px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)', objectFit: 'cover' }} />
+                        <img src={logoUrl} alt={`${product.name} Logo`} style={{ width: '96px', height: '96px', borderRadius: '20px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)', objectFit: 'cover' }} />
                     ) : (
                         <div style={{ width: '96px', height: '96px', borderRadius: '20px', background: '#f3f4f6', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem', fontWeight: 'bold', color: '#666' }}>
                             {product.name.charAt(0)}
                         </div>
                     )}
                     <div style={{ flex: 1 }}>
-                        <h1 style={{ marginBottom: '8px', fontSize: '2.5rem' }}>{product.name}</h1>
-                        <p style={{ fontSize: '1.25rem', color: '#666', marginBottom: '16px' }}>{product.tagline}</p>
+                        {/* H1: Product Name (Entity Identity) */}
+                        <h1 style={{ marginBottom: '8px', fontSize: '2.5rem', fontWeight: '800', letterSpacing: '-0.5px' }}>{product.name}</h1>
 
-                        {/* Screenshots Section - New */}
-                        {screenshotUrls.length > 0 && (
+                        {/* Tagline - Explicitly requested */}
+                        {product.tagline && (
+                            <p style={{ fontSize: '1.5rem', fontWeight: '300', color: '#4b5563', marginBottom: '16px' }}>
+                                {product.tagline}
+                            </p>
+                        )}
+
+                        {/* Description - Separate from Tagline */}
+                        <p style={{ fontSize: '1.1rem', color: '#374151', marginBottom: '24px', lineHeight: '1.6', maxWidth: '800px' }}>
+                            {product.description}
+                        </p>
+
+                        {/* Visible Entity Metadata (HTML) */}
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', marginBottom: '24px', fontSize: '0.9rem', color: '#6b7280', borderTop: '1px solid #e5e7eb', paddingTop: '16px' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                <span style={{ fontWeight: '600', color: '#374151' }}>Category:</span>
+                                <span>{entityCategory}</span>
+                            </div>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                <span style={{ fontWeight: '600', color: '#374151' }}>Status:</span>
+                                <span style={{ color: entityStatus === 'Active' ? '#059669' : '#d97706', fontWeight: '500' }}>{entityStatus}</span>
+                            </div>
+                            {(product.offers?.price || entityPrice) && (
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                    <span style={{ fontWeight: '600', color: '#374151' }}>Price:</span>
+                                    <span>{entityPrice}</span>
+                                </div>
+                            )}
+                            {product.follower_count > 0 && (
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                    <span style={{ fontWeight: '600', color: '#374151' }}>Followers:</span>
+                                    <span>{product.follower_count}</span>
+                                </div>
+                            )}
+                        </div>
+
+                        {/* Screenshots Section - Conditional */}
+                        {screenshotUrls && screenshotUrls.length > 0 && (
                             <div style={{ marginTop: '24px', marginBottom: '24px', overflowX: 'auto', display: 'flex', gap: '16px', paddingBottom: '16px' }}>
                                 {screenshotUrls.map((url, idx) => (
                                     <img key={idx} src={url} alt={`Screenshot ${idx + 1}`} style={{ height: '200px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0,0,0,0.1)', flexShrink: 0 }} />
@@ -130,6 +186,7 @@ const ProductDetails = () => {
 
                         <div style={{ display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap' }}>
 
+                            {/* Ratings - Conditional */}
                             {product.avg_rating > 0 && (
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '1rem' }}>
                                     <span>⭐</span>
@@ -137,29 +194,20 @@ const ProductDetails = () => {
                                     <span style={{ color: '#666' }}>({product.ratings_count} reviews)</span>
                                 </div>
                             )}
-
-                            {/* Follower Count Display (Hidden if 0) */}
-                            {product.follower_count > 0 && (
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.95rem', background: '#f8f9fa', padding: '4px 10px', borderRadius: '12px', border: '1px solid #eee' }}>
-                                    <span style={{ color: '#666' }}>👥</span>
-                                    <span style={{ fontWeight: '600', color: '#333' }}>{product.follower_count}</span>
-                                    <span style={{ color: '#666' }}>followers</span>
-                                </div>
-                            )}
                         </div>
 
-                        {/* Team Cluster (Horizontal) */}
+                        {/* Team Cluster (Horizontal) - Conditional */}
                         {product.team_members && product.team_members.length > 0 && (
-                            <div style={{ marginTop: '20px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <div style={{ marginTop: '20px', display: 'flex', alignItems: 'center', gap: '12px' }}>
                                 <div style={{ display: 'flex', paddingLeft: '8px' }}>
                                     {product.team_members.slice(0, 5).map((member, i) => {
                                         const avatar = member.avatar_url || getImageUrl(member.profileImageKey) || '';
                                         return (
-                                            <div key={i} title={`${member.name} (${member.title || 'Member'})`} style={{ marginLeft: '-8px', width: '32px', height: '32px', borderRadius: '50%', border: '2px solid white', overflow: 'hidden', background: '#e5e7eb' }}>
+                                            <div key={i} title={`${member.name} (${member.title || 'Member'})`} style={{ marginLeft: '-8px', width: '48px', height: '48px', borderRadius: '50%', border: '3px solid white', overflow: 'hidden', background: '#e5e7eb', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
                                                 {avatar ? (
                                                     <img src={avatar} alt={member.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                                 ) : (
-                                                    <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.7rem', fontWeight: 'bold', color: '#6b7280' }}>
+                                                    <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(135deg, #6366f1, #a855f7)', color: 'white', fontWeight: 'bold', fontSize: '1.2rem' }}>
                                                         {(member.name || '?').charAt(0)}
                                                     </div>
                                                 )}
@@ -167,18 +215,17 @@ const ProductDetails = () => {
                                         )
                                     })}
                                 </div>
-                                <span style={{ fontSize: '0.9rem', color: '#6b7280' }}>
+                                <span style={{ fontSize: '1rem', color: '#374151' }}>
                                     by {product.team_members[0].user_id ? (
                                         <Link
                                             to={`/founder/${product.team_members[0].user_id.slug || product.team_members[0].user_id._id || product.team_members[0].user_id}`}
-                                            style={{ color: '#111827', fontWeight: '500', textDecoration: 'underline', cursor: 'pointer' }}
+                                            style={{ color: '#2563eb', fontWeight: '600', textDecoration: 'none', cursor: 'pointer' }}
                                         >
                                             {product.team_members[0].name}
                                         </Link>
                                     ) : (
-                                        <span style={{ color: '#111827', fontWeight: '500' }}>{product.team_members[0].name}</span>
+                                        <span style={{ color: '#111827', fontWeight: '600' }}>{product.team_members[0].name}</span>
                                     )}
-                                    {product.team_members.length > 1 && <span> + {product.team_members.length - 1} more</span>}
                                 </span>
                             </div>
                         )}
@@ -190,9 +237,9 @@ const ProductDetails = () => {
                                 rel="noopener noreferrer"
                                 className="btn btn-primary"
                                 onClick={handleVisitWebsite}
-                                style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                                style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '12px 24px', fontSize: '1.1rem' }}
                             >
-                                Visit Website (Tracked)
+                                Visit Website
                             </a>
                             <button
                                 className="btn btn-secondary"
@@ -204,12 +251,24 @@ const ProductDetails = () => {
                                     }
                                     setShowSaveModal(true);
                                 }}
-                                style={{ flex: 1 }}
+                                style={{ flex: 1, padding: '12px 24px', fontSize: '1.1rem' }}
                             >
                                 ❤️ Save
                             </button>
-                            <FollowButton targetId={product._id} type="product" />
+                            <FollowButton
+                                targetId={product._id}
+                                type="product"
+                                label="Follow"
+                                onToggle={(isFollowing) => {
+                                    setProduct(prev => ({
+                                        ...prev,
+                                        follower_count: (prev.follower_count || 0) + (isFollowing ? 1 : -1)
+                                    }));
+                                    showToast(isFollowing ? 'Followed successfully' : 'Unfollowed successfully', 'success');
+                                }}
+                            />
                         </div>
+
                     </div>
                 </div>
             </div>
