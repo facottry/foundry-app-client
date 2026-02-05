@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import api from '../utils/api';
+import { emitEvent } from '../analytics';
 import { getImageUrl } from '../utils/getImageUrl';
 import { getOrCreateSessionId } from '../utils/sessionUtils';
 import Breadcrumbs from '../components/Breadcrumbs';
@@ -34,6 +35,18 @@ const ProductDetails = () => {
 
                 // Track view with session - now we have the product object with _id
                 if (res.data && res.data._id) {
+
+                    emitEvent({
+                        name: 'product_viewed',
+                        category: 'discovery',
+                        actor: { type: user ? 'user' : 'anonymous', id: user?.id },
+                        object: { type: 'product', id: res.data._id },
+                        properties: {
+                            slug: res.data.slug,
+                            name: res.data.name
+                        }
+                    });
+
                     const sessionId = getOrCreateSessionId();
                     // New Event Tracking API
                     api.post('/events/track', {
@@ -52,6 +65,18 @@ const ProductDetails = () => {
 
     const handleVisitWebsite = () => {
         if (!product) return;
+
+        emitEvent({
+            name: 'product_clicked',
+            category: 'conversion',
+            actor: { type: user ? 'user' : 'anonymous', id: user?.id },
+            object: { type: 'product', id: product._id },
+            properties: {
+                slug: product.slug,
+                destination_url: product.website_url
+            }
+        });
+
         const sessionId = getOrCreateSessionId();
         api.post('/events/track', {
             productId: product._id,

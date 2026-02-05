@@ -1,7 +1,19 @@
 import React, { createContext, useState, useEffect } from 'react';
 import api, { registerLogoutHandler } from '../utils/api';
+import { emitEvent } from '../analytics';
 
-const AuthContext = createContext();
+const AuthContext = createContext({
+    user: null,
+    loading: true,
+    login: async () => { },
+    signup: async () => { },
+    logout: async () => { },
+    loginWithOTP: async () => { },
+    loginWithPhone: async () => { },
+    loginWithProvider: async () => { },
+    googleLoginSDK: () => { },
+    updateUser: () => { }
+});
 
 export const AuthProvider = ({ children }) => {
 
@@ -30,6 +42,14 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem('token', res.data.token);
         localStorage.setItem('user', JSON.stringify(res.data.user));
         setUser(res.data.user);
+
+        emitEvent({
+            name: 'login_completed',
+            category: 'user',
+            actor: { type: 'user', id: res.data.user.id },
+            properties: { method: 'password' }
+        });
+
         return res.data.user;
     };
 
@@ -43,6 +63,14 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem('token', res.data.token);
         localStorage.setItem('user', JSON.stringify(res.data.user));
         setUser(res.data.user);
+
+        emitEvent({
+            name: 'login_completed',
+            category: 'user',
+            actor: { type: 'user', id: res.data.user.id },
+            properties: { method: 'otp' }
+        });
+
         return res.data.user;
     };
 
@@ -51,6 +79,14 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem('token', res.data.token);
         localStorage.setItem('user', JSON.stringify(res.data.user));
         setUser(res.data.user);
+
+        emitEvent({
+            name: 'login_completed',
+            category: 'user',
+            actor: { type: 'user', id: res.data.user.id },
+            properties: { method: 'phone' }
+        });
+
         return res.data.user;
     };
 
@@ -59,6 +95,14 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem('token', res.data.token);
         localStorage.setItem('user', JSON.stringify(res.data.user));
         setUser(res.data.user);
+
+        emitEvent({
+            name: 'signup_completed',
+            category: 'user',
+            actor: { type: 'user', id: res.data.user.id },
+            properties: { role }
+        });
+
         return res.data.user;
     };
 
@@ -67,6 +111,14 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem('token', res.data.accessToken);
         localStorage.setItem('user', JSON.stringify(res.data.user));
         setUser(res.data.user);
+
+        emitEvent({
+            name: 'login_completed',
+            category: 'user',
+            actor: { type: 'user', id: res.data.user.id },
+            properties: { method: provider }
+        });
+
         return res.data.user;
     };
 
@@ -89,6 +141,13 @@ export const AuthProvider = ({ children }) => {
                 localStorage.setItem('token', accessToken);
                 localStorage.setItem('user', JSON.stringify(user));
                 setUser(user);
+
+                emitEvent({
+                    name: 'login_completed',
+                    category: 'user',
+                    actor: { type: 'user', id: user.id },
+                    properties: { method: 'google' }
+                });
 
                 // User state change will trigger redirects in components
             } catch (err) {

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import api from '../utils/api';
 import AuthContext from '../context/AuthContext';
+import { emitEvent } from '../analytics';
 
 const FollowButton = ({ targetId, type = 'product', label = 'Follow', onToggle }) => {
     const { user, loading: authLoading } = useContext(AuthContext);
@@ -46,6 +47,16 @@ const FollowButton = ({ targetId, type = 'product', label = 'Follow', onToggle }
                 const newState = res.data.isFollowing;
                 setIsFollowing(newState);
                 if (onToggle) onToggle(newState);
+
+                if (newState) {
+                    emitEvent({
+                        name: 'product_followed',
+                        category: 'engagement',
+                        actor: { type: 'user', id: user.id },
+                        object: { type: 'product', id: targetId },
+                        properties: { location: window.location.pathname }
+                    });
+                }
             }
         } catch (err) {
             console.error('Follow error:', err);
