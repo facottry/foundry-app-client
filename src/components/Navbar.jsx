@@ -1,6 +1,6 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import AuthContext from '../context/AuthContext';
+import { useAuth } from '../context/AuthContext';
 import SearchBox from './SearchBox';
 import { useBot } from '../context/BotContext';
 import BRAND from '../config/brand';
@@ -26,7 +26,7 @@ const REXLink = () => {
 
 const Navbar = () => {
 
-    const { user, logout } = useContext(AuthContext);
+    const { user, logout } = useAuth();
     const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(false);
 

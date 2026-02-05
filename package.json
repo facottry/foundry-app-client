@@ -1,9 +1,10 @@
 {
     "name": "appclient",
-    "version": "3.3.5.1",
+    "version": "3.3.5.2",
     "private": true,
     "dependencies": {
         "axios": "^0.27.0",
+        "lucide-react": "^0.563.0",
         "react": "^18.0.0",
         "react-dom": "^18.0.0",
         "react-helmet-async": "^2.0.5",
@@ -17,8 +18,8 @@
         "commit": "git add . && git commit -m 'update' && git push origin main",
         "production": "git push --force-with-lease origin main:PRODUCTION_DEPLOYMENT",
         "development": "git push --force-with-lease origin main:DEVELOPMENT_DEPLOYMENT",
-        "tag": "node -e \"const v=require('./package.json').version; require('child_process').execSync(`git tag -a v${v} -m 'Release v${v}'`, { stdio: 'inherit' })\"",
-        "tagpush": "npm run tag:release && git push origin HEAD && git push origin --tags",
+        "tagversion": "node -e \"const v=require('./package.json').version; const {execSync}=require('child_process'); const d=new Date(); const ts=d.toLocaleString('en-GB',{year:'numeric',month:'short',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:true}).replace(',',''); try{execSync(`git tag -a v${v} -m \\\"Release v${v} at ${ts}\\\"`,{stdio:'inherit'})}catch(e){console.log('Tag v'+v+' already exists. Skipping.')}\"",
+        "tagversionpush": "npm run tagversion && git push origin --tags",
         "FAST_DEV": "git add . && git commit -m 'FAST_DEV' && node -e \"const d=new Date(); const ts=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}-${String(d.getHours()).padStart(2,'0')}-${String(d.getMinutes()).padStart(2,'0')}`; require('child_process').execSync(`git tag dev-${ts}`, { stdio:'inherit' })\" && git push origin HEAD:DEVELOPMENT_DEPLOYMENT && git push origin --tags"
     },
     "eslintConfig": {

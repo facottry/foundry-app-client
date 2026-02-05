@@ -26,6 +26,7 @@ import FounderProductsPage from './pages/FounderProductsPage';
 import ProductAnalyticsPage from './pages/ProductAnalyticsPage';
 import DashboardCustomer from './pages/DashboardCustomer';
 import CategoryPage from './pages/CategoryPage';
+import CollectionDetails from './pages/CollectionDetails';
 import ProductDetails from './pages/ProductDetails';
 import ProductReviewsPage from './pages/ProductReviewsPage';
 import CreateProduct from './pages/CreateProduct';
@@ -136,6 +137,7 @@ function App() {
 
 
                                     <Route path="/category/:slug" element={<CategoryPage />} />
+                                    <Route path="/collections/:slug" element={<CollectionDetails />} />
                                     <Route path="/tag/:slug" element={<TagPage />} />
                                     <Route path="/product/:slug" element={<ProductDetails />} />
                                     <Route path="/product/:slug/reviews" element={<ProductReviewsPage />} />

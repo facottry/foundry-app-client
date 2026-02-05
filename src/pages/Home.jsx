@@ -3,9 +3,12 @@ import { Link } from 'react-router-dom';
 import SEO from '../components/SEO'; //Changed from SEOHead
 import { organizationSchema } from '../utils/seo'; // Kept for structuredData prop
 import CategoryDiscoveryGrid from '../components/home/CategoryDiscoveryGrid';
+import CollectionsGrid from '../components/home/CollectionsGrid';
 import BRAND from '../config/brand';
 
 const Home = () => {
+    const [activeTab, setActiveTab] = React.useState('category');
+
     return (
         <>
             <SEO // Changed from SEOHead
@@ -64,9 +67,30 @@ const Home = () => {
                     </div>
                 </div>
 
-                {/* Categories Grid (Redesigned) */}
-                <div style={{ marginTop: '80px' }}>
-                    <CategoryDiscoveryGrid />
+                {/* Tabs & Grid */}
+                <div style={{ marginTop: '60px' }}>
+                    <div className="container mx-auto px-4 mb-8">
+                        <div className="flex justify-center border-b border-gray-200">
+                            <button
+                                className={`px-8 py-4 font-medium text-lg border-b-2 transition-all duration-200 ${activeTab === 'category' ? 'border-orange-500 text-orange-600 bg-orange-50/10' : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'}`}
+                                onClick={() => setActiveTab('category')}
+                            >
+                                Browse by Category
+                            </button>
+                            <button
+                                className={`px-8 py-4 font-medium text-lg border-b-2 transition-all duration-200 ${activeTab === 'collection' ? 'border-orange-500 text-orange-600 bg-orange-50/10' : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'}`}
+                                onClick={() => setActiveTab('collection')}
+                            >
+                                Browse by Collection
+                            </button>
+                        </div>
+                    </div>
+
+                    {activeTab === 'category' ? (
+                        <CategoryDiscoveryGrid />
+                    ) : (
+                        <CollectionsGrid />
+                    )}
                 </div>
 
                 {/* Value Props */}

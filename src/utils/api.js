@@ -67,4 +67,9 @@ export const updateProfile = (data) => api.put('/profile/me', data);
 export const getCategories = () => api.get('/categories');
 export const getCategoryStats = () => api.get('/products/categories/stats');
 
+// Collections
+export const getCollections = () => api.get('/collections');
+
+export const getCollectionBySlug = (slug) => api.get(`/collections/${slug}`);
+
 export default api;
