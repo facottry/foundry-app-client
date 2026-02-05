@@ -25,6 +25,13 @@ api.interceptors.request.use(
     error => Promise.reject(error)
 );
 
+
+
+let logoutAction = null;
+export const registerLogoutHandler = (fn) => {
+    logoutAction = fn;
+};
+
 // Response Interceptor (Error Handling)
 api.interceptors.response.use(
     response => {
@@ -36,6 +43,14 @@ api.interceptors.response.use(
         // Check for request cancellation
         if (axios.isCancel(error)) {
             return Promise.reject(error);
+        }
+
+        // Handle 401 Unauthorized (Token Invalid/Expired)
+        if (error.response && error.response.status === 401) {
+            // Avoid infinite loop if logout itself fails
+            if (!error.config.url.includes('/auth/logout') && logoutAction) {
+                logoutAction();
+            }
         }
 
         // Network Error / Server Down

@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
-import api from '../utils/api';
+import api, { registerLogoutHandler } from '../utils/api';
 
 const AuthContext = createContext();
 
@@ -169,6 +169,11 @@ export const AuthProvider = ({ children }) => {
         setUser(null);
         window.location.href = '/login';
     };
+
+    // Register logout handler for 401s
+    useEffect(() => {
+        registerLogoutHandler(logout);
+    }, []);
 
     return (
         <AuthContext.Provider value={{ user, login, loginWithOTP, loginWithPhone, loginWithProvider, signup, logout, loading, updateUser, googleLoginSDK }}>

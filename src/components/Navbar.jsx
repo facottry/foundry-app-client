@@ -71,6 +71,7 @@ const Navbar = () => {
                         </div>
                     )}
 
+                    <Link to="/">Home</Link>
                     <Link to="/category/all">Browse</Link>
 
                     {user ? (

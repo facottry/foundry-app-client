@@ -279,6 +279,58 @@ const ProductDetails = () => {
             {/* Similar Products (Internal Linking) */}
             <SimilarProducts currentProduct={product} />
 
+            {/* Also Visible In Collections Tray */}
+            {product.collections && product.collections.length >= 2 && (
+                <div style={{ marginTop: '60px', borderTop: '1px solid #f3f4f6', paddingTop: '40px' }}>
+                    <div style={{ marginBottom: '24px' }}>
+                        <h2 style={{ fontSize: '1.6rem', fontWeight: '800', marginBottom: '8px', color: '#111827', letterSpacing: '-0.02em' }}>Also Visible In Collections</h2>
+                        <p style={{ fontSize: '1rem', color: '#6b7280', margin: 0 }}>This product is also featured in the following curated lists.</p>
+                    </div>
+
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '20px' }}>
+                        {product.collections.map(col => (
+                            <Link key={col.slug} to={`/collection/${col.slug}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                                <div style={{
+                                    padding: '20px',
+                                    borderRadius: '12px',
+                                    border: '1px solid #e5e7eb',
+                                    background: '#fff',
+                                    transition: 'transform 0.2s, box-shadow 0.2s',
+                                    height: '100%',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    justifyContent: 'space-between'
+                                }}
+                                    onMouseEnter={(e) => {
+                                        e.currentTarget.style.transform = 'translateY(-2px)';
+                                        e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.05)';
+                                    }}
+                                    onMouseLeave={(e) => {
+                                        e.currentTarget.style.transform = 'none';
+                                        e.currentTarget.style.boxShadow = 'none';
+                                        e.currentTarget.style.border = '1px solid #e5e7eb';
+                                    }}
+                                >
+                                    <div>
+                                        <h3 style={{ fontSize: '1.1rem', fontWeight: '700', marginBottom: '6px', color: '#1f2937' }}>{col.name}</h3>
+                                        <p style={{ fontSize: '0.9rem', color: '#6b7280', margin: 0, lineHeight: '1.4', marginBottom: '16px', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                                            {col.tagline}
+                                        </p>
+                                    </div>
+
+                                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 'auto', paddingTop: '16px', borderTop: '1px solid #f9fafb' }}>
+                                        <span style={{ fontSize: '0.8rem', fontWeight: '600', color: '#4f46e5', background: '#eef2ff', padding: '4px 10px', borderRadius: '20px' }}>
+                                            {col.productCount} tools
+                                        </span>
+                                        <span style={{ fontSize: '0.9rem', color: '#9ca3af' }}>View →</span>
+                                    </div>
+                                </div>
+                            </Link>
+                        ))}
+                    </div>
+                </div>
+            )}
+
             {/* Save Modal and Toast... */}
 
             {

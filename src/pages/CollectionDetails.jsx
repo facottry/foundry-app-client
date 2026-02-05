@@ -60,34 +60,54 @@ const CollectionDetails = () => {
                             </h2>
 
                             <div className="space-y-6">
-                                {collection.products.map((productName, index) => (
-                                    <Link
-                                        to={`/search?q=${encodeURIComponent(productName)}`}
-                                        key={index}
-                                        className="block group"
-                                    >
-                                        <div className="flex items-start p-6 rounded-xl bg-gray-50 hover:bg-orange-50/30 transition-all border border-transparent hover:border-orange-200 cursor-pointer">
-                                            <div className="flex-shrink-0 mt-1">
-                                                <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-sm text-gray-400 group-hover:text-orange-500 transition-colors border border-gray-100 group-hover:border-orange-100">
-                                                    <Check className="w-5 h-5" />
+                                {collection.products.length > 0 ? (
+                                    collection.products.map((productName, index) => (
+                                        <Link
+                                            to={`/search?q=${encodeURIComponent(productName)}`}
+                                            key={index}
+                                            className="block group"
+                                        >
+                                            <div className="flex items-start p-6 rounded-xl bg-gray-50 hover:bg-orange-50/30 transition-all border border-transparent hover:border-orange-200 cursor-pointer">
+                                                <div className="flex-shrink-0 mt-1">
+                                                    <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-sm text-gray-400 group-hover:text-orange-500 transition-colors border border-gray-100 group-hover:border-orange-100">
+                                                        <Check className="w-5 h-5" />
+                                                    </div>
+                                                </div>
+                                                <div className="ml-6 flex-grow">
+                                                    <div className="flex items-center justify-between mb-2">
+                                                        <h3 className="text-lg font-bold text-gray-900 group-hover:text-orange-700 transition-colors">
+                                                            {productName}
+                                                        </h3>
+                                                        <span className="opacity-0 group-hover:opacity-100 transition-opacity text-orange-500 text-sm font-medium flex items-center">
+                                                            View Product &rarr;
+                                                        </span>
+                                                    </div>
+                                                    <p className="text-gray-500 text-sm group-hover:text-gray-600">
+                                                        Recommended tool for this category.
+                                                    </p>
                                                 </div>
                                             </div>
-                                            <div className="ml-6 flex-grow">
-                                                <div className="flex items-center justify-between mb-2">
-                                                    <h3 className="text-lg font-bold text-gray-900 group-hover:text-orange-700 transition-colors">
-                                                        {productName}
-                                                    </h3>
-                                                    <span className="opacity-0 group-hover:opacity-100 transition-opacity text-orange-500 text-sm font-medium flex items-center">
-                                                        View Product &rarr;
-                                                    </span>
-                                                </div>
-                                                <p className="text-gray-500 text-sm group-hover:text-gray-600">
-                                                    Recommended tool for this category.
-                                                </p>
-                                            </div>
+                                        </Link>
+                                    ))
+                                ) : (
+                                    <div className="text-center py-16 px-6 bg-gray-50 rounded-2xl border border-dashed border-gray-300">
+                                        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-orange-100 text-orange-600 mb-6">
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                                            </svg>
                                         </div>
-                                    </Link>
-                                ))}
+                                        <h3 className="text-2xl font-bold text-gray-900 mb-3">Pioneers Wanted</h3>
+                                        <p className="text-gray-500 max-w-md mx-auto mb-8">
+                                            This collection is waiting for its first verified product. Be the innovation this category needs.
+                                        </p>
+                                        <Link
+                                            to="/dashboard"
+                                            className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-full shadow-sm text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-transform transform hover:-translate-y-0.5"
+                                        >
+                                            Launch Your Product in This Category
+                                        </Link>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>
