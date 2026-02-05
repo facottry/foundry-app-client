@@ -182,23 +182,19 @@ const SearchResults = () => {
             <SEOHead title={query ? `${query} - Search` : 'Search Clicktory'} />
 
             {/* Premium Header (Sticky) */}
-            <div style={{
-                position: 'sticky',
-                top: 0,
-                zIndex: 900,
-                borderBottom: '1px solid rgba(0,0,0,0.04)',
-                padding: '20px 40px',
-                ...gradientStyle
-            }}>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '40px' }}>
+            <div className="search-header">
+                <div className="search-header-content">
 
                     {/* 1. Logo (Extreme Left) */}
-                    <Link to="/" style={{ fontSize: '1.5rem', fontWeight: '800', letterSpacing: '-0.03em', color: 'var(--text-primary)', whiteSpace: 'nowrap', textDecoration: 'none' }}>
-                        {BRAND.publicName}
-                    </Link>
+                    <div className="search-logo-container">
+                        <Link to="/" style={{ fontSize: '1.5rem', fontWeight: '800', letterSpacing: '-0.03em', color: 'var(--text-primary)', whiteSpace: 'nowrap', textDecoration: 'none' }}>
+                            {BRAND.publicName}
+                        </Link>
+                        {/* Mobile: Show Login/Profile here if desired, or simplified */}
+                    </div>
 
                     {/* 2. Hero Search Bar (Centered / Shifted Right) */}
-                    <div style={{ flex: 1, maxWidth: '800px', position: 'relative' }}>
+                    <div style={{ flex: 1, width: '100%', maxWidth: '800px', position: 'relative' }}>
                         <div style={{
                             position: 'relative',
                             background: 'rgba(255,255,255,0.6)',
@@ -225,7 +221,6 @@ const SearchResults = () => {
                                     fontWeight: '500'
                                 }}
                             />
-                            {/* Search Icon / Submit Button */}
                             {/* Search Icon / Submit Button */}
                             <button
                                 onClick={handleSearch}
@@ -259,8 +254,8 @@ const SearchResults = () => {
                         </div>
                     </div>
 
-                    {/* 3. Secondary Navigation (Right) */}
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '24px', whiteSpace: 'nowrap' }}>
+                    {/* 3. Secondary Navigation (Right) - Hide on mobile via CSS if needed, or stack */}
+                    <div className="desktop-only" style={{ display: 'flex', alignItems: 'center', gap: '24px', whiteSpace: 'nowrap' }}>
                         <Link to="/category/all" style={{ textDecoration: 'none', color: 'var(--text-secondary)', fontWeight: '500' }}>Browse</Link>
                         {!user ? (
                             <>
@@ -275,8 +270,6 @@ const SearchResults = () => {
                         )}
                     </div>
                 </div>
-
-
             </div>
 
             {/* Main Content Area */}
@@ -353,180 +346,125 @@ const SearchResults = () => {
                 )}
 
                 {/* Filters (Left Aligned) - Hidden if only 1 category exists */}
-                {
-                    query && hasResults && !loading &&
-                    ((results.pages.length > 0 ? 1 : 0) + (results.categories.length > 0 ? 1 : 0) + (results.products.length > 0 ? 1 : 0) + (results.founders.length > 0 ? 1 : 0) > 1) && (
-                        <div style={{ marginBottom: '40px', display: 'flex', justifyContent: 'flex-start', gap: '8px', paddingBottom: '8px', paddingLeft: '24px' }}>
-                            <FilterBadge label="All Results" type="ALL" count={0} />
-                            {results.pages.length > 0 && <FilterBadge label="Collections" type="PAGE" count={results.pages.length} />}
-                            {results.categories.length > 0 && <FilterBadge label="Categories" type="CATEGORY" count={results.categories.length} />}
-                            {results.products.length > 0 && <FilterBadge label="Products" type="PRODUCT" count={results.products.length} />}
-                            {results.founders.length > 0 && <FilterBadge label="Founders" type="FOUNDER" count={results.founders.length} />}
-                        </div>
-                    )
-                }
+                {/* Chrome-style Tabs */}
+                <div className="flex border-b border-gray-200 mb-6 mx-4 md:mx-0 overflow-x-auto scrollbar-hide">
+                    <button
+                        onClick={() => setActiveFilter('ALL')}
+                        className={`flex-shrink-0 px-5 py-2.5 text-sm font-bold rounded-t-lg mr-1 transition-all ${activeFilter === 'ALL' ? 'bg-white text-gray-900 border-t-[3px] border-orange-500 shadow-[0_-2px_10px_rgba(0,0,0,0.02)]' : 'bg-gray-50 text-gray-500 hover:bg-gray-100 hover:text-gray-700'}`}
+                    >
+                        All Results
+                    </button>
+                    {results.pages.length > 0 && (
+                        <button
+                            onClick={() => setActiveFilter('PAGE')}
+                            className={`flex-shrink-0 px-5 py-2.5 text-sm font-bold rounded-t-lg mr-1 transition-all ${activeFilter === 'PAGE' ? 'bg-white text-gray-900 border-t-[3px] border-orange-500 shadow-[0_-2px_10px_rgba(0,0,0,0.02)]' : 'bg-gray-50 text-gray-500 hover:bg-gray-100 hover:text-gray-700'}`}
+                        >
+                            Collections <span className="ml-1 opacity-60 text-xs bg-gray-200 px-1.5 py-0.5 rounded-full">{results.pages.length}</span>
+                        </button>
+                    )}
+                    {results.categories.length > 0 && (
+                        <button
+                            onClick={() => setActiveFilter('CATEGORY')}
+                            className={`flex-shrink-0 px-5 py-2.5 text-sm font-bold rounded-t-lg mr-1 transition-all ${activeFilter === 'CATEGORY' ? 'bg-white text-gray-900 border-t-[3px] border-orange-500 shadow-[0_-2px_10px_rgba(0,0,0,0.02)]' : 'bg-gray-50 text-gray-500 hover:bg-gray-100 hover:text-gray-700'}`}
+                        >
+                            Categories <span className="ml-1 opacity-60 text-xs bg-gray-200 px-1.5 py-0.5 rounded-full">{results.categories.length}</span>
+                        </button>
+                    )}
+                    {results.products.length > 0 && (
+                        <button
+                            onClick={() => setActiveFilter('PRODUCT')}
+                            className={`flex-shrink-0 px-5 py-2.5 text-sm font-bold rounded-t-lg mr-1 transition-all ${activeFilter === 'PRODUCT' ? 'bg-white text-gray-900 border-t-[3px] border-orange-500 shadow-[0_-2px_10px_rgba(0,0,0,0.02)]' : 'bg-gray-50 text-gray-500 hover:bg-gray-100 hover:text-gray-700'}`}
+                        >
+                            Products <span className="ml-1 opacity-60 text-xs bg-gray-200 px-1.5 py-0.5 rounded-full">{results.products.length}</span>
+                        </button>
+                    )}
+                </div>
 
-                {/* Empty State */}
-                {
-                    query && !loading && !hasResults && (
-                        <div style={{ textAlign: 'center', padding: '60px 20px', maxWidth: '600px', margin: '0 auto' }}>
-                            <div style={{ fontSize: '4rem', marginBottom: '24px', opacity: 0.8 }}>🔭</div>
-                            <h2 style={{ marginBottom: '16px', fontWeight: '700', letterSpacing: '-0.5px' }}>No exact matches for "{query}"</h2>
-                            <p style={{ color: 'var(--text-secondary)', marginBottom: '40px', fontSize: '1.1rem', lineHeight: '1.6' }}>
-                                We couldn't find a direct match. Try exploring our curated collections.
-                            </p>
-
-                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px' }}>
-                                <Link to="/category/AI" className="category-card-small" style={{
-                                    padding: '20px', borderRadius: '12px', border: '1px solid var(--border-subtle)',
-                                    textDecoration: 'none', color: 'inherit', textAlign: 'left', background: 'var(--bg-card)'
-                                }}>
-                                    <div style={{ fontSize: '1.5rem', marginBottom: '8px' }}>🤖</div>
-                                    <div style={{ fontWeight: '600' }}>AI Tools</div>
-                                </Link>
-                                <Link to="/category/SaaS" className="category-card-small" style={{
-                                    padding: '20px', borderRadius: '12px', border: '1px solid var(--border-subtle)',
-                                    textDecoration: 'none', color: 'inherit', textAlign: 'left', background: 'var(--bg-card)'
-                                }}>
-                                    <div style={{ fontSize: '1.5rem', marginBottom: '8px' }}>☁️</div>
-                                    <div style={{ fontWeight: '600' }}>SaaS Products</div>
-                                </Link>
-                                <Link to="/category/Marketing" className="category-card-small" style={{
-                                    padding: '20px', borderRadius: '12px', border: '1px solid var(--border-subtle)',
-                                    textDecoration: 'none', color: 'inherit', textAlign: 'left', background: 'var(--bg-card)'
-                                }}>
-                                    <div style={{ fontSize: '1.5rem', marginBottom: '8px' }}>📈</div>
-                                    <div style={{ fontWeight: '600' }}>Marketing</div>
-                                </Link>
+                {/* Content Area - Dense Grid */}
+                <div className="bg-white rounded-b-xl min-h-[400px]">
+                    {showPages && (
+                        <section className="mb-8">
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                {results.pages.map((p, i) => (
+                                    <Link to={p.url} key={i} className="block group">
+                                        <div className="p-4 border border-gray-100 rounded-xl hover:border-orange-200 hover:shadow-md transition-all bg-gradient-to-br from-white to-gray-50 h-full">
+                                            <h3 className="text-base font-bold text-gray-900 mb-1 group-hover:text-orange-600">{p.name}</h3>
+                                            <p className="text-xs text-gray-500 line-clamp-2">{p.description}</p>
+                                        </div>
+                                    </Link>
+                                ))}
                             </div>
-                        </div>
-                    )
-                }
+                        </section>
+                    )}
 
-                {/* Results Grid */}
-                {
-                    !loading && hasResults && (
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '60px' }}>
-
-                            {/* A. Custom Pages */}
-                            {showPages && (
-                                <section>
-                                    <h4 style={{
-                                        textTransform: 'uppercase', letterSpacing: '1.5px', fontSize: '0.8rem',
-                                        color: 'var(--text-tertiary)', marginBottom: '24px', fontWeight: '600', paddingLeft: '24px'
-                                    }}>Curated Collections</h4>
-                                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '24px', padding: '0 24px' }}>
-                                        {results.pages.map((p, i) => (
-                                            <Link to={p.url} key={i} style={{ textDecoration: 'none', color: 'inherit' }}>
-                                                <div style={{
-                                                    padding: '24px', border: '1px solid var(--border-subtle)', borderRadius: '16px',
-                                                    background: 'linear-gradient(135deg, var(--bg-card) 0%, var(--bg-subtle) 100%)',
-                                                    height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center'
-                                                }} className="hover-scale-subtle">
-                                                    <h3 style={{ margin: '0 0 8px 0', fontSize: '1.25rem', color: 'var(--text-primary)' }}>{p.name}</h3>
-                                                    <p style={{ margin: 0, fontSize: '0.9rem', color: 'var(--text-secondary)' }}>{p.description} →</p>
-                                                </div>
-                                            </Link>
-                                        ))}
-                                    </div>
-                                </section>
-                            )}
-
-                            {/* B. Categories */}
-                            {showCategories && (
-                                <section>
-                                    <h4 style={{
-                                        textTransform: 'uppercase', letterSpacing: '1.5px', fontSize: '0.8rem',
-                                        color: 'var(--text-tertiary)', marginBottom: '24px', fontWeight: '600', paddingLeft: '24px'
-                                    }}>Categories</h4>
-                                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px', padding: '0 24px' }}>
-                                        {results.categories.map((cat) => (
-                                            <Link to={`/category/${cat.slug}`} key={cat.slug} style={{ textDecoration: 'none' }}>
-                                                <div style={{
-                                                    padding: '20px', borderRadius: '16px', border: '1px solid var(--border-subtle)',
-                                                    display: 'flex', alignItems: 'center', gap: '12px', background: 'var(--bg-card)', transition: 'all 0.2s'
-                                                }} className="hover-border-highlight">
-                                                    <span style={{ fontSize: '1.8rem' }}>{cat.icon || '📂'}</span>
-                                                    <div>
-                                                        <div style={{ fontWeight: '600', fontSize: '1rem', color: 'var(--text-primary)' }}>{cat.name}</div>
-                                                        <div style={{ fontSize: '0.85rem', color: 'var(--text-tertiary)' }}>View Collection</div>
-                                                    </div>
-                                                </div>
-                                            </Link>
-                                        ))}
-                                    </div>
-                                </section>
-                            )}
-
-                            {/* C. Founders */}
-                            {showFounders && (
-                                <section>
-                                    <h4 style={{
-                                        textTransform: 'uppercase', letterSpacing: '1.5px', fontSize: '0.8rem',
-                                        color: 'var(--text-tertiary)', marginBottom: '24px', fontWeight: '600', paddingLeft: '24px'
-                                    }}>Founders</h4>
-                                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '24px', padding: '0 24px' }}>
-                                        {results.founders.map(founder => (
-                                            <Link to={`/founder/${founder.slug || founder._id}`} key={founder._id} style={{ textDecoration: 'none' }}>
-                                                <div style={{
-                                                    padding: '20px', borderRadius: '16px', border: '1px solid var(--border-subtle)',
-                                                    background: 'var(--bg-card)', display: 'flex', alignItems: 'center', gap: '16px'
-                                                }} className="hover-border-highlight">
-                                                    {/* Founder Avatar with Initials Fallback */}
-                                                    <div style={{ width: '56px', height: '56px', flexShrink: 0, position: 'relative' }}>
-                                                        <img
-                                                            src={founder.avatar_url || 'https://via.placeholder.com/80'}
-                                                            alt={founder.name}
-                                                            style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }}
-                                                            onError={(e) => {
-                                                                e.target.style.display = 'none';
-                                                                e.target.nextSibling.style.display = 'flex';
-                                                            }}
-                                                        />
-                                                        {/* Fallback Initials (Hidden by default, shown on error) */}
-                                                        <div style={{
-                                                            display: 'none',
-                                                            width: '100%', height: '100%', borderRadius: '50%',
-                                                            alignItems: 'center', justifyContent: 'center',
-                                                            fontSize: '1.2rem', fontWeight: 'bold',
-                                                            background: 'linear-gradient(135deg, #FFEFBA, #FFFFFF)', // Default light
-                                                            border: '1px solid rgba(0,0,0,0.05)',
-                                                            position: 'absolute', top: 0, left: 0
-                                                        }}>
-                                                            {founder.name.charAt(0).toUpperCase()}
-                                                        </div>
-                                                    </div>
-
-                                                    <div>
-                                                        <div style={{ fontWeight: '700', fontSize: '1rem', color: 'var(--text-primary)' }}>{founder.name}</div>
-                                                        <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>{founder.company_name || founder.role_title || 'Founder'}</div>
-                                                    </div>
-                                                </div>
-                                            </Link>
-                                        ))}
-                                    </div>
-                                </section>
-                            )}
-
-                            {/* D. Products */}
-                            {showProducts && (
-                                <section>
-                                    <h4 style={{
-                                        textTransform: 'uppercase', letterSpacing: '1.5px', fontSize: '0.8rem',
-                                        color: 'var(--text-tertiary)', marginBottom: '24px', fontWeight: '600', paddingLeft: '24px'
-                                    }}>Products</h4>
-                                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '24px', padding: '0 24px' }}>
-                                        {results.products.map(product => (
-                                            <div key={product._id} style={{ aspectRatio: '4/3' }}>
-                                                <ProductCard product={product} aspectRatio="4/3" />
+                    {/* B. Categories - DENSE GRID */}
+                    {showCategories && (
+                        <section className="mb-6 px-4 md:px-6">
+                            <h4 className="text-[10px] md:text-xs font-bold text-gray-400 uppercase tracking-widest mb-3 md:mb-4 pl-1">Categories</h4>
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                                {results.categories.map((cat) => (
+                                    <Link to={`/category/${cat.slug}`} key={cat.slug} className="block group">
+                                        <div className="p-3 border border-gray-100 rounded-xl hover:border-orange-200 hover:shadow-sm bg-gray-50 flex items-center gap-3 transition-all h-full">
+                                            <span className="text-xl md:text-2xl">{cat.icon || '📂'}</span>
+                                            <div className="min-w-0 flex-1">
+                                                <div className="font-bold text-sm text-gray-900 group-hover:text-orange-600 truncate">{cat.name}</div>
+                                                <div className="text-[10px] text-gray-400 font-medium">View Collection</div>
                                             </div>
-                                        ))}
+                                        </div>
+                                    </Link>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+
+                    {/* C. Founders - DENSE GRID */}
+                    {showFounders && (
+                        <section className="mb-6 px-4 md:px-6">
+                            <h4 className="text-[10px] md:text-xs font-bold text-gray-400 uppercase tracking-widest mb-3 md:mb-4 pl-1">Founders</h4>
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                                {results.founders.map(founder => (
+                                    <Link to={`/founder/${founder.slug || founder._id}`} key={founder._id} className="block group">
+                                        <div className="p-3 border border-gray-100 rounded-xl hover:border-orange-200 hover:shadow-sm bg-white flex items-center gap-3 transition-all">
+                                            <div className="relative w-10 h-10 flex-shrink-0">
+                                                <img
+                                                    src={founder.avatar_url || 'https://via.placeholder.com/80'}
+                                                    alt={founder.name}
+                                                    className="w-full h-full rounded-full object-cover border border-gray-100 bg-gray-50"
+                                                    onError={(e) => {
+                                                        e.target.style.display = 'none';
+                                                        e.target.nextSibling.style.display = 'flex';
+                                                    }}
+                                                />
+                                                <div className="hidden w-full h-full rounded-full items-center justify-center text-sm font-bold bg-gradient-to-br from-orange-100 to-amber-50 text-orange-800 border border-orange-100 absolute top-0 left-0">
+                                                    {founder.name.charAt(0).toUpperCase()}
+                                                </div>
+                                            </div>
+
+                                            <div className="min-w-0 flex-1">
+                                                <div className="font-bold text-sm text-gray-900 group-hover:text-orange-600 truncate">{founder.name}</div>
+                                                <div className="text-[11px] text-gray-400 truncate">{founder.company_name || 'Founder'}</div>
+                                            </div>
+                                        </div>
+                                    </Link>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+
+                    {/* D. Products - ULTRA DENSE GRID */}
+                    {showProducts && (
+                        <section className="px-4 md:px-6 pb-8">
+                            <h4 className="text-[10px] md:text-xs font-bold text-gray-400 uppercase tracking-widest mb-3 md:mb-4 pl-1">Products</h4>
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+                                {results.products.map(product => (
+                                    <div key={product._id} className="h-full">
+                                        <ProductCard product={product} />
                                     </div>
-                                </section>
-                            )}
-                        </div>
-                    )
-                }
+                                ))}
+                            </div>
+                        </section>
+                    )}
+                </div>
             </div >
         </div >
     );

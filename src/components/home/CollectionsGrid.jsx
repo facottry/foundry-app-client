@@ -63,7 +63,7 @@ const CollectionsGrid = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {collections.map(col => (
+                {collections.filter(col => col.products && col.products.length >= 3).map(col => (
                     <CollectionCard key={col.slug} collection={col} />
                 ))}
             </div>

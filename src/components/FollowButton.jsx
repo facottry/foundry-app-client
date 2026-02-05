@@ -3,7 +3,9 @@ import api from '../utils/api';
 import AuthContext from '../context/AuthContext';
 import { emitEvent } from '../analytics';
 
-const FollowButton = ({ targetId, type = 'product', label = 'Follow', onToggle }) => {
+const FollowButton = ({ targetId, type = 'product', label = 'Follow', onToggle, className = '' }) => {
+    // ... context and state ... (keep as is, only showing render part if possible, but replace tool needs context)
+    // Re-declaring component body to ensure props are captured
     const { user, loading: authLoading } = useContext(AuthContext);
     const [isFollowing, setIsFollowing] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -15,7 +17,7 @@ const FollowButton = ({ targetId, type = 'product', label = 'Follow', onToggle }
                 try {
                     const endpoint = type === 'product'
                         ? `/products/${targetId}/follow-state`
-                        : `/follows/${type}/${targetId}/state`; // Fallback if other types added later
+                        : `/follows/${type}/${targetId}/state`;
 
                     const res = await api.get(endpoint);
                     setIsFollowing(res.data.isFollowing);
@@ -30,8 +32,6 @@ const FollowButton = ({ targetId, type = 'product', label = 'Follow', onToggle }
 
     const handleFollow = async () => {
         if (!user) {
-            // Check auth
-            // Use window.location as strict unauthorized fallback or use a modal if context allowed
             window.location.href = `/login?redirect=${encodeURIComponent(window.location.pathname)}`;
             return;
         }
@@ -65,32 +65,22 @@ const FollowButton = ({ targetId, type = 'product', label = 'Follow', onToggle }
         }
     };
 
-    if (authLoading) return null; // Or skeleton
+    if (authLoading) return null;
 
     return (
         <button
             onClick={handleFollow}
             disabled={loading}
-            style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '6px',
-                padding: '8px 16px',
-                borderRadius: '20px',
-                border: isFollowing ? '1px solid #e5e5e5' : '1px solid #1a1a1a',
-                background: isFollowing ? '#fff' : '#1a1a1a',
-                color: isFollowing ? '#666' : '#fff',
-                fontSize: '0.9rem',
-                fontWeight: '600',
-                cursor: 'pointer',
-                transition: 'all 0.2s',
-                opacity: loading ? 0.7 : 1,
-                minWidth: '120px'
-            }}
+            className={`
+                flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-full text-sm font-semibold transition-all disabled:opacity-70 border
+                ${isFollowing
+                    ? 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'
+                    : 'bg-gray-900 text-white border-gray-900 hover:bg-gray-800'}
+                ${className}
+            `}
         >
             <span>{isFollowing ? '✓' : '+'}</span>
-            {isFollowing ? 'Following' : label}
+            <span className="whitespace-nowrap">{isFollowing ? 'Following' : label}</span>
         </button>
     );
 };

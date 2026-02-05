@@ -151,50 +151,58 @@ const ProductDetails = () => {
             ]} />
 
             {/* Product Header - Entity Node Style */}
-            <div style={{ marginBottom: '40px' }}>
-                <div style={{ display: 'flex', gap: '24px', alignItems: 'start', marginBottom: '24px' }}>
+            <div className="mb-8 md:mb-12">
+                <div className="flex flex-col md:flex-row gap-5 md:gap-8 items-start mb-6 md:mb-8">
                     {logoUrl ? (
-                        <img src={logoUrl} alt={`${product.name} Logo`} style={{ width: '96px', height: '96px', borderRadius: '20px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)', objectFit: 'cover' }} />
+                        <img
+                            src={logoUrl}
+                            alt={`${product.name} Logo`}
+                            className="w-20 h-20 md:w-24 md:h-24 rounded-2xl shadow-sm object-cover border border-gray-100 flex-shrink-0"
+                        />
                     ) : (
-                        <div style={{ width: '96px', height: '96px', borderRadius: '20px', background: '#f3f4f6', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem', fontWeight: 'bold', color: '#666' }}>
+                        <div className="w-20 h-20 md:w-24 md:h-24 rounded-2xl bg-gray-100 flex items-center justify-center text-3xl md:text-4xl font-bold text-gray-500 flex-shrink-0">
                             {product.name.charAt(0)}
                         </div>
                     )}
-                    <div style={{ flex: 1 }}>
+                    <div className="flex-1 w-full min-w-0">
                         {/* H1: Product Name (Entity Identity) */}
-                        <h1 style={{ marginBottom: '8px', fontSize: '2.5rem', fontWeight: '800', letterSpacing: '-0.5px' }}>{product.name}</h1>
+                        <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight text-gray-900 mb-2 md:mb-3 leading-tight">
+                            {product.name}
+                        </h1>
 
                         {/* Tagline - Explicitly requested */}
                         {product.tagline && (
-                            <p style={{ fontSize: '1.5rem', fontWeight: '300', color: '#4b5563', marginBottom: '16px' }}>
+                            <p className="text-lg md:text-2xl font-light text-gray-600 mb-4 md:mb-6 leading-snug">
                                 {product.tagline}
                             </p>
                         )}
 
                         {/* Description - Separate from Tagline */}
-                        <p style={{ fontSize: '1.1rem', color: '#374151', marginBottom: '24px', lineHeight: '1.6', maxWidth: '800px' }}>
+                        <p className="text-base md:text-lg text-gray-700 mb-6 leading-relaxed max-w-3xl">
                             {product.description}
                         </p>
 
                         {/* Visible Entity Metadata (HTML) */}
-                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', marginBottom: '24px', fontSize: '0.9rem', color: '#6b7280', borderTop: '1px solid #e5e7eb', paddingTop: '16px' }}>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                                <span style={{ fontWeight: '600', color: '#374151' }}>Category:</span>
+                        <div className="flex flex-wrap gap-x-4 gap-y-2 mb-6 text-sm text-gray-500 border-t border-gray-100 pt-4">
+                            <div className="flex items-center gap-1.5">
+                                <span className="font-semibold text-gray-700">Category:</span>
                                 <span>{entityCategory}</span>
                             </div>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                                <span style={{ fontWeight: '600', color: '#374151' }}>Status:</span>
-                                <span style={{ color: entityStatus === 'Active' ? '#059669' : '#d97706', fontWeight: '500' }}>{entityStatus}</span>
+                            <div className="flex items-center gap-1.5">
+                                <span className="font-semibold text-gray-700">Status:</span>
+                                <span className={entityStatus === 'Active' ? 'text-emerald-600 font-medium' : 'text-amber-600 font-medium'}>
+                                    {entityStatus}
+                                </span>
                             </div>
                             {(product.offers?.price || entityPrice) && (
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                                    <span style={{ fontWeight: '600', color: '#374151' }}>Price:</span>
+                                <div className="flex items-center gap-1.5">
+                                    <span className="font-semibold text-gray-700">Price:</span>
                                     <span>{entityPrice}</span>
                                 </div>
                             )}
                             {product.follower_count > 0 && (
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                                    <span style={{ fontWeight: '600', color: '#374151' }}>Followers:</span>
+                                <div className="flex items-center gap-1.5">
+                                    <span className="font-semibold text-gray-700">Followers:</span>
                                     <span>{product.follower_count}</span>
                                 </div>
                             )}
@@ -202,37 +210,41 @@ const ProductDetails = () => {
 
                         {/* Screenshots Section - Conditional */}
                         {screenshotUrls && screenshotUrls.length > 0 && (
-                            <div style={{ marginTop: '24px', marginBottom: '24px', overflowX: 'auto', display: 'flex', gap: '16px', paddingBottom: '16px' }}>
+                            <div className="mt-6 mb-8 flex gap-3 overflow-x-auto pb-4 snap-x">
                                 {screenshotUrls.map((url, idx) => (
-                                    <img key={idx} src={url} alt={`Screenshot ${idx + 1}`} style={{ height: '200px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0,0,0,0.1)', flexShrink: 0 }} />
+                                    <img
+                                        key={idx}
+                                        src={url}
+                                        alt={`Screenshot ${idx + 1}`}
+                                        className="h-32 md:h-48 rounded-lg shadow-sm border border-gray-100 flex-shrink-0 snap-center"
+                                    />
                                 ))}
                             </div>
                         )}
 
-                        <div style={{ display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap' }}>
-
+                        <div className="flex gap-4 items-center flex-wrap">
                             {/* Ratings - Conditional */}
                             {product.avg_rating > 0 && (
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '1rem' }}>
+                                <div className="flex items-center gap-1 text-base">
                                     <span>⭐</span>
-                                    <strong>{product.avg_rating.toFixed(1)}</strong>
-                                    <span style={{ color: '#666' }}>({product.ratings_count} reviews)</span>
+                                    <strong className="text-gray-900">{product.avg_rating.toFixed(1)}</strong>
+                                    <span className="text-gray-500">({product.ratings_count} reviews)</span>
                                 </div>
                             )}
                         </div>
 
                         {/* Team Cluster (Horizontal) - Conditional */}
                         {product.team_members && product.team_members.length > 0 && (
-                            <div style={{ marginTop: '20px', display: 'flex', alignItems: 'center', gap: '12px' }}>
-                                <div style={{ display: 'flex', paddingLeft: '8px' }}>
+                            <div className="mt-5 flex items-center gap-3">
+                                <div className="flex -space-x-2 pl-2">
                                     {product.team_members.slice(0, 5).map((member, i) => {
                                         const avatar = member.avatar_url || getImageUrl(member.profileImageKey) || '';
                                         return (
-                                            <div key={i} title={`${member.name} (${member.title || 'Member'})`} style={{ marginLeft: '-8px', width: '48px', height: '48px', borderRadius: '50%', border: '3px solid white', overflow: 'hidden', background: '#e5e7eb', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
+                                            <div key={i} title={`${member.name} (${member.title || 'Member'})`} className="w-8 h-8 md:w-10 md:h-10 rounded-full border-2 border-white overflow-hidden bg-gray-200 flex items-center justify-center shadow-sm relative z-0 hover:z-10 transition-all">
                                                 {avatar ? (
-                                                    <img src={avatar} alt={member.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                                    <img src={avatar} alt={member.name} className="w-full h-full object-cover" />
                                                 ) : (
-                                                    <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(135deg, #6366f1, #a855f7)', color: 'white', fontWeight: 'bold', fontSize: '1.2rem' }}>
+                                                    <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-indigo-500 to-purple-500 text-white font-bold text-xs md:text-sm">
                                                         {(member.name || '?').charAt(0)}
                                                     </div>
                                                 )}
@@ -240,34 +252,33 @@ const ProductDetails = () => {
                                         )
                                     })}
                                 </div>
-                                <span style={{ fontSize: '1rem', color: '#374151' }}>
+                                <span className="text-sm text-gray-600">
                                     by {product.team_members[0].user_id ? (
                                         <Link
                                             to={`/founder/${product.team_members[0].user_id.slug || product.team_members[0].user_id._id || product.team_members[0].user_id}`}
-                                            style={{ color: '#2563eb', fontWeight: '600', textDecoration: 'none', cursor: 'pointer' }}
+                                            className="text-blue-600 font-semibold hover:underline"
                                         >
                                             {product.team_members[0].name}
                                         </Link>
                                     ) : (
-                                        <span style={{ color: '#111827', fontWeight: '600' }}>{product.team_members[0].name}</span>
+                                        <span className="font-semibold text-gray-900">{product.team_members[0].name}</span>
                                     )}
                                 </span>
                             </div>
                         )}
 
-                        <div style={{ display: 'flex', gap: '16px', marginTop: '24px' }}>
+                        <div className="flex gap-2 md:gap-4 mt-6">
                             <a
                                 href={`/visit/${product._id}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="btn btn-primary"
+                                className="btn btn-primary flex-1 flex items-center justify-center py-2.5 px-3 md:px-5 text-sm md:text-base font-medium rounded-full shadow-lg shadow-orange-500/20 active:scale-95 transition-transform whitespace-nowrap"
                                 onClick={handleVisitWebsite}
-                                style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '12px 24px', fontSize: '1.1rem' }}
                             >
                                 Visit Website
                             </a>
                             <button
-                                className="btn btn-secondary"
+                                className="btn btn-secondary flex-1 py-2.5 px-3 md:px-5 text-sm md:text-base font-medium rounded-full border border-gray-200 hover:bg-gray-50 active:scale-95 transition-transform whitespace-nowrap"
                                 onClick={() => {
                                     const token = localStorage.getItem('token');
                                     if (!token) {
@@ -276,7 +287,6 @@ const ProductDetails = () => {
                                     }
                                     setShowSaveModal(true);
                                 }}
-                                style={{ flex: 1, padding: '12px 24px', fontSize: '1.1rem' }}
                             >
                                 ❤️ Save
                             </button>
@@ -284,6 +294,7 @@ const ProductDetails = () => {
                                 targetId={product._id}
                                 type="product"
                                 label="Follow"
+                                className="flex-1 px-3 md:px-5 whitespace-nowrap"
                                 onToggle={(isFollowing) => {
                                     setProduct(prev => ({
                                         ...prev,

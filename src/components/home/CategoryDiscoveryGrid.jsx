@@ -28,8 +28,9 @@ const CategoryDiscoveryGrid = () => {
             </div>
 
             {/* Grid Layout: 1 col mobile, 2 col tablet, 3 col desktop */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {categories.map(cat => (
+            {/* Desktop: 4 cols (3 col span in 12 grid), maintain generous outer padding */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+                {categories.filter(cat => cat.productCount >= 3).map(cat => (
                     <CategoryDiscoveryCard key={cat.slug} category={cat} />
                 ))}
             </div>

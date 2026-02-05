@@ -8,62 +8,47 @@ const CategoryDiscoveryCard = ({ category }) => {
     return (
         <Link
             to={`/category/${category.slug}`}
-            className="group block relative overflow-hidden rounded-2xl bg-white border border-gray-100 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-orange-100/50"
+            className="group relative block h-full bg-white rounded-xl border border-stone-100 shadow-[0_2px_8px_rgba(0,0,0,0.04)] transition-all duration-300 hover:shadow-[0_8px_24px_rgba(0,0,0,0.06)] hover:-translate-y-0.5 overflow-hidden"
             style={{ textDecoration: 'none' }}
         >
-            {/* Subtle Top Gradient Line */}
-            <div className="h-1.5 w-full bg-gradient-to-r from-orange-300 to-amber-200"></div>
+            {/* Subtle Warm Tint Overlay on Hover */}
+            <div className="absolute inset-0 bg-orange-50/0 group-hover:bg-orange-50/[0.03] transition-colors" />
 
-            <div className="p-6 h-full flex flex-col justify-between relative z-10">
-                {/* Top Section */}
-                <div className="flex justify-between items-start mb-4">
-                    <div className="p-3 bg-orange-50 text-2xl rounded-xl group-hover:scale-110 group-hover:bg-orange-100 transition-all duration-300">
+            {/* Top Accent Line */}
+            <div className="absolute top-0 left-0 right-0 h-[2px] bg-transparent group-hover:bg-orange-500/20 transition-colors" />
+
+            <div className="relative p-5 flex flex-col h-full">
+                {/* Header: Icon + Count */}
+                <div className="flex justify-between items-start mb-3">
+                    <div className="w-9 h-9 rounded-lg bg-orange-50/80 flex items-center justify-center text-lg text-orange-600/90 shadow-sm border border-orange-100/50 group-hover:bg-orange-100/80 transition-colors">
                         {category.icon}
                     </div>
-                    {category.isTrending && (
-                        <div className="flex items-center gap-1.5 px-3 py-1 bg-amber-50 text-amber-600 rounded-full text-[0.7rem] font-bold border border-amber-100 uppercase tracking-wide">
-                            🔥 Trending
-                        </div>
-                    )}
+                    {/* Tiny Count Badge */}
+                    <span className="text-[10px] font-medium text-gray-400 bg-gray-50 px-1.5 py-0.5 rounded-md border border-gray-100">
+                        {category.productCount}
+                    </span>
                 </div>
 
-                {/* Center Content */}
-                <div className="mb-6">
-                    <h3 className="text-xl font-bold text-gray-900 mb-2 font-display group-hover:text-orange-600 transition-colors">
+                {/* Text Content */}
+                <div className="mb-4">
+                    <h3 className="text-[0.95rem] font-semibold text-gray-900 mb-1 group-hover:text-orange-700 transition-colors">
                         {category.name}
                     </h3>
-                    <p className="text-gray-500 text-sm font-medium leading-relaxed">
+                    <p className="text-[11px] text-gray-500 leading-relaxed line-clamp-2 pr-2">
                         {category.tagline}
                     </p>
                 </div>
 
-                {/* Subtags */}
-                <div className="flex flex-wrap gap-2 mb-6">
-                    {category.subtags.slice(0, 3).map(tag => (
-                        <span key={tag} className="px-2.5 py-1 bg-gray-50 rounded-md text-xs font-medium text-gray-600 border border-gray-100 group-hover:border-orange-100 group-hover:bg-orange-50/50 transition-colors">
-                            {tag}
+                {/* Top Tools (Chips) - Pushed to bottom */}
+                <div className="mt-auto pt-3 border-t border-gray-50/50 flex flex-wrap gap-1.5 opacity-80 group-hover:opacity-100 transition-opacity">
+                    {category.topProducts && category.topProducts.slice(0, 3).map((prod, i) => (
+                        <span key={i} className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-gray-50 text-gray-500 border border-gray-100/80">
+                            {prod.name}
                         </span>
                     ))}
-                </div>
-
-                {/* Top Products (Pills) */}
-                <CategoryTopProducts
-                    products={category.topProducts}
-                    selectionMode={category.selectionMode}
-                />
-
-                {/* Bottom Row */}
-                <div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-50">
-                    <span className="text-gray-400 text-xs font-semibold uppercase tracking-wider">
-                        {category.productCount} Tools
-                    </span>
-
-                    <div className="flex items-center gap-1 text-sm font-bold text-orange-600 opacity-0 group-hover:opacity-100 transform translate-x-2 group-hover:translate-x-0 transition-all duration-300">
-                        Explore
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 5l7 7-7 7" />
-                        </svg>
-                    </div>
+                    {(category.topProducts?.length || 0) > 3 && (
+                        <span className="text-[10px] text-gray-300 px-1">+{(category.topProducts?.length || 0) - 3}</span>
+                    )}
                 </div>
             </div>
         </Link>

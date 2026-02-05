@@ -56,63 +56,62 @@ const ProductCard = ({ product, promoted, aspectRatio }) => {
         <Link
             to={`/product/${product.slug || product._id}`}
             style={{ textDecoration: 'none' }}
-            className="group block h-full outline-none"
+            className="group block outline-none h-full"
         >
             <div className={`
-                relative flex flex-col h-full rounded-2xl border transition-all duration-200 ease-out
-                ${isCompact ? 'p-5' : 'p-6'} 
-                ${cardGradientClass} animate-gradient-slow
+                relative flex flex-col h-full rounded-xl border transition-all duration-200 ease-out
+                p-3 md:p-4 bg-white
                 ${promoted ? 'border-orange-200 shadow-orange-100/20' : 'border-gray-100'}
-                hover:-translate-y-1 hover:shadow-xl hover:shadow-gray-200/50 hover:border-orange-200/50
-                focus-within:ring-2 focus-within:ring-orange-500/20
+                hover:-translate-y-1 hover:shadow-lg hover:border-orange-200/50
             `}>
-
-                {/* Promoted Badge */}
-                {promoted && (
-                    <div className="absolute -top-3 left-6 flex items-center gap-1 bg-gradient-to-r from-orange-500 to-amber-500 text-white text-[0.65rem] font-bold px-3 py-1 rounded-full shadow-sm uppercase tracking-wider z-10">
-                        <span>🚀</span> Promoted
+                {/* Header: Icon + Title Tight Row */}
+                <div className="flex items-start gap-3 mb-2">
+                    {/* Compact Icon */}
+                    <div className="flex-shrink-0">
+                        {logoUrl ? (
+                            <img
+                                src={logoUrl}
+                                alt={`${product.name} logo`}
+                                className="w-10 h-10 rounded-lg object-cover border border-gray-50 bg-gray-50"
+                            />
+                        ) : (
+                            <div className={`w-10 h-10 rounded-lg flex items-center justify-center text-lg font-bold ${initialColorClass}`}>
+                                {(product.name || '?').charAt(0).toUpperCase()}
+                            </div>
+                        )}
                     </div>
-                )}
 
-                {/* 1. Visual Anchor */}
-                <div className="mb-5 transform transition-transform duration-200 group-hover:scale-105 origin-top-left">
-                    {logoUrl ? (
-                        <img
-                            src={logoUrl}
-                            alt={`${product.name} logo`}
-                            className="w-12 h-12 rounded-xl object-cover shadow-sm border border-gray-50"
-                        />
-                    ) : (
-                        <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-xl font-bold shadow-sm ${initialColorClass}`}>
-                            {(product.name || '?').charAt(0).toUpperCase()}
+                    {/* Title + Promoted Status */}
+                    <div className="flex-1 min-w-0 pt-0.5">
+                        <div className="flex items-center justify-between gap-2">
+                            <h3 className="text-sm md:text-base font-bold text-gray-900 truncate group-hover:text-orange-600 transition-colors leading-tight">
+                                {product.name}
+                            </h3>
+                            {promoted && (
+                                <span className="text-[10px] font-bold text-orange-600 bg-orange-50 px-1.5 py-0.5 rounded uppercase tracking-wider flex-shrink-0">
+                                    Ad
+                                </span>
+                            )}
                         </div>
-                    )}
-                </div>
-
-                {/* 2. Text Content */}
-                <div className="flex-1 min-w-0">
-                    <h3 className="text-xl font-bold text-gray-900 mb-2 truncate group-hover:text-orange-600 transition-colors">
-                        {product.name}
-                    </h3>
-                    <p className="text-gray-500 text-sm leading-relaxed overflow-hidden text-ellipsis line-clamp-1">
-                        {product.tagline}
-                    </p>
-                </div>
-
-                {/* 3. Footer / CTA */}
-                <div className="mt-8 flex items-end justify-between border-t border-gray-50 pt-4">
-                    {/* Category Pill */}
-                    <span className="inline-flex items-center px-2.5 py-1 rounded-md bg-gray-50 text-gray-500 text-xs font-medium border border-gray-100 group-hover:border-orange-100 group-hover:bg-orange-50 transition-colors">
-                        {category}
-                    </span>
-
-                    {/* View Action */}
-                    <div className="flex items-center gap-1 text-sm font-semibold text-gray-400 group-hover:text-orange-600 transition-colors">
-                        <span>View</span>
-                        <span className="transform transition-transform duration-200 group-hover:translate-x-1 group-hover:text-orange-500">
-                            →
-                        </span>
+                        <div className="text-[11px] md:text-xs text-xs font-medium text-gray-500 truncate mt-0.5">
+                            {category}
+                        </div>
                     </div>
+                </div>
+
+                {/* Description: Max 2 lines dense */}
+                <p className="text-gray-500 text-xs leading-5 line-clamp-2 mb-3 min-h-[2.5rem]">
+                    {product.tagline}
+                </p>
+
+                {/* Footer: Metadata or Action - Very minimal */}
+                <div className="mt-auto pt-2 border-t border-gray-50 flex items-center justify-between text-[11px] text-gray-400 font-medium">
+                    {/* Can add stars or '1.2k views' here if data exists */}
+                    <span>{product.views ? `${product.views} views` : 'New'}</span>
+
+                    <span className="group-hover:text-orange-500 group-hover:font-semibold transition-colors flex items-center gap-1">
+                        View
+                    </span>
                 </div>
             </div>
         </Link>

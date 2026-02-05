@@ -25,17 +25,15 @@ const SimilarProducts = ({ currentProduct }) => {
     if (loading || products.length === 0) return null;
 
     return (
-        <section style={{ marginTop: '60px', marginBottom: '40px' }}>
-            <h2 style={{ fontSize: '1.5rem', marginBottom: '24px', fontWeight: '700' }}>
+        <section className="mt-12 mb-12">
+            <h2 className="text-2xl font-bold mb-6 text-gray-900">
                 Similar Tools
             </h2>
-            <div style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
-                gap: '24px'
-            }}>
+            <div className="flex md:grid md:grid-cols-4 gap-4 md:gap-6 overflow-x-auto md:overflow-visible pb-4 md:pb-0 snap-x scrollbar-hide -mx-4 px-4 md:mx-0 md:px-0">
                 {products.map(product => (
-                    <ProductCard key={product._id} product={product} />
+                    <div key={product._id} className="min-w-[280px] md:min-w-0 snap-center h-full">
+                        <ProductCard product={product} />
+                    </div>
                 ))}
             </div>
         </section>
