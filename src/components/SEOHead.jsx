@@ -14,8 +14,8 @@ const SEOHead = ({
 }) => {
     const fullTitle = title ? `${title} | Clicktory` : 'Clicktory - Discovery Platform for Independent Builders';
     const defaultDescription = 'A modern discovery platform for independent SaaS founders and builders.';
-    const siteUrl = window.location.origin;
-    const fullUrl = canonical ? `${siteUrl}${canonical}` : window.location.href;
+    const siteUrl = 'https://www.clicktory.in';
+    const fullUrl = canonical ? `${siteUrl}${canonical}` : `${siteUrl}${window.location.pathname}`;
 
     return (
         <Helmet>

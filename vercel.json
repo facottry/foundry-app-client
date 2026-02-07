@@ -11,14 +11,14 @@
     ],
     "redirects": [
         {
-            "source": "/:path*",
+            "source": "/(.*)",
             "has": [
                 {
                     "type": "host",
                     "value": "clicktory.in"
                 }
             ],
-            "destination": "https://www.clicktory.in/:path*",
+            "destination": "https://www.clicktory.in/$1",
             "permanent": true
         }
     ]

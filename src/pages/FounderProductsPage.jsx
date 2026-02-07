@@ -111,7 +111,7 @@ const FounderProductsPage = () => {
                                                     <a href={`/product/${product._id}`} target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.85rem', color: '#3b82f6', textDecoration: 'none' }}>View Public Page</a>
                                                     <button
                                                         onClick={() => {
-                                                            const url = `${window.location.origin}/product/${product._id}`;
+                                                            const url = `https://www.clicktory.in/product/${product._id}`;
                                                             navigator.clipboard.writeText(url);
                                                             alert('Product URL copied to clipboard!');
                                                         }}

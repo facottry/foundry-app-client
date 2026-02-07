@@ -90,7 +90,7 @@ const Navbar = () => {
                                         <Link to={`/founder/${user._id || user.id}`} style={{ fontWeight: '500', color: 'var(--text-secondary)' }}>Public Profile</Link>
                                         <button
                                             onClick={() => {
-                                                const url = `${window.location.origin}/founder/${user._id || user.id}`;
+                                                const url = `https://www.clicktory.in/founder/${user._id || user.id}`;
                                                 navigator.clipboard.writeText(url);
                                                 alert('Profile URL copied to clipboard!');
                                             }}
@@ -142,7 +142,7 @@ const Navbar = () => {
                                     <Link to={`/founder/${user._id || user.id}`}>Public Profile</Link>
                                     <button
                                         onClick={() => {
-                                            const url = `${window.location.origin}/founder/${user._id || user.id}`;
+                                            const url = `https://www.clicktory.in/founder/${user._id || user.id}`;
                                             navigator.clipboard.writeText(url);
                                             alert('Profile URL copied to clipboard!');
                                         }}

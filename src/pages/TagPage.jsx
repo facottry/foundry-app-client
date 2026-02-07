@@ -47,13 +47,13 @@ const TagPage = () => {
                 description={getSEODescription()}
                 canonical={`/tag/${slug}`}
                 keywords={`${tagName.toLowerCase()}, ${tagName.toLowerCase()} tools, ${tagName.toLowerCase()} software`}
-            />
-
-            {/* Schema Markup */}
-            <CollectionPageSchema
-                name={`${tagName} Tools`}
-                description={getSEODescription()}
-                url={`${window.location.origin}/tag/${slug}`}
+                jsonLd={{
+                    "@context": "https://schema.org",
+                    "@type": "CollectionPage",
+                    "name": `${tagName} Products`,
+                    "description": `Best ${tagName} tools and software`,
+                    "url": `https://www.clicktory.in/tag/${slug}`
+                }}
             />
             <BreadcrumbListSchema
                 items={[

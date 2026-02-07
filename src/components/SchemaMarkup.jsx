@@ -10,7 +10,7 @@ export const SoftwareApplicationSchema = ({ product }) => {
         "@type": "SoftwareApplication",
         "name": product.name,
         "description": product.description || product.tagline,
-        "url": `${window.location.origin}/product/${product._id}`,
+        "url": `https://www.clicktory.in/product/${product._id}`,
         "applicationCategory": "BusinessApplication",
         "operatingSystem": "Web",
         "offers": {
@@ -52,7 +52,7 @@ export const BreadcrumbListSchema = ({ items }) => {
             "@type": "ListItem",
             "position": index + 1,
             "name": item.label,
-            "item": item.href ? `${window.location.origin}${item.href}` : undefined
+            "item": item.href ? `https://www.clicktory.in${item.href}` : undefined
         }))
     };
 
@@ -94,8 +94,8 @@ export const OrganizationSchema = () => {
         "@context": "https://schema.org",
         "@type": "Organization",
         "name": "Clicktory",
-        "url": window.location.origin,
-        "logo": `${window.location.origin}/logo.png`,
+        "url": "https://www.clicktory.in",
+        "logo": "https://www.clicktory.in/logo.png",
         "description": "Performance-based product discovery platform"
     };
 
