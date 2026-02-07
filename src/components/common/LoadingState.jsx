@@ -1,21 +1,47 @@
 import React from 'react';
 
-const LoadingState = () => (
-    <div style={{ textAlign: 'center', padding: '50px' }}>
-        <div className="spinner" style={{
-            border: '4px solid #f3f3f3',
-            borderTop: '4px solid #333',
-            borderRadius: '50%',
-            width: '40px',
-            height: '40px',
-            animation: 'spin 1s linear infinite',
-            margin: '0 auto 20px'
-        }}></div>
-        <p style={{ color: '#666' }}>Loading...</p>
-        <style>{`
-            @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        `}</style>
-    </div>
-);
+const LoadingState = ({ message = "Getting things ready" }) => {
+    return (
+        <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '100%',
+            minHeight: '200px', // Ensure visibility
+            width: '100%',
+            fontFamily: 'inherit', // Inherit brand font
+            color: '#4B5563', // Gray-600 - Muted brand foreground
+            backgroundColor: 'transparent' // Match parent bg
+        }}>
+            <div style={{
+                width: '12px',
+                height: '12px',
+                backgroundColor: '#4B5563',
+                borderRadius: '50%',
+                opacity: 0.6,
+                animation: 'pulse 1.5s ease-in-out infinite'
+            }}></div>
+
+            <p style={{
+                marginTop: '16px',
+                fontSize: '0.95rem',
+                fontWeight: '500', // Medium
+                letterSpacing: '0.03em', // Slightly increased
+                opacity: 0.9
+            }}>
+                {message}
+            </p>
+
+            <style>{`
+                @keyframes pulse {
+                    0% { transform: scale(0.85); opacity: 0.5; }
+                    50% { transform: scale(1.15); opacity: 0.8; }
+                    100% { transform: scale(0.85); opacity: 0.5; }
+                }
+            `}</style>
+        </div>
+    );
+};
 
 export default LoadingState;

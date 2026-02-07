@@ -21,11 +21,7 @@
     margin: 0;
 }
 
-.loading-state {
-    text-align: center;
-    padding: 80px 20px;
-    color: #64748b;
-}
+
 
 .error-banner {
     background: #fef2f2;

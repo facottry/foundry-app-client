@@ -119,22 +119,34 @@ const SearchBox = () => {
                     placeholder="Search products..."
                     style={{
                         width: '100%',
-                        padding: '10px 40px 10px 16px',
-                        borderRadius: '8px',
-                        border: '1px solid #E5E5E5',
-                        fontSize: '0.95rem',
-                        cursor: 'text'
+                        padding: '12px 48px 12px 24px', // More padding for pill shape
+                        borderRadius: '24px', // Pill shape
+                        border: '1px solid transparent', // Cleaner look, shadow does the validation
+                        backgroundColor: '#F1F3F4', // Google grey bg
+                        fontSize: '1rem',
+                        cursor: 'text',
+                        transition: 'all 0.2s ease',
+                        boxShadow: 'none'
+                    }}
+                    onFocus={(e) => {
+                        e.target.style.backgroundColor = 'white';
+                        e.target.style.boxShadow = '0 1px 6px rgba(32,33,36,0.28)';
+                        handleFocus();
+                    }}
+                    onBlur={(e) => {
+                        e.target.style.backgroundColor = '#F1F3F4';
+                        e.target.style.boxShadow = 'none';
                     }}
                 />
                 <span
                     onClick={handleSearch}
                     style={{
                         position: 'absolute',
-                        right: '12px',
+                        right: '16px',
                         top: '50%',
                         transform: 'translateY(-50%)',
                         fontSize: '1.2rem',
-                        color: '#666',
+                        color: '#5F6368', // Google grey icon
                         cursor: 'pointer'
                     }}
                     role="button"

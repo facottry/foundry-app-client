@@ -59,15 +59,18 @@
   --text-tertiary: #A0A0A0;
 }
 
+html,
 body {
   font-family: var(--font-ui);
   background-color: var(--bg-primary);
   color: var(--text-primary);
   margin: 0;
+  padding: 0;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
-  /* Prevent horizontal scroll */
+  width: 100%;
+  position: relative;
 }
 
 /* Responsive Images */
@@ -234,10 +237,11 @@ textarea:focus {
 
 /* Navbar */
 .navbar {
-  background: rgba(255, 255, 255, 0.95);
+  /* Dark Gradient Blue -> Red/Brown */
+  background: linear-gradient(90deg, #1E2139 0%, #5A2E33 100%);
   backdrop-filter: blur(12px);
   padding: 1rem 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   position: sticky;
   top: 0;
   z-index: 100;

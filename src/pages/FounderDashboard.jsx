@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import api from '../utils/api';
 import { getImageUrl } from '../utils/getImageUrl';
 import SEO from '../components/SEO';
+import LoadingState from '../components/common/LoadingState';
 
 const FounderDashboard = () => {
     const [products, setProducts] = useState([]);
@@ -56,7 +57,10 @@ const FounderDashboard = () => {
         );
     };
 
-    if (loading) return <div style={{ padding: '40px', textAlign: 'center' }}>Loading...</div>;
+
+    // ... existing imports
+
+    if (loading) return <LoadingState message="Preparing your dashboard..." />;
 
     return (
         <div style={{ paddingTop: '40px', paddingBottom: '60px' }}>

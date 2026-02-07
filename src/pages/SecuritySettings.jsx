@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
+import LoadingState from '../components/common/LoadingState';
 
 const SecuritySettings = () => {
     const { user } = useAuth(); // Need to ensure user object is available
@@ -52,7 +53,7 @@ const SecuritySettings = () => {
         return identities.some(i => i.provider === provider);
     };
 
-    if (loading) return <div>Loading...</div>;
+    if (loading) return <LoadingState message="Verifying security settings..." />;
 
     return (
         <div className="max-w-4xl mx-auto py-10 px-4">

@@ -6,7 +6,7 @@ import SEOHead from '../components/SEOHead';
 import { CollectionPageSchema, BreadcrumbListSchema } from '../components/SchemaMarkup';
 import ProductCard from '../components/ProductCard';
 import BRAND from '../config/brand';
-
+import LoadingState from '../components/common/LoadingState';
 const TagPage = () => {
     const { slug } = useParams();
     const [products, setProducts] = useState([]);
@@ -36,7 +36,7 @@ const TagPage = () => {
     };
 
     if (loading) {
-        return <div style={{ padding: '60px 20px', textAlign: 'center' }}>Loading...</div>;
+        return <LoadingState message="Finding relevant tools..." />;
     }
 
     return (

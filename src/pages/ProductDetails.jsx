@@ -13,6 +13,7 @@ import BRAND from '../config/brand';
 import SEO from '../components/SEO';
 import SimilarProducts from '../components/SimilarProducts';
 import FollowButton from '../components/FollowButton';
+import LoadingState from '../components/common/LoadingState';
 
 const ProductDetails = () => {
     const { slug } = useParams();
@@ -87,7 +88,10 @@ const ProductDetails = () => {
         // Use direct redirect if desired, but we usually open target `_blank` from the <a> tag
     };
 
-    if (loading) return <div style={{ padding: '40px', textAlign: 'center' }}>Loading...</div>;
+
+    // ... existing imports
+
+    if (loading) return <LoadingState message="Loading product details..." />;
     if (!product) return <div style={{ padding: '40px', textAlign: 'center' }}>Product not found</div>;
 
     // Use enhanced URLs if available, else derive using helper

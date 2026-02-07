@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../utils/api';
 import './AIAssistants.css';
+import LoadingState from '../components/common/LoadingState';
 
 const AIAssistants = ({ isEmbedded = false }) => {
     const navigate = useNavigate();
@@ -66,7 +67,7 @@ const AIAssistants = ({ isEmbedded = false }) => {
     if (loading) {
         return (
             <div className="ai-assistants-page">
-                <div className="loading-state">Loading...</div>
+                <LoadingState message="Connecting to AI services..." />
             </div>
         );
     }

@@ -6,6 +6,7 @@ import ReviewList from '../components/reviews/ReviewList';
 import AuthContext from '../context/AuthContext';
 import SEO from '../components/SEO';
 import BRAND from '../config/brand';
+import LoadingState from '../components/common/LoadingState';
 
 const ProductReviewsPage = () => {
     const { slug } = useParams();
@@ -26,7 +27,7 @@ const ProductReviewsPage = () => {
         fetchProduct();
     }, [slug]);
 
-    if (loading) return <div style={{ padding: '60px', textAlign: 'center' }}>Loading...</div>;
+    if (loading) return <LoadingState message="Loading reviews..." />;
     if (!product) return <div style={{ padding: '60px', textAlign: 'center' }}>Product not found</div>;
 
     return (

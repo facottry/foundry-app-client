@@ -4,6 +4,7 @@ import api from '../utils/api';
 import SEO from '../components/SEO';
 import { getImageUrl } from '../utils/getImageUrl';
 import BRAND from '../config/brand';
+import LoadingState from '../components/common/LoadingState';
 
 const FounderProfile = () => {
     const { founderId } = useParams(); // Note: Route param might be named founderId but can be slug
@@ -33,7 +34,7 @@ const FounderProfile = () => {
         }
     }, [founderId]);
 
-    if (loading) return <div style={{ padding: '60px', textAlign: 'center' }}>Loading...</div>;
+    if (loading) return <LoadingState message="Loading profile..." />;
     if (error || !profile) return (
         <div style={{ padding: '60px', textAlign: 'center' }}>
             <h1>Founder Not Found</h1>

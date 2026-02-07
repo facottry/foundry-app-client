@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { getCollectionBySlug } from '../utils/api';
 import SEO from '../components/SEO';
 import { ArrowLeft, Check } from 'lucide-react';
+import LoadingState from '../components/common/LoadingState';
 
 const CollectionDetails = () => {
     const { slug } = useParams();
@@ -23,7 +24,7 @@ const CollectionDetails = () => {
             .finally(() => setLoading(false));
     }, [slug]);
 
-    if (loading) return <div className="py-20 text-center">Loading...</div>;
+    if (loading) return <LoadingState message="Curating collection..." />;
     if (error) return <div className="py-20 text-center text-red-500">{error}</div>;
     if (!collection) return null;
 

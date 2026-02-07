@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import NewsletterSignup from '../components/NewsletterSignup';
 import { useAuth } from '../context/AuthContext';
 import BRAND from '../config/brand';
+import LoadingState from '../components/common/LoadingState';
 
 const NewsletterPage = () => {
     const { slug } = useParams();
@@ -135,7 +136,7 @@ const NewsletterContent = ({ slug }) => {
         fetchNewsletter();
     }, [slug]);
 
-    if (loading) return <div className="p-12 text-center text-gray-500">Loading...</div>;
+    if (loading) return <LoadingState message="Loading newsletter content..." />;
     if (!newsletter) return <div className="p-12 text-center text-gray-500">Newsletter not found.</div>;
 
     return (
