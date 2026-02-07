@@ -59,6 +59,15 @@
   --text-tertiary: #A0A0A0;
 }
 
+/* Safe Area Utilities */
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.pt-safe {
+  padding-top: env(safe-area-inset-top);
+}
+
 html,
 body {
   font-family: var(--font-ui);
@@ -74,16 +83,27 @@ body {
 }
 
 /* Responsive Images */
-img {
+/* Responsive Images & SVGs */
+img,
+svg {
   max-width: 100%;
   height: auto;
 }
 
-.container {
-  max-width: 1200px;
-  /* Matched to Admin for consistency or kept as 1100px */
-  margin: 0 auto;
-  padding: 0 24px;
+html,
+body {
+  font-family: var(--font-ui);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  /* Safety net */
+  width: 100%;
+  /* Prevent horizontal scroll from 100vw issues */
 }
 
 @media (max-width: 768px) {
@@ -590,5 +610,34 @@ textarea:focus {
   .category-grid {
     grid-template-columns: 1fr;
     /* Stack categories on mobile */
+  }
+}
+
+/* Dashboard Layout */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  gap: 32px;
+  align-items: start;
+}
+
+.dashboard-sidebar-group {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+@media (max-width: 900px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    /* Stack on mobile/tablet */
+    gap: 40px;
+    /* Increased vertical spacing per requirements */
+  }
+
+  /* On mobile, sidebar items become full-width info strips */
+  .info-strip {
+    width: 100%;
+    /* Ensure text flows horizontally */
   }
 }

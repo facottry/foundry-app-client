@@ -4,7 +4,7 @@ import BRAND from '../config/brand';
 
 const Footer = () => {
     return (
-        <footer style={{
+        <footer className="hidden md:block" style={{
             backgroundColor: '#F7F6F2',
             borderTop: '1px solid #E5E5E5',
             marginTop: 'auto',

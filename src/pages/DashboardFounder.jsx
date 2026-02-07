@@ -38,23 +38,45 @@ const DashboardFounder = () => {
     return (
         <div style={{ paddingTop: '40px' }}>
             <SEO title="Founder Dashboard" noindex={true} />
-            {/* Header Section */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '40px' }}>
-                <div>
-                    <h1 style={{ marginBottom: '8px' }}>Founder Dashboard</h1>
-                    <p style={{ fontSize: '1.05rem' }}>Welcome back. Here's how your products are performing.</p>
-                </div>
-                <div style={{ display: 'flex', gap: '16px' }}>
-                    <Link to={`/founder/${data?.user?.slug || data?.user?._id}`} target="_blank" className="btn btn-secondary" style={{ padding: '14px 28px', fontSize: '1rem' }}>
-                        View Public Profile
-                    </Link>
-                    <Link to="/create-product" className="btn btn-primary" style={{ padding: '14px 28px', fontSize: '1rem' }}>
-                        + Launch Product
-                    </Link>
+            {/* Header Section - Dashboard Hero (+5%) */}
+            <div style={{
+                background: 'linear-gradient(to bottom, #FAF9F6, #FFFFFF)',
+                padding: '40px 32px',
+                borderRadius: '16px',
+                marginBottom: '56px', // Increased spacing (+3%)
+                border: '1px solid rgba(0,0,0,0.02)'
+            }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '24px' }}>
+                    <div>
+                        <h1 style={{ marginBottom: '12px', fontSize: '2.2rem', letterSpacing: '-0.03em' }}>Founder Dashboard</h1>
+                        <p style={{ fontSize: '1.05rem', color: 'var(--text-secondary)', maxWidth: '480px', lineHeight: '1.6' }}>
+                            Welcome back. Here's how your products are performing.
+                        </p>
+                    </div>
+                    {/* Primary Action Promoted (+4%) */}
+                    <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                        <Link to={`/founder/${data?.user?.slug || data?.user?._id}`} target="_blank" className="btn" style={{
+                            padding: '12px 24px',
+                            fontSize: '0.95rem',
+                            background: 'transparent',
+                            border: '1px solid #E5E5E5',
+                            color: 'var(--text-secondary)',
+                            fontWeight: '500'
+                        }}>
+                            View Public Profile
+                        </Link>
+                        <Link to="/create-product" className="btn btn-primary" style={{
+                            padding: '14px 28px',
+                            fontSize: '1rem',
+                            boxShadow: '0 4px 12px rgba(217, 119, 87, 0.25)'
+                        }}>
+                            + Launch Product
+                        </Link>
+                    </div>
                 </div>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 2fr) minmax(0, 1fr)', gap: '32px', alignItems: 'start' }}>
+            <div className="dashboard-grid">
 
                 {/* Main Content: Product List */}
                 <div>
@@ -67,25 +89,25 @@ const DashboardFounder = () => {
                             action={<Link to="/create-product" className="btn btn-primary">Launch Now</Link>}
                         />
                     ) : (
-                        <div className="card" style={{ padding: '0', overflow: 'hidden' }}>
+                        <div className="card" style={{ padding: '0', overflow: 'hidden', borderTop: '4px solid var(--accent-primary)' }}>
                             <table className="data-table">
                                 <thead>
                                     <tr>
-                                        <th>Product</th>
-                                        <th style={{ textAlign: 'center' }}>Followers</th>
+                                        <th style={{ paddingLeft: '24px' }}>Product</th>
+                                        <th style={{ textAlign: 'center', color: 'var(--text-muted)', fontWeight: '500' }}>Followers</th>
                                         <th style={{ textAlign: 'right' }}>Clicks (Today/Total)</th>
                                         <th>Status</th>
-                                        <th style={{ textAlign: 'right' }}>Actions</th>
+                                        <th style={{ textAlign: 'right', paddingRight: '24px' }}>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {data.products.map(product => (
                                         <tr key={product._id}>
-                                            <td>
-                                                <div style={{ fontWeight: '600', color: 'var(--text-primary)', fontSize: '1rem' }}>{product.name}</div>
+                                            <td style={{ paddingLeft: '24px' }}>
+                                                <div style={{ fontWeight: '700', color: 'var(--text-primary)', fontSize: '1rem' }}>{product.name}</div>
                                                 <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '4px' }}>{product.tagline}</div>
                                             </td>
-                                            <td style={{ textAlign: 'center', fontWeight: 'bold' }}>
+                                            <td style={{ textAlign: 'center', fontWeight: '500', color: 'var(--text-muted)' }}>
                                                 {product.follower_count || 0}
                                             </td>
                                             <td style={{ textAlign: 'right', fontWeight: '500' }}>
@@ -98,7 +120,7 @@ const DashboardFounder = () => {
                                                     {product.boost_status}
                                                 </span>
                                             </td>
-                                            <td style={{ textAlign: 'right' }}>
+                                            <td style={{ textAlign: 'right', paddingRight: '24px' }}>
                                                 <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end' }}>
                                                     <Link to={`/product/${product._id}`} className="btn btn-secondary" style={{ padding: '6px 16px', fontSize: '0.85rem', borderRadius: '8px' }}>View</Link>
                                                     <Link to={`/founder/products/${product._id}/edit`} className="btn btn-secondary" style={{ padding: '6px 16px', fontSize: '0.85rem', borderRadius: '8px', background: '#f3f4f6', color: '#374151' }}>Edit</Link>
@@ -106,9 +128,9 @@ const DashboardFounder = () => {
                                                         padding: '6px 16px',
                                                         fontSize: '0.85rem',
                                                         borderRadius: '8px',
-                                                        background: '#FFF3E0',
-                                                        color: '#E65100',
-                                                        border: '1px solid #FFE0B2',
+                                                        background: '#FFF7ED', // Matches promoted badge base roughly
+                                                        color: '#C2410C',
+                                                        border: '1px solid #FFEDD5',
                                                         fontWeight: '600'
                                                     }}>
                                                         Boost
@@ -131,62 +153,103 @@ const DashboardFounder = () => {
                     )}
                 </div>
 
-                {/* Sidebar: Wallet Card */}
-                <div>
-                    <h3 style={{ marginBottom: '24px' }}>Wallet</h3>
-                    <div className="card" style={{
-                        background: 'linear-gradient(135deg, #FAF9F6 0%, #FFFFFF 100%)', // Subtle gradient
-                        border: '1px solid #EAEAEA'
-                    }}>
-                        <div style={{ marginBottom: '8px', color: 'var(--text-secondary)', fontSize: '0.9rem', fontWeight: '500', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                            Credit Balance
-                        </div>
-                        <div style={{ fontSize: '3.5rem', fontWeight: '700', color: 'var(--text-primary)', lineHeight: '1', marginBottom: '8px' }}>
-                            {data?.balance || 0}
-                        </div>
-                        <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', marginBottom: '24px' }}>
-                            Available Credits
-                        </div>
-
-                        <Link to="/wallet" className="btn" style={{
-                            width: '100%',
-                            background: '#F5F5F4',
-                            color: '#444',
-                            justifyContent: 'center',
-                            fontWeight: '600'
+                {/* Sidebar: Wallet & Info Strips */}
+                <div className="dashboard-sidebar-group">
+                    {/* Wallet Card */}
+                    <div>
+                        <h3 style={{ marginBottom: '24px' }}>Wallet</h3>
+                        <div className="card" style={{
+                            background: '#FAFAFA',
+                            border: '1px solid #E5E5E5',
+                            padding: '32px'
                         }}>
-                            Manage Wallet
-                        </Link>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+                                <div style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                                    Credit Balance
+                                </div>
+                                <span style={{
+                                    background: '#E6F4EA',
+                                    color: '#1E6F3E',
+                                    padding: '4px 8px',
+                                    borderRadius: '6px',
+                                    fontSize: '0.75rem',
+                                    fontWeight: '700',
+                                    letterSpacing: '0.02em',
+                                    textTransform: 'uppercase'
+                                }}>
+                                    Active
+                                </span>
+                            </div>
+                            <div style={{ fontSize: '3.8rem', fontWeight: '800', color: 'var(--text-primary)', lineHeight: '0.9', marginBottom: '12px', letterSpacing: '-0.04em' }}>
+                                {data?.balance || 0}
+                            </div>
+                            <div style={{ fontSize: '0.95rem', color: 'var(--text-muted)', marginBottom: '32px' }}>
+                                Available Credits
+                            </div>
+
+                            <Link to="/wallet" className="btn" style={{
+                                width: '100%',
+                                background: '#F5F5F4',
+                                color: '#444',
+                                justifyContent: 'center',
+                                fontWeight: '600'
+                            }}>
+                                Manage Wallet
+                            </Link>
+                        </div>
                     </div>
 
-                    {/* Helpful Tip (Optional Polish) */}
-                    <div style={{ padding: '20px', background: '#F0F9FF', borderRadius: '12px', marginTop: '24px' }}>
-                        <h4 style={{ fontSize: '1rem', color: '#0369A1', marginBottom: '8px' }}>Did you know?</h4>
-                        <p style={{ fontSize: '0.9rem', color: '#0C4A6E', marginBottom: '0' }}>
+                    {/* Did you know? - Info Strip */}
+                    <div className="info-strip" style={{
+                        padding: '24px 32px', // More horizontal padding 
+                        background: '#F0F9FF',
+                        borderRadius: '12px',
+                        // Reduced vertical rhythm internal
+                    }}>
+                        <h4 style={{ fontSize: '0.95rem', color: '#0369A1', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <span>💡</span> Did you know?
+                        </h4>
+                        <p style={{
+                            fontSize: '0.95rem',
+                            color: '#0C4A6E',
+                            marginBottom: '0',
+                            lineHeight: '1.5', // Reduced line-height
+                            maxWidth: '100%' // Let text breathe
+                        }}>
                             Products with active Boost campaigns get 3x more visibility on category pages.
                         </p>
                     </div>
 
-                    {/* AI Assistants Card */}
-                    <div style={{ padding: '20px', background: 'linear-gradient(135deg, #f0f0ff 0%, #e8f4f8 100%)', borderRadius: '12px', marginTop: '24px', border: '1px solid #e2e8f0' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
-                            <span style={{ fontSize: '24px' }}>🤖</span>
-                            <h4 style={{ fontSize: '1rem', color: '#1e1e2e', marginBottom: '0' }}>AI Assistants</h4>
+                    {/* AI Assistants - Info Strip */}
+                    <div className="info-strip" style={{
+                        padding: '24px 32px',
+                        background: 'linear-gradient(135deg, #f0f0ff 0%, #e8f4f8 100%)',
+                        borderRadius: '12px',
+                        border: '1px solid #e2e8f0'
+                    }}>
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '16px' }}>
+                            <div style={{ flex: 1, minWidth: '200px' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '8px' }}>
+                                    <span style={{ fontSize: '20px' }}>🤖</span>
+                                    <h4 style={{ fontSize: '0.95rem', color: '#1e1e2e', marginBottom: '0', fontWeight: '700' }}>AI Assistants</h4>
+                                </div>
+                                <p style={{ fontSize: '0.9rem', color: '#64748b', marginBottom: '0', lineHeight: '1.4' }}>
+                                    AIRA & REX help you track and decide.
+                                </p>
+                            </div>
+                            <Link to="/profile#ai-assistants" className="btn" style={{
+                                background: '#6366f1',
+                                color: 'white',
+                                justifyContent: 'center',
+                                fontWeight: '600',
+                                borderRadius: '8px',
+                                padding: '8px 16px',
+                                fontSize: '0.85rem',
+                                whiteSpace: 'nowrap'
+                            }}>
+                                Manage
+                            </Link>
                         </div>
-                        <p style={{ fontSize: '0.85rem', color: '#64748b', marginBottom: '16px' }}>
-                            AIRA & REX - Your record keeper and decision advisor.
-                        </p>
-                        <Link to="/profile#ai-assistants" className="btn" style={{
-                            width: '100%',
-                            background: '#6366f1',
-                            color: 'white',
-                            justifyContent: 'center',
-                            fontWeight: '600',
-                            borderRadius: '8px',
-                            padding: '10px 16px'
-                        }}>
-                            Manage AI Assistants
-                        </Link>
                     </div>
                 </div>
 
