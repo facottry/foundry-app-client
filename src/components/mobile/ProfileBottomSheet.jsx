@@ -2,6 +2,7 @@ import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useUI } from '../../context/UIContext';
 import { useAuth } from '../../context/AuthContext';
+import { useScrollLock } from '../../hooks/useScrollLock';
 import { useNavigate, Link } from 'react-router-dom';
 import {
     User, Share2, Box, Bookmark, Settings, LogOut,
@@ -13,6 +14,9 @@ const ProfileBottomSheet = () => {
     const { isProfileSheetOpen, closeProfileSheet } = useUI();
     const { user, logout } = useAuth();
     const navigate = useNavigate();
+
+    // Enforce Modal-Grade Scroll Locking
+    useScrollLock(isProfileSheetOpen);
 
     // Swipe down handler could be added with specialized libraries, 
     // but for now we'll use a drag constraint on framer-motion or simple overlay click.

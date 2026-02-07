@@ -1,10 +1,12 @@
 ﻿import { authors } from './blogAuthors';
+import { legacyBlogPosts } from './legacyBlogPosts';
 
 /**
  * Blog posts following BlogV2 schema
  * @type {import('./blogTypes').BlogV2[]}
  */
 export const blogPosts = [
+    ...legacyBlogPosts,
     {
         id: "b001-2026-02-07-llm-inference-costs",
         slug: "understanding-llm-inference-cost-curves-in-production",
