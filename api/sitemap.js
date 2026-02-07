@@ -29,6 +29,11 @@ export default async function handler(req, res) {
     const urls = [
       "/",
       ...categories.map(c => `/category/${c}`),
+      ...categories.map(c => `/category/${c}`),
+      "/jobs",
+      "/hiring",
+      // Add Jobs dynamic routes (hardcoded for now as jobsData isn't easily importable in this serverless function context without reliable build step access)
+      "/jobs/support-community-specialist",
       ...products.map(p => `/product/${p.slug || p._id}`) // Updated to use Slugs
     ];
 

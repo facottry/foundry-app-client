@@ -1,7 +1,8 @@
 import React, { useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import SEOHead from '../components/SEOHead';
-import { blogPosts, authors } from '../data/blogData';
+import { blogPosts } from '../data/blogPosts';
+import { authors } from '../data/blogAuthors';
 import Breadcrumbs from '../components/Breadcrumbs';
 import BRAND from '../config/brand';
 
@@ -12,7 +13,7 @@ const AuthorBlog = () => {
     // Filter posts by this author
     const authorPosts = useMemo(() => {
         return blogPosts
-            .filter(post => post.authorId === authorId)
+            .filter(post => post.author.id === authorId)
             // Sort by date descending (newest first)
             .sort((a, b) => new Date(b.date) - new Date(a.date));
 
@@ -121,19 +122,30 @@ const AuthorBlog = () => {
                                         <div style={{ padding: '32px' }}>
                                             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', marginBottom: '16px' }}>
                                                 {/* Tags */}
-                                                {post.tags && post.tags.map(tag => (
-                                                    <span key={tag} style={{
-                                                        fontSize: '0.75rem',
-                                                        fontWeight: '600',
-                                                        color: 'var(--text-secondary)',
-                                                        background: '#f3f4f6',
-                                                        padding: '4px 12px',
-                                                        borderRadius: '20px',
-                                                        textTransform: 'uppercase',
-                                                        letterSpacing: '0.05em'
-                                                    }}>
-                                                        {tag}
-                                                    </span>
+                                                {post.taxonomy?.tags && post.taxonomy.tags.map(tag => (
+                                                    <Link
+                                                        key={tag}
+                                                        to={`/blog/tags/${tag.toLowerCase().replace(/\s+/g, '-')}`}
+                                                        style={{ textDecoration: 'none' }}
+                                                        onClick={(e) => e.stopPropagation()} // Prevent card click
+                                                    >
+                                                        <span style={{
+                                                            fontSize: '0.75rem',
+                                                            fontWeight: '600',
+                                                            color: 'var(--text-secondary)',
+                                                            background: '#f3f4f6',
+                                                            padding: '4px 12px',
+                                                            borderRadius: '20px',
+                                                            textTransform: 'uppercase',
+                                                            letterSpacing: '0.05em',
+                                                            transition: 'background 0.2s'
+                                                        }}
+                                                            onMouseEnter={(e) => e.target.style.background = '#e5e7eb'}
+                                                            onMouseLeave={(e) => e.target.style.background = '#f3f4f6'}
+                                                        >
+                                                            {tag}
+                                                        </span>
+                                                    </Link>
                                                 ))}
                                             </div>
 

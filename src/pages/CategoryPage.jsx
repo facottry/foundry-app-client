@@ -10,9 +10,11 @@ import SEO from '../components/SEO';
 import { CATEGORY_INTROS, CATEGORY_TITLES } from '../constants/categories';
 import BRAND from '../config/brand';
 import FollowButton from '../components/FollowButton';
+import CategoryCollectionTabs from '../components/CategoryCollectionTabs';
 
-const CategoryPage = () => {
-    const { slug } = useParams();
+const CategoryPage = ({ staticSlug }) => {
+    const { slug: paramSlug } = useParams();
+    const slug = staticSlug || paramSlug;
     const [organic, setOrganic] = useState([]);
     const [promoted, setPromoted] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -135,11 +137,15 @@ const CategoryPage = () => {
                 type="CollectionPage"
             />
             {/* Breadcrumbs */}
+            {/* Breadcrumbs */}
             <Breadcrumbs items={[
                 { label: 'Home', href: '/' },
-                { label: 'Products', href: '/category/all' },
-                { label: slug === 'all' ? 'All Categories' : slug }
+                { label: 'Products', href: '/product' },
+                { label: CATEGORY_TITLES[slug] || slug }
             ]} />
+
+            {/* Show Tabs only on "All Products" (slug === 'all') */}
+            {slug === 'all' && <CategoryCollectionTabs />}
 
             {/* Category Header */}
             <div style={{ marginBottom: '40px' }}>

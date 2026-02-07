@@ -2,39 +2,63 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
-    <loc>https://www.clicktory.in/blog/how-to-get-early-users-for-saas</loc>
+    <loc>https://www.clicktory.in/blog/understanding-llm-inference-cost-curves-in-production</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
-    <image:image>
-      <image:loc>https://www.clicktory.in/images/blog/growth.png</image:loc>
-      <image:title>how-to-get-early-users-for-saas</image:title>
-    </image:image>
   </url>
   <url>
-    <loc>https://www.clicktory.in/blog/launching-as-solo-founder</loc>
+    <loc>https://www.clicktory.in/blog/connection-pooling-at-scale-what-breaks-first</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
-    <image:image>
-      <image:loc>https://www.clicktory.in/images/blog/founder.png</image:loc>
-      <image:title>launching-as-solo-founder</image:title>
-    </image:image>
   </url>
   <url>
-    <loc>https://www.clicktory.in/blog/product-discovery-without-noise</loc>
+    <loc>https://www.clicktory.in/blog/react-server-components-at-scale-reality</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
-    <image:image>
-      <image:loc>https://www.clicktory.in/images/blog/product.png</image:loc>
-      <image:title>product-discovery-without-noise</image:title>
-    </image:image>
   </url>
   <url>
-    <loc>https://www.clicktory.in/blog/choosing-right-early-tools</loc>
+    <loc>https://www.clicktory.in/blog/kubernetes-cost-optimization-strategies</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
-    <image:image>
-      <image:loc>https://www.clicktory.in/images/blog/engineering.png</image:loc>
-      <image:title>choosing-right-early-tools</image:title>
-    </image:image>
+  </url>
+  <url>
+    <loc>https://www.clicktory.in/blog/vector-database-indexing-tradeoffs</loc>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://www.clicktory.in/blog/redis-caching-strategies-high-throughput</loc>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://www.clicktory.in/blog/monorepo-vs-polyrepo-at-scale</loc>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://www.clicktory.in/blog/load-testing-vs-ddos-attack</loc>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://www.clicktory.in/blog/why-ecommerce-sites-crash-black-friday</loc>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://www.clicktory.in/blog/qa-automation-pyramid-2026</loc>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://www.clicktory.in/blog/zero-downtime-database-migrations</loc>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://www.clicktory.in/blog/roi-of-developer-experience</loc>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
   </url>
 </urlset>

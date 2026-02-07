@@ -65,7 +65,9 @@ const Navbar = () => {
                     {/* Desktop Nav Links */}
                     <div className="desktop-only" style={{ display: 'flex', gap: '24px', marginLeft: '12px' }}>
                         <Link to="/" style={{ fontWeight: '500', color: 'var(--text-secondary)' }}>Home</Link>
-                        <Link to="/category/all" style={{ fontWeight: '500', color: 'var(--text-secondary)' }}>Browse</Link>
+                        <Link to="/product" style={{ fontWeight: '500', color: 'var(--text-secondary)' }}>Product List</Link>
+                        <Link to="/collection" style={{ fontWeight: '500', color: 'var(--text-secondary)' }}>Collections</Link>
+                        <Link to="/category" style={{ fontWeight: '500', color: 'var(--text-secondary)' }}>Categories</Link>
                     </div>
                 </div>
 
@@ -107,7 +109,9 @@ const Navbar = () => {
                     </div>
 
                     <Link to="/">Home</Link>
-                    <Link to="/category/all">Browse</Link>
+                    <Link to="/product">Product List</Link>
+                    <Link to="/collection">Collections</Link>
+                    <Link to="/category">Categories</Link>
 
                     {user ? (
                         <>

@@ -105,6 +105,7 @@ const Footer = () => {
                             <Link to="/contact" style={{ fontSize: '0.95rem', color: 'var(--text-secondary)' }}>Contact</Link>
                             <Link to="/blog" style={{ fontSize: '0.95rem', color: 'var(--text-secondary)' }}>Blog</Link>
                             <Link to="/newsletter" style={{ fontSize: '0.95rem', color: 'var(--text-secondary)' }}>Newsletter</Link>
+                            <Link to="/hiring" style={{ fontSize: '0.95rem', color: 'var(--text-secondary)' }}>Hiring</Link>
                             <Link to="/changelog" style={{ fontSize: '0.95rem', color: 'var(--text-secondary)' }}>Changelog</Link>
                         </div>
                     </div>

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import SEOHead from '../components/SEOHead';
 import Breadcrumbs from '../components/Breadcrumbs';
-import { authors } from '../data/blogData';
+import { authors } from '../data/blogAuthors';
 import BRAND from '../config/brand';
 
 const AuthorsList = () => {

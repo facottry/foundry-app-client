@@ -2,30 +2,34 @@
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <sitemap>
     <loc>https://www.clicktory.in/sitemaps/static.xml</loc>
-    <lastmod>2026-02-04T08:30:03.682Z</lastmod>
+    <lastmod>2026-02-07T09:31:30.150Z</lastmod>
   </sitemap>
   <sitemap>
     <loc>https://www.clicktory.in/sitemaps/product.xml</loc>
-    <lastmod>2026-02-04T08:30:03.682Z</lastmod>
+    <lastmod>2026-02-07T09:31:30.150Z</lastmod>
   </sitemap>
   <sitemap>
     <loc>https://www.clicktory.in/sitemaps/founder.xml</loc>
-    <lastmod>2026-02-04T08:30:03.682Z</lastmod>
+    <lastmod>2026-02-07T09:31:30.150Z</lastmod>
   </sitemap>
   <sitemap>
     <loc>https://www.clicktory.in/sitemaps/blog.xml</loc>
-    <lastmod>2026-02-04T08:30:03.682Z</lastmod>
+    <lastmod>2026-02-07T09:31:30.150Z</lastmod>
   </sitemap>
   <sitemap>
     <loc>https://www.clicktory.in/sitemaps/writer.xml</loc>
-    <lastmod>2026-02-04T08:30:03.682Z</lastmod>
+    <lastmod>2026-02-07T09:31:30.150Z</lastmod>
   </sitemap>
   <sitemap>
     <loc>https://www.clicktory.in/sitemaps/category.xml</loc>
-    <lastmod>2026-02-04T08:30:03.682Z</lastmod>
+    <lastmod>2026-02-07T09:31:30.150Z</lastmod>
   </sitemap>
   <sitemap>
     <loc>https://www.clicktory.in/sitemaps/tag.xml</loc>
-    <lastmod>2026-02-04T08:30:03.682Z</lastmod>
+    <lastmod>2026-02-07T09:31:30.150Z</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://www.clicktory.in/sitemaps/jobs.xml</loc>
+    <lastmod>2026-02-07T09:31:30.150Z</lastmod>
   </sitemap>
 </sitemapindex>

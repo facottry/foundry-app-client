@@ -16,7 +16,10 @@ import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
 import BlogPost from './pages/BlogPost';
 import AuthorBlog from './pages/AuthorBlog';
+import TagBlog from './pages/TagBlog';
 import AuthorsList from './pages/AuthorsList';
+import Jobs from './pages/Jobs';
+import JobDetails from './pages/JobDetails';
 import Changelog from './pages/Changelog';
 import CookiePolicy from './pages/CookiePolicy';
 import Login from './pages/Login';
@@ -26,6 +29,8 @@ import FounderProductsPage from './pages/FounderProductsPage';
 import ProductAnalyticsPage from './pages/ProductAnalyticsPage';
 import DashboardCustomer from './pages/DashboardCustomer';
 import CategoryPage from './pages/CategoryPage';
+import AllCategories from './pages/AllCategories';
+import AllCollections from './pages/AllCollections';
 import CollectionDetails from './pages/CollectionDetails';
 import ProductDetails from './pages/ProductDetails';
 import ProductReviewsPage from './pages/ProductReviewsPage';
@@ -98,7 +103,11 @@ function App() {
                                     <Route path="/blog/:slug" element={<BlogPost />} />
                                     <Route path="/blog/author" element={<AuthorsList />} />
                                     <Route path="/blog/author/:authorId" element={<AuthorBlog />} />
+                                    <Route path="/blog/tags/:slug" element={<TagBlog />} />
                                     <Route path="/changelog" element={<Changelog />} />
+                                    <Route path="/jobs" element={<Jobs />} />
+                                    <Route path="/hiring" element={<Jobs />} />
+                                    <Route path="/jobs/:slug" element={<JobDetails />} />
                                     <Route path="/cookies" element={<CookiePolicy />} />
                                     <Route path="/privacy" element={<Privacy />} />
                                     <Route path="/terms" element={<Terms />} />
@@ -136,7 +145,16 @@ function App() {
                                     } />
 
 
+                                    <Route path="/product" element={<CategoryPage staticSlug="all" />} />
+                                    <Route path="/products" element={<Navigate to="/product" replace />} />
+
+                                    <Route path="/category" element={<AllCategories />} />
+                                    <Route path="/categories" element={<Navigate to="/category" replace />} />
+                                    <Route path="/category/all" element={<Navigate to="/product" replace />} />
+
                                     <Route path="/category/:slug" element={<CategoryPage />} />
+                                    <Route path="/collection" element={<AllCollections />} />
+                                    <Route path="/collections" element={<Navigate to="/collection" replace />} />
                                     <Route path="/collections/:slug" element={<CollectionDetails />} />
                                     <Route path="/tag/:slug" element={<TagPage />} />
                                     <Route path="/product/:slug" element={<ProductDetails />} />

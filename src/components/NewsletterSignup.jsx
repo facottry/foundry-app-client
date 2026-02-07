@@ -21,7 +21,7 @@ const NewsletterSignup = () => {
             setEmail('');
         } catch (error) {
             setStatus('error');
-            setMessage(error.response?.data?.error || 'Something went wrong. Please try again.');
+            setMessage(error.response?.data?.message || error.response?.data?.error || 'Something went wrong. Please try again.');
         }
     };
 

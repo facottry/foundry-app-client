@@ -58,7 +58,7 @@ const Home = () => {
                     </p>
 
                     <div className="hero-buttons">
-                        <Link to="/category/all" className="btn btn-primary" style={{ padding: '16px 32px', fontSize: '1.1rem' }}>
+                        <Link to="/product" className="btn btn-primary" style={{ padding: '16px 32px', fontSize: '1.1rem' }}>
                             Explore Products
                         </Link>
                         <Link to="/pricing" className="btn btn-secondary" style={{ padding: '16px 32px', fontSize: '1.1rem' }}>

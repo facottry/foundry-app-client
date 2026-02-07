@@ -36,7 +36,7 @@ const CollectionDetails = () => {
             />
 
             <div className="container mx-auto px-4 py-12">
-                <Link to="/" className="inline-flex items-center text-gray-500 hover:text-orange-600 mb-8 transition-colors">
+                <Link to="/collection" className="inline-flex items-center text-gray-500 hover:text-orange-600 mb-8 transition-colors">
                     <ArrowLeft className="w-4 h-4 mr-2" /> Back to Collections
                 </Link>
 
