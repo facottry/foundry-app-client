@@ -84,6 +84,19 @@ const About = () => {
                             </a>
                         </div>
 
+                        {/* Vivek Kumar Shankhdhar */}
+                        <div style={{ background: '#fff', padding: '24px', borderRadius: '12px', border: '1px solid #eee' }}>
+                            <div style={{ fontSize: '2.5rem', marginBottom: '16px' }}>🛡️</div>
+                            <h3 style={{ fontSize: '1.25rem', fontWeight: '700', marginBottom: '4px' }}>Vivek Kumar Shankhdhar</h3>
+                            <p style={{ color: 'var(--primary-color)', fontWeight: '600', fontSize: '0.9rem', marginBottom: '12px' }}>Co-Founder & Head of Quality</p>
+                            <p style={{ fontSize: '0.95rem', lineHeight: '1.6', color: 'var(--text-secondary)', marginBottom: '16px' }}>
+                                Adobe Commerce (Magento) Certified & QA Lead with deep experience in E-commerce automation and performance testing. Vivek ensures every interaction on {BRAND.publicName} meets the highest standards of reliability and trust.
+                            </p>
+                            <a href="https://www.linkedin.com/in/vivek-kumar-shankhdhar-398a5980/" target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.9rem', color: '#0077b5', textDecoration: 'none', fontWeight: '500' }}>
+                                Connect on LinkedIn &rarr;
+                            </a>
+                        </div>
+
                         {/* Manish Jaiswal */}
                         <div style={{ background: '#fff', padding: '24px', borderRadius: '12px', border: '1px solid #eee' }}>
                             <div style={{ fontSize: '2.5rem', marginBottom: '16px' }}>💡</div>
