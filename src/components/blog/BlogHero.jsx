@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const BlogHero = ({ title, subtitle, image, author, voiceTagline, date, readTime, intent, taxonomy }) => {
     const intentColors = {
