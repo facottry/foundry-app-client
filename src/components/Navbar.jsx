@@ -87,10 +87,30 @@ const Navbar = () => {
                                     <>
                                         <Link to="/founder/dashboard" style={{ fontWeight: '500', color: 'var(--text-secondary)' }}>Dashboard</Link>
                                         <REXLink />
+                                        <Link to={`/founder/${user._id || user.id}`} style={{ fontWeight: '500', color: 'var(--text-secondary)' }}>Public Profile</Link>
+                                        <button
+                                            onClick={() => {
+                                                const url = `${window.location.origin}/founder/${user._id || user.id}`;
+                                                navigator.clipboard.writeText(url);
+                                                alert('Profile URL copied to clipboard!');
+                                            }}
+                                            style={{
+                                                background: 'none',
+                                                border: 'none',
+                                                cursor: 'pointer',
+                                                fontWeight: '500',
+                                                color: 'var(--accent-primary)',
+                                                padding: 0,
+                                                fontFamily: 'inherit',
+                                                fontSize: 'inherit'
+                                            }}
+                                        >
+                                            Share
+                                        </button>
                                     </>
                                 )}
                                 <Link to="/saved" style={{ fontWeight: '500', color: 'var(--text-secondary)' }}>Saved</Link>
-                                <Link to="/profile" style={{ fontWeight: '500', color: 'var(--text-secondary)' }}>My Profile</Link>
+                                <Link to="/profile" style={{ fontWeight: '500', color: 'var(--text-secondary)' }}>Settings</Link>
                                 <span onClick={handleLogout} style={{ cursor: 'pointer', fontWeight: '500', color: 'var(--text-muted)' }}>Logout</span>
                             </>
                         ) : (
@@ -119,11 +139,33 @@ const Navbar = () => {
                                 <>
                                     <Link to="/founder/dashboard">Dashboard</Link>
                                     <REXLink />
+                                    <Link to={`/founder/${user._id || user.id}`}>Public Profile</Link>
+                                    <button
+                                        onClick={() => {
+                                            const url = `${window.location.origin}/founder/${user._id || user.id}`;
+                                            navigator.clipboard.writeText(url);
+                                            alert('Profile URL copied to clipboard!');
+                                        }}
+                                        style={{
+                                            background: 'none',
+                                            border: 'none',
+                                            cursor: 'pointer',
+                                            padding: '12px 0',
+                                            display: 'block',
+                                            color: 'var(--accent-primary)',
+                                            textAlign: 'left',
+                                            width: '100%',
+                                            fontFamily: 'inherit',
+                                            fontSize: 'inherit'
+                                        }}
+                                    >
+                                        Share Profile
+                                    </button>
                                     <Link to="/founder/products">My Products</Link>
                                 </>
                             )}
                             <Link to="/saved">Saved</Link>
-                            <Link to="/profile">My Profile</Link>
+                            <Link to="/profile">Settings</Link>
                             <span onClick={handleLogout} style={{ cursor: 'pointer', padding: '12px 0', display: 'block', color: 'var(--text-secondary)' }}>Logout</span>
                         </>
                     ) : (

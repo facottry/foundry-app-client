@@ -109,6 +109,16 @@ const FounderProductsPage = () => {
                                                 </div>
                                                 <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
                                                     <a href={`/product/${product._id}`} target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.85rem', color: '#3b82f6', textDecoration: 'none' }}>View Public Page</a>
+                                                    <button
+                                                        onClick={() => {
+                                                            const url = `${window.location.origin}/product/${product._id}`;
+                                                            navigator.clipboard.writeText(url);
+                                                            alert('Product URL copied to clipboard!');
+                                                        }}
+                                                        style={{ background: 'none', border: 'none', color: '#6366f1', fontSize: '0.85rem', cursor: 'pointer', padding: 0, textDecoration: 'none' }}
+                                                    >
+                                                        Share
+                                                    </button>
                                                     {product.verified_status !== 'verified' && (
                                                         <button
                                                             onClick={() => setVerifyingProduct(product)}
