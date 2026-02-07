@@ -930,7 +930,7 @@ export const getBlogsByAuthor = (authorId) => blogPosts.filter(post => post.auth
  * @returns {import('./blogTypes').BlogV2[]}
  */
 export const getBlogsByCategory = (category) => blogPosts.filter(post =>
-    post.taxonomy.primary === category || post.taxonomy.secondary.includes(category)
+    post.taxonomy.primary === category || (post.taxonomy.secondary && post.taxonomy.secondary.includes(category))
 );
 
 /**
@@ -940,8 +940,12 @@ export const getBlogsByCategory = (category) => blogPosts.filter(post =>
 export const getAllCategories = () => {
     const categories = new Set();
     blogPosts.forEach(post => {
-        categories.add(post.taxonomy.primary);
-        post.taxonomy.secondary.forEach(cat => categories.add(cat));
+        if (post.taxonomy.primary) {
+            categories.add(post.taxonomy.primary);
+        }
+        if (post.taxonomy.secondary && Array.isArray(post.taxonomy.secondary)) {
+            post.taxonomy.secondary.forEach(cat => categories.add(cat));
+        }
     });
     return Array.from(categories);
 };

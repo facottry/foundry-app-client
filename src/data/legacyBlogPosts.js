@@ -18,10 +18,7 @@ export const legacyBlogPosts = [
             id: "arun",
             voiceTagline: "Founder & CEO"
         },
-        taxonomy: {
-            primary: "Product Discovery",
-            tags: ["Marketing", "Zero to One", "Growth"]
-        },
+        taxonomy: { primary: "Product Discovery", secondary: [], tags: ["Marketing", "Zero to One", "Growth"] },
         hero: {
             title: "How to Get Early Users for Your SaaS Without Paid Ads",
             subtitle: "Discovery platforms, communities, and organic channels that actually work for early-stage products.",
@@ -83,10 +80,7 @@ export const legacyBlogPosts = [
             id: "arun",
             voiceTagline: "Founder & CEO"
         },
-        taxonomy: {
-            primary: "Founder Playbooks",
-            tags: ["Solo Founder", "Strategy", "Mindset"]
-        },
+        taxonomy: { primary: "Founder Playbooks", secondary: [], tags: ["Solo Founder", "Strategy", "Mindset"] },
         hero: {
             title: "Launching as a Solo Founder: What Actually Matters",
             subtitle: "Cut through the noise. Focus on the fundamentals that move the needle when you are building alone.",
@@ -141,10 +135,7 @@ export const legacyBlogPosts = [
             id: "manish",
             voiceTagline: "Head of Product"
         },
-        taxonomy: {
-            primary: "Product Discovery",
-            tags: ["UX", "Discovery", "Problem Solving"]
-        },
+        taxonomy: { primary: "Product Discovery", secondary: [], tags: ["UX", "Discovery", "Problem Solving"] },
         hero: {
             title: "Product Discovery Without the Noise",
             subtitle: "Why structured discovery beats algorithmic feeds for finding tools that actually solve problems.",
@@ -199,10 +190,7 @@ export const legacyBlogPosts = [
             id: "shobhit",
             voiceTagline: "Tech Lead"
         },
-        taxonomy: {
-            primary: "Founder Playbooks",
-            tags: ["Stack", "Tools", "Efficiency"]
-        },
+        taxonomy: { primary: "Founder Playbooks", secondary: [], tags: ["Stack", "Tools", "Efficiency"] },
         hero: {
             title: "Choosing the Right Early Tools for Your Startup",
             subtitle: "A framework for evaluating tools when you are pre-revenue and every decision counts.",
@@ -256,7 +244,7 @@ export const legacyBlogPosts = [
             intent: "opinion"
         },
         author: { id: "shobhit", voiceTagline: "Tech Lead" },
-        taxonomy: { primary: "Engineering", tags: ["React", "Next.js", "Frontend"] },
+        taxonomy: { primary: "Engineering", secondary: [], tags: ["React", "Next.js", "Frontend"] },
         hero: {
             title: "Why Next.js is the Default Choice for Modern SaaS in 2026",
             subtitle: "Server components, edge rendering, and the developer experience that makes Next.js unbeatable.",
@@ -274,7 +262,7 @@ export const legacyBlogPosts = [
         seo: { title: "The Guide to Programmatic SEO for Marketplaces", description: "How to generate thousands of high-value landing pages without getting penalized by Google.", keywords: ["SEO", "Marketing", "Scale"] },
         meta: { publishedAt: "2026-01-27T10:00:00Z", readTime: "9 min read", language: "en", intent: "educational" },
         author: { id: "arun", voiceTagline: "Founder & CEO" },
-        taxonomy: { primary: "Growth", tags: ["SEO", "Marketing", "Scale"] },
+        taxonomy: { primary: "Growth", secondary: [], tags: ["SEO", "Marketing", "Scale"] },
         hero: { title: "The Guide to Programmatic SEO for Marketplaces", subtitle: "How to generate thousands of high-value landing pages without getting penalized by Google.", image: { url: "/images/blog/growth.png", alt: "SEO Graph", prompt: "Search results rising", mood: "Growth" } },
         sections: [
             { heading: "Value, Not Spam", paragraphs: [{ text: "Programmatic SEO fails when you generate empty pages. Each page must offer unique value to the user." }] },
@@ -288,7 +276,7 @@ export const legacyBlogPosts = [
         seo: { title: "The Friction Audit: How to Fix Your Onboarding", description: "Users leave because of friction. Here is a step-by-step audit to find where you are losing them.", keywords: ["UX", "Onboarding", "Retention"] },
         meta: { publishedAt: "2026-01-26T10:00:00Z", readTime: "5 min read", language: "en", intent: "framework" },
         author: { id: "manish", voiceTagline: "Head of Product" },
-        taxonomy: { primary: "Product Design", tags: ["UX", "Onboarding", "Retention"] },
+        taxonomy: { primary: "Product Design", secondary: [], tags: ["UX", "Onboarding", "Retention"] },
         hero: { title: "The Friction Audit: How to Fix Your Onboarding", subtitle: "Users leave because of friction. Here is a step-by-step audit to find where you are losing them.", image: { url: "/images/blog/product.png", alt: "User flow funnel", prompt: "Funnel dropoff", mood: "Analytical" } },
         sections: [
             { heading: "Identify the Drop-offs", paragraphs: [{ text: "Use analytics to find exactly which screen users abandon. Is it the credit card form? The email verification?" }] },
@@ -302,7 +290,7 @@ export const legacyBlogPosts = [
         seo: { title: "3 Patterns for Integrating AI into Legacy SaaS", description: "Don't rewrite your backend. Use these patterns to layer AI value on top of existing code.", keywords: ["AI", "Architecture", "Legacy"] },
         meta: { publishedAt: "2026-01-25T10:00:00Z", readTime: "7 min read", language: "en", intent: "educational" },
         author: { id: "vinod", voiceTagline: "CTO" },
-        taxonomy: { primary: "Engineering", tags: ["AI", "Architecture", "Legacy"] },
+        taxonomy: { primary: "Engineering", secondary: [], tags: ["AI", "Architecture", "Legacy"] },
         hero: { title: "3 Patterns for Integrating AI into Legacy SaaS", subtitle: "Don't rewrite your backend. Use these patterns to layer AI value on top of existing code.", image: { url: "/images/blog/engineering.png", alt: "AI Integration diagram", prompt: "AI chip integration", mood: "Technical" } },
         sections: [
             { heading: "The Sidecar Pattern", paragraphs: [{ text: "Run your AI service alongside your monolith. Let it consume events and update the database asynchronously." }] },
@@ -316,7 +304,7 @@ export const legacyBlogPosts = [
         seo: { title: "Pricing Psychology: Tiered vs. Usage-Based Models", description: "How to align your pricing model with the value metrics your customers actually care about.", keywords: ["Pricing", "Revenue", "Strategy"] },
         meta: { publishedAt: "2025-12-25T10:00:00Z", readTime: "8 min read", language: "en", intent: "educational" },
         author: { id: "arun", voiceTagline: "Founder & CEO" },
-        taxonomy: { primary: "Founder Playbooks", tags: ["Pricing", "Revenue", "Strategy"] },
+        taxonomy: { primary: "Founder Playbooks", secondary: [], tags: ["Pricing", "Revenue", "Strategy"] },
         hero: { title: "Pricing Psychology: Tiered vs. Usage-Based Models", subtitle: "How to align your pricing model with the value metrics your customers actually care about.", image: { url: "/images/blog/founder.png", alt: "Pricing tier options", prompt: "Pricing psychological choice", mood: "Strategic" } },
         sections: [
             { heading: "Understanding Value Metrics", paragraphs: [{ text: "Charge for what the customer values, not what costs you money. If they value seats, charge for seats." }] },
@@ -330,7 +318,7 @@ export const legacyBlogPosts = [
         seo: { title: "The Myth of Community-Led Growth", description: "Community is an outcome, not a channel. Why you can't 'hack' a community into existence.", keywords: ["Community", "Marketing", "Reality Check"] },
         meta: { publishedAt: "2025-11-24T10:00:00Z", readTime: "6 min read", language: "en", intent: "contrarian" },
         author: { id: "manish", voiceTagline: "Head of Product" },
-        taxonomy: { primary: "Growth", tags: ["Community", "Marketing", "Reality Check"] },
+        taxonomy: { primary: "Growth", secondary: [], tags: ["Community", "Marketing", "Reality Check"] },
         hero: { title: "The Myth of Community-Led Growth", subtitle: "Community is an outcome, not a channel. Why you can't 'hack' a community into existence.", image: { url: "/images/blog/growth.png", alt: "Crowd of people", prompt: "Organic community gathering", mood: "Social" } },
         sections: [
             { heading: "Community cannot be forced", paragraphs: [{ text: "You can build an audience, but community requires member-to-member interaction. You can't broadcast a community into existence." }] },
@@ -344,7 +332,7 @@ export const legacyBlogPosts = [
         seo: { title: "Optimizing React Performance: Beyond useMemo", description: "Real-world techniques for fixing slow renders that have nothing to do with memoization.", keywords: ["React", "Performance", "Code"] },
         meta: { publishedAt: "2026-01-24T10:00:00Z", readTime: "10 min read", language: "en", intent: "educational" },
         author: { id: "shobhit", voiceTagline: "Tech Lead" },
-        taxonomy: { primary: "Engineering", tags: ["React", "Performance", "Code"] },
+        taxonomy: { primary: "Engineering", secondary: [], tags: ["React", "Performance", "Code"] },
         hero: { title: "Optimizing React Performance: Beyond useMemo", subtitle: "Real-world techniques for fixing slow renders that have nothing to do with memoization.", image: { url: "/images/blog/engineering.png", alt: "React Profiler", prompt: "Code optimization process", mood: "Technical" } },
         sections: [
             { heading: "React Profiler is your friend", paragraphs: [{ text: "Stop guessing. Use the profiler to find exactly which component re-renders too often." }] },
@@ -358,7 +346,7 @@ export const legacyBlogPosts = [
         seo: { title: "Vector Databases Explained for Product Managers", description: "Understanding embeddings and semantic search without needing a PhD in math.", keywords: ["AI", "Database", "Search"] },
         meta: { publishedAt: "2025-11-23T10:00:00Z", readTime: "5 min read", language: "en", intent: "educational" },
         author: { id: "vinod", voiceTagline: "CTO" },
-        taxonomy: { primary: "Technology", tags: ["AI", "Database", "Search"] },
+        taxonomy: { primary: "Technology", secondary: [], tags: ["AI", "Database", "Search"] },
         hero: { title: "Vector Databases Explained for Product Managers", subtitle: "Understanding embeddings and semantic search without needing a PhD in math.", image: { url: "/images/blog/engineering.png", alt: "Vector space visualization", prompt: "3D data points visualization", mood: "Futuristic" } },
         sections: [
             { heading: "What is an Embedding?", paragraphs: [{ text: "An embedding is just a list of numbers that represents the 'meaning' of a piece of text. Similar texts have similar numbers." }] },
@@ -372,7 +360,7 @@ export const legacyBlogPosts = [
         seo: { title: "Bootstrapping vs. VC in 2026: The math has changed", description: "With AI reducing the cost of building, the case for bootstrapping has never been stronger.", keywords: ["VC", "Bootstrapping", "Finance"] },
         meta: { publishedAt: "2026-01-23T10:00:00Z", readTime: "7 min read", language: "en", intent: "opinion" },
         author: { id: "arun", voiceTagline: "Founder & CEO" },
-        taxonomy: { primary: "Founder Playbooks", tags: ["VC", "Bootstrapping", "Finance"] },
+        taxonomy: { primary: "Founder Playbooks", secondary: [], tags: ["VC", "Bootstrapping", "Finance"] },
         hero: { title: "Bootstrapping vs. VC in 2026: The math has changed", subtitle: "With AI reducing the cost of building, the case for bootstrapping has never been stronger.", image: { url: "/images/blog/founder.png", alt: "Tug of war money vs freedom", prompt: "Balance of freedom and capital", mood: "Serious" } },
         sections: [
             { heading: "Cost to Build has Crashed", paragraphs: [{ text: "You can now build with 2 people what used to take 10. This means you need less capital to get to market." }] },
@@ -386,7 +374,7 @@ export const legacyBlogPosts = [
         seo: { title: "Churn is a Symptom, Not a Disease", description: "Stop trying to clear the bucket. Fix the hole. How to trace churn back to activation failures.", keywords: ["Churn", "Metrics", "Product"] },
         meta: { publishedAt: "2025-10-22T10:00:00Z", readTime: "6 min read", language: "en", intent: "framework" },
         author: { id: "manish", voiceTagline: "Head of Product" },
-        taxonomy: { primary: "Product Design", tags: ["Churn", "Metrics", "Product"] },
+        taxonomy: { primary: "Product Design", secondary: [], tags: ["Churn", "Metrics", "Product"] },
         hero: { title: "Churn is a Symptom, Not a Disease", subtitle: "Stop trying to clear the bucket. Fix the hole. How to trace churn back to activation failures.", image: { url: "/images/blog/product.png", alt: "Leaky bucket", prompt: "Leaky bucket illustration", mood: "Problematic" } },
         sections: [
             { heading: "Activation is Key", paragraphs: [{ text: "Most churn happens because the user never actually experienced the core value promise in the first place." }] },
@@ -400,7 +388,7 @@ export const legacyBlogPosts = [
         seo: { title: "Cold Email in 2026: Relevance over Personalization", description: "Nobody cares that you went to the same college. They care that you solved their specific problem yesterday.", keywords: ["Sales", "Email", "Outreach"] },
         meta: { publishedAt: "2026-01-22T10:00:00Z", readTime: "5 min read", language: "en", intent: "educational" },
         author: { id: "arun", voiceTagline: "Founder & CEO" },
-        taxonomy: { primary: "Growth", tags: ["Sales", "Email", "Outreach"] },
+        taxonomy: { primary: "Growth", secondary: [], tags: ["Sales", "Email", "Outreach"] },
         hero: { title: "Cold Email in 2026: Relevance over Personalization", subtitle: "Nobody cares that you went to the same college. They care that you solved their specific problem yesterday.", image: { url: "/images/blog/growth.png", alt: "Email inbox", prompt: "Focused email in inbox", mood: "Professional" } },
         sections: [
             { heading: "Relevance > Personalization", paragraphs: [{ text: "Knowing their dog's name is creepy. Knowing they just installed a competitor's tool is relevant." }] },
@@ -414,7 +402,7 @@ export const legacyBlogPosts = [
         seo: { title: "MongoDB Schema Design for High-Traffic SaaS", description: "Embedding vs. Referencing: The definitive guide for read-heavy applications.", keywords: ["Database", "MongoDB", "Backend"] },
         meta: { publishedAt: "2025-12-21T10:00:00Z", readTime: "8 min read", language: "en", intent: "educational" },
         author: { id: "shobhit", voiceTagline: "Tech Lead" },
-        taxonomy: { primary: "Engineering", tags: ["Database", "MongoDB", "Backend"] },
+        taxonomy: { primary: "Engineering", secondary: [], tags: ["Database", "MongoDB", "Backend"] },
         hero: { title: "MongoDB Schema Design for High-Traffic SaaS", subtitle: "Embedding vs. Referencing: The definitive guide for read-heavy applications.", image: { url: "/images/blog/engineering.png", alt: "Database schema diagram", prompt: "Document database structure", mood: "Technical" } },
         sections: [
             { heading: "Embed for Reads", paragraphs: [{ text: "If you always display comments with a post, embed the comments in the post document (up to a limit)." }] },
@@ -428,7 +416,7 @@ export const legacyBlogPosts = [
         seo: { title: "The Ethics of AI-Generated Content in Marketplaces", description: "How we ensure quality and transparency when using LLMs to enhance product data.", keywords: ["AI", "Ethics", "Trust"] },
         meta: { publishedAt: "2025-12-15T10:00:00Z", readTime: "6 min read", language: "en", intent: "opinion" },
         author: { id: "vinod", voiceTagline: "CTO" },
-        taxonomy: { primary: "Technology", tags: ["AI", "Ethics", "Trust"] },
+        taxonomy: { primary: "Technology", secondary: [], tags: ["AI", "Ethics", "Trust"] },
         hero: { title: "The Ethics of AI-Generated Content in Marketplaces", subtitle: "How we ensure quality and transparency when using LLMs to enhance product data.", image: { url: "/images/blog/engineering.png", alt: "AI brain with scales of justice", prompt: "Ethical AI balance", mood: "Thoughtful" } },
         sections: [
             { heading: "Transparency is Mandatory", paragraphs: [{ text: "Users deserve to know if they are reading human or AI content. Label it clearly." }] },
@@ -442,7 +430,7 @@ export const legacyBlogPosts = [
         seo: { title: "Hiring Your First Founding Engineer", description: "What to look for, what to pay, and how to split equity with your first technical hire.", keywords: ["Hiring", "Team", "Equity"] },
         meta: { publishedAt: "2026-01-20T10:00:00Z", readTime: "7 min read", language: "en", intent: "framework" },
         author: { id: "arun", voiceTagline: "Founder & CEO" },
-        taxonomy: { primary: "Founder Playbooks", tags: ["Hiring", "Team", "Equity"] },
+        taxonomy: { primary: "Founder Playbooks", secondary: [], tags: ["Hiring", "Team", "Equity"] },
         hero: { title: "Hiring Your First Founding Engineer", subtitle: "What to look for, what to pay, and how to split equity with your first technical hire.", image: { url: "/images/blog/founder.png", alt: "Two people shaking hands", prompt: "Partnership start", mood: "Professional" } },
         sections: [
             { heading: "Generalist > Specialist", paragraphs: [{ text: "You need someone who can touch the database, the API, and the CSS. Specialists kill early startups." }] },
@@ -456,7 +444,7 @@ export const legacyBlogPosts = [
         seo: { title: "Feature Flags: The Secret to Stress-Free Deployments", description: "Decouple deployment from release. How feature flags change your engineering culture.", keywords: ["DevOps", "Deployment", "Culture"] },
         meta: { publishedAt: "2025-11-20T10:00:00Z", readTime: "5 min read", language: "en", intent: "educational" },
         author: { id: "shobhit", voiceTagline: "Tech Lead" },
-        taxonomy: { primary: "Engineering", tags: ["DevOps", "Deployment", "Culture"] },
+        taxonomy: { primary: "Engineering", secondary: [], tags: ["DevOps", "Deployment", "Culture"] },
         hero: { title: "Feature Flags: The Secret to Stress-Free Deployments", subtitle: "Decouple deployment from release. How feature flags change your engineering culture.", image: { url: "/images/blog/engineering.png", alt: "Control panel switches", prompt: "Toggling features", mood: "Control" } },
         sections: [
             { heading: "Deploy != Release", paragraphs: [{ text: "Deploy code whenever it is ready. Release the feature when marketing is ready. Feature flags make this possible." }] },
@@ -470,7 +458,7 @@ export const legacyBlogPosts = [
         seo: { title: "Engineering as Marketing: Building Micro-Tools", description: "Why building a simple, free calculator or generator is better than writing 10 blog posts.", keywords: ["Marketing", "Tools", "Viral"] },
         meta: { publishedAt: "2025-12-05T10:00:00Z", readTime: "6 min read", language: "en", intent: "growth-hack" },
         author: { id: "manish", voiceTagline: "Head of Product" },
-        taxonomy: { primary: "Growth", tags: ["Marketing", "Tools", "Viral"] },
+        taxonomy: { primary: "Growth", secondary: [], tags: ["Marketing", "Tools", "Viral"] },
         hero: { title: "Engineering as Marketing: Building Micro-Tools", subtitle: "Why building a simple, free calculator or generator is better than writing 10 blog posts.", image: { url: "/images/blog/growth.png", alt: "Swiss army knife", prompt: "Useful small tool", mood: "Practical" } },
         sections: [
             { heading: "Utility goes Viral", paragraphs: [{ text: "People share things that are useful. A 'SaaS Pricing Calculator' is more shareable than a blog post about pricing." }] },
@@ -484,7 +472,7 @@ export const legacyBlogPosts = [
         seo: { title: "Redis Caching Strategies for fast API response times", description: "Cache-aside, write-through, or write-back? Choosing the right strategy for your API.", keywords: ["Performance", "Redis", "Backend"] },
         meta: { publishedAt: "2025-11-19T10:00:00Z", readTime: "7 min read", language: "en", intent: "educational" },
         author: { id: "vinod", voiceTagline: "CTO" },
-        taxonomy: { primary: "Engineering", tags: ["Performance", "Redis", "Backend"] },
+        taxonomy: { primary: "Engineering", secondary: [], tags: ["Performance", "Redis", "Backend"] },
         hero: { title: "Redis Caching Strategies for fast API response times", subtitle: "Cache-aside, write-through, or write-back? Choosing the right strategy for your API.", image: { url: "/images/blog/engineering.png", alt: "Fast server", prompt: "High speed data", mood: "Fast" } },
         sections: [
             { heading: "Cache-Aside", paragraphs: [{ text: "The application code manages the cache. Flexible but requires boilerplate. The most common pattern." }] },
@@ -498,7 +486,7 @@ export const legacyBlogPosts = [
         seo: { title: "Founder Mental Health: The Marathon Mindset", description: "Burnout kills more startups than lack of funding. Strategies for sustainable building.", keywords: ["Health", "Mindset", "Sustainability"] },
         meta: { publishedAt: "2025-10-18T10:00:00Z", readTime: "5 min read", language: "en", intent: "personal" },
         author: { id: "arun", voiceTagline: "Founder & CEO" },
-        taxonomy: { primary: "Founder Playbooks", tags: ["Health", "Mindset", "Sustainability"] },
+        taxonomy: { primary: "Founder Playbooks", secondary: [], tags: ["Health", "Mindset", "Sustainability"] },
         hero: { title: "Founder Mental Health: The Marathon Mindset", subtitle: "Burnout kills more startups than lack of funding. Strategies for sustainable building.", image: { url: "/images/blog/founder.png", alt: "Person meditating", prompt: "Calm mind", mood: "Peaceful" } },
         sections: [
             { heading: "Sleep is a Business Asset", paragraphs: [{ text: "You cannot make good decisions on 4 hours of sleep. Prioritize rest." }] },
@@ -512,7 +500,7 @@ export const legacyBlogPosts = [
         seo: { title: "Implementing Dark Mode with CSS Variables", description: "A clean implementation of theme switching without styled-components bloat.", keywords: ["CSS", "Design", "Frontend"] },
         meta: { publishedAt: "2025-12-18T10:00:00Z", readTime: "5 min read", language: "en", intent: "tutorial" },
         author: { id: "shobhit", voiceTagline: "Tech Lead" },
-        taxonomy: { primary: "Product Design", tags: ["CSS", "Design", "Frontend"] },
+        taxonomy: { primary: "Product Design", secondary: [], tags: ["CSS", "Design", "Frontend"] },
         hero: { title: "Implementing Dark Mode with CSS Variables", subtitle: "A clean implementation of theme switching without styled-components bloat.", image: { url: "/images/blog/product.png", alt: "Dark UI toggle", prompt: "Light vs Dark", mood: "Design" } },
         sections: [
             { heading: "CSS Variables are powerful", paragraphs: [{ text: "Define your colors as variables. Switch the class on the body. Let CSS handle the rest." }] },
@@ -526,7 +514,7 @@ export const legacyBlogPosts = [
         seo: { title: "Measuring DevRel: Metrics that actually matter", description: "Move beyond vanity metrics like Twitter followers. Track integration depth and time-to-hello-world.", keywords: ["DevRel", "Metrics", "Community"] },
         meta: { publishedAt: "2026-01-17T10:00:00Z", readTime: "6 min read", language: "en", intent: "educational" },
         author: { id: "manish", voiceTagline: "Head of Product" },
-        taxonomy: { primary: "Growth", tags: ["DevRel", "Metrics", "Community"] },
+        taxonomy: { primary: "Growth", secondary: [], tags: ["DevRel", "Metrics", "Community"] },
         hero: { title: "Measuring DevRel: Metrics that actually matter", subtitle: "Move beyond vanity metrics like Twitter followers. Track integration depth and time-to-hello-world.", image: { url: "/images/blog/growth.png", alt: "Ruler measuring code", prompt: "Measuring success", mood: "Analytical" } },
         sections: [
             { heading: "Time to First Hello World", paragraphs: [{ text: "How long does it take a developer to make their first API call? Optimize this metric relentlessly." }] },
