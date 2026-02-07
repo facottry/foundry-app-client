@@ -67,8 +67,8 @@ const Login = () => {
             localStorage.setItem('token', accessToken);
             updateUser(user);
 
-            if (user.role === 'FOUNDER') navigate('/founder/dashboard');
-            else navigate('/dashboard/customer');
+            if (user.role === 'FOUNDER') navigate('/');
+            else navigate('/');
 
         } catch (err) {
             console.error('[GoogleAuth] Backend Exchange Error', err);

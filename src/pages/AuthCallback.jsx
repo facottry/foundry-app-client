@@ -50,8 +50,8 @@ const AuthCallback = () => {
 
                 // Final Navigation
                 if (user) {
-                    if (user.role === 'FOUNDER') navigate('/founder/dashboard');
-                    else navigate('/dashboard/customer');
+                    if (user.role === 'FOUNDER') navigate('/');
+                    else navigate('/');
                 } else {
                     console.warn('No user resolved. Navigating to login.');
                     navigate('/login');
