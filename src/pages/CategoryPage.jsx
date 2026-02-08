@@ -140,7 +140,7 @@ const CategoryPage = ({ staticSlug }) => {
             {/* Breadcrumbs */}
             <Breadcrumbs items={[
                 { label: 'Home', href: '/' },
-                { label: 'Products', href: '/product' },
+                { label: 'Product', href: '/product' },
                 { label: CATEGORY_TITLES[slug] || slug }
             ]} />
 

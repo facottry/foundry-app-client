@@ -629,7 +629,7 @@ textarea:focus {
 
 @media (max-width: 900px) {
   .dashboard-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     /* Stack on mobile/tablet */
     gap: 40px;
     /* Increased vertical spacing per requirements */
@@ -639,5 +639,42 @@ textarea:focus {
   .info-strip {
     width: 100%;
     /* Ensure text flows horizontally */
+  }
+}
+
+/* Wallet Page Styles */
+.wallet-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 30px;
+}
+
+.wallet-input-group {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+  .wallet-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .wallet-input-group {
+    flex-direction: column;
+  }
+
+  .wallet-input-group input {
+    width: 100%;
+    font-size: 16px;
+    /* Prevent iOS zoom */
+    padding: 12px;
+  }
+
+  .wallet-input-group button {
+    width: 100%;
+    padding: 12px;
   }
 }

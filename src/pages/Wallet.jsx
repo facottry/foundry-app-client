@@ -78,17 +78,22 @@ const Wallet = () => {
                 </div>
             )}
 
-            <div style={{ display: 'flex', gap: '20px', marginBottom: '30px' }}>
-                <div className="card" style={{ flex: 1, textAlign: 'center', background: '#e3f2fd' }}>
+            <div className="wallet-grid">
+                <div className="card" style={{ textAlign: 'center', background: '#e3f2fd' }}>
                     <h3>Current Balance</h3>
                     <div style={{ fontSize: '3rem', fontWeight: 'bold' }}>{balance}</div>
                     <p>Credits</p>
                 </div>
-                <div className="card" style={{ flex: 1 }}>
+                <div className="card">
                     <h3>Buy Credits</h3>
                     <p>1 Credit = 1 Qualified Visitor</p>
-                    <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
-                        <input type="number" value={amount} onChange={e => setAmount(e.target.value)} style={{ padding: '8px' }} />
+                    <div className="wallet-input-group">
+                        <input
+                            type="number"
+                            value={amount}
+                            onChange={e => setAmount(e.target.value)}
+                            placeholder="Amount"
+                        />
                         <button onClick={onTopup} className="btn btn-primary">Add Credits</button>
                     </div>
                 </div>
@@ -97,26 +102,28 @@ const Wallet = () => {
             <div className="card">
                 <h3>Transaction History</h3>
                 {transactions.length === 0 ? <p>No transactions yet.</p> : (
-                    <table style={{ width: '100%' }}>
-                        <thead>
-                            <tr style={{ textAlign: 'left' }}>
-                                <th>Date</th>
-                                <th>Type</th>
-                                <th>Amount</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {transactions.map(tx => (
-                                <tr key={tx._id} style={{ borderBottom: '1px solid #eee' }}>
-                                    <td style={{ padding: '10px' }}>{new Date(tx.created_at).toLocaleDateString()}</td>
-                                    <td style={{ padding: '10px' }}>{tx.reason}</td>
-                                    <td style={{ padding: '10px', color: tx.amount > 0 ? 'green' : 'red' }}>
-                                        {tx.amount > 0 ? '+' : ''}{tx.amount}
-                                    </td>
+                    <div style={{ overflowX: 'auto', margin: '0 -16px', padding: '0 16px' }}> {/* Negative margin hack for edge-to-edge scroll on small screens inside padding */}
+                        <table style={{ width: '100%', minWidth: '500px', borderCollapse: 'collapse' }}>
+                            <thead>
+                                <tr style={{ textAlign: 'left', borderBottom: '2px solid #eee' }}>
+                                    <th style={{ padding: '12px' }}>Date</th>
+                                    <th style={{ padding: '12px' }}>Type</th>
+                                    <th style={{ padding: '12px' }}>Amount</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                {transactions.map(tx => (
+                                    <tr key={tx._id} style={{ borderBottom: '1px solid #eee' }}>
+                                        <td style={{ padding: '12px' }}>{new Date(tx.created_at).toLocaleDateString()}</td>
+                                        <td style={{ padding: '12px', textTransform: 'capitalize' }}>{tx.reason}</td>
+                                        <td style={{ padding: '12px', fontWeight: 'bold', color: tx.amount > 0 ? '#1E6F3E' : '#B91C1C' }}>
+                                            {tx.amount > 0 ? '+' : ''}{tx.amount}
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
                 )}
             </div>
         </div>

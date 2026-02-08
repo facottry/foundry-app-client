@@ -40,7 +40,7 @@ const ProductReviewsPage = () => {
 
             <Breadcrumbs items={[
                 { label: 'Home', href: '/' },
-                { label: 'Products', href: '/category/all' },
+                { label: 'Product', href: '/category/all' },
                 { label: product.name, href: `/product/${product.slug}` },
                 { label: 'Reviews' }
             ]} />

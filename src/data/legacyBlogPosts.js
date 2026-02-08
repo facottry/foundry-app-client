@@ -47,7 +47,7 @@ export const legacyBlogPosts = [
             {
                 heading: "Discovery Platforms",
                 paragraphs: [
-                    { text: "Platforms like Foundry and Product Hunt are designed for discovery. They put your product in front of early adopters who are actively looking for new solutions." },
+                    { text: "Platforms like Clicktory and Product Hunt are designed for discovery. They put your product in front of early adopters who are actively looking for new solutions." },
                     { text: "Success here requires a clear value proposition and a polished listing. Your screenshot and tagline are your storefront." }
                 ]
             }
@@ -158,7 +158,7 @@ export const legacyBlogPosts = [
                 heading: "Structured Discovery",
                 paragraphs: [
                     { text: "We need categorized, verified, and structured data. Search by problem, not by popularity." },
-                    { text: "Foundry is built on this principle. We categorize tools based on what they do, ensuring you find the right tool for the job." }
+                    { text: "Clicktory is built on this principle. We categorize tools based on what they do, ensuring you find the right tool for the job." }
                 ]
             }
         ],

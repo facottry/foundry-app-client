@@ -21,6 +21,7 @@ const EditProduct = () => {
         screenshots: [],
         screenshotKeys: []
     });
+    const [isUploading, setIsUploading] = useState(false);
 
     useEffect(() => {
         const fetchProduct = async () => {
@@ -32,10 +33,14 @@ const EditProduct = () => {
                     tagline: p.tagline || '',
                     description: p.description || '',
                     website_url: p.website_url || '',
-                    logo_url: getImageUrl(p.logoKey || p.logo_url) || '', // Use derived for display
+                    // Use server-provided URL first, fallback to constructing from key
+                    logo_url: p.logoUrl || p.logo_url || getImageUrl(p.logoKey) || '',
                     logoKey: p.logoKey || '',
                     category: (p.categories && p.categories[0]) || '',
-                    screenshots: (p.screenshotKeys || p.screenshots || []).map(k => getImageUrl(k)),
+                    // Use server-provided screenshot URLs
+                    screenshots: (p.screenshotUrls && p.screenshotUrls.length > 0)
+                        ? p.screenshotUrls
+                        : (p.screenshotKeys || p.screenshots || []).map(k => getImageUrl(k)),
                     screenshotKeys: p.screenshotKeys || []
                 });
             } catch (err) {
@@ -50,9 +55,12 @@ const EditProduct = () => {
 
     const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
+    const handleUploadStart = () => setIsUploading(true);
+    const handleUploadEnd = () => setIsUploading(false);
+
     const handleLogoUpload = (result) => {
-        const url = result.url || result;
-        const key = result.key;
+        const url = result.url || result; // Handle both object and string for backward compat
+        const key = result.key || '';
         setFormData(prev => ({
             ...prev,
             logo_url: url,
@@ -62,12 +70,17 @@ const EditProduct = () => {
 
     const onSubmit = async e => {
         e.preventDefault();
+        if (isUploading) return; // double check
+
         setError(null);
         try {
+            // ... (rest of submit logic)
             const payload = {
                 ...formData,
                 categories: formData.category ? [formData.category] : [],
-                // backend expects logoKey and screenshotKeys to update
+                // Filter out any empty strings from screenshotKeys to strictly satisfy validation
+                screenshotKeys: (formData.screenshotKeys || []).filter(k => k && k.trim() !== ''),
+                screenshots: (formData.screenshots || []).filter(s => s && s.trim() !== '')
             };
             await api.put(`/founder/products/${id}`, payload);
             navigate('/founder/dashboard');
@@ -108,6 +121,8 @@ const EditProduct = () => {
                         label="Product Logo"
                         type="product_logo"
                         onUpload={handleLogoUpload}
+                        onUploadStart={handleUploadStart}
+                        onUploadEnd={handleUploadEnd}
                         currentUrl={formData.logo_url}
                     />
                 </div>
@@ -125,8 +140,6 @@ const EditProduct = () => {
                                         const newScreenshots = [...formData.screenshots];
                                         const newKeys = [...formData.screenshotKeys];
                                         newScreenshots.splice(idx, 1);
-                                        // Be careful with syncing keys if mixed legacy URLs
-                                        // For simplicity, assuming alignment or rebuild
                                         if (newKeys.length > idx) newKeys.splice(idx, 1);
                                         setFormData(prev => ({ ...prev, screenshots: newScreenshots, screenshotKeys: newKeys }));
                                     }}
@@ -143,9 +156,19 @@ const EditProduct = () => {
                                     label=""
                                     type="screenshot"
                                     currentUrl=""
+                                    onUploadStart={handleUploadStart}
+                                    onUploadEnd={handleUploadEnd}
                                     onUpload={(result) => {
-                                        const url = result.url || result;
-                                        const key = result.key;
+                                        let url = result;
+                                        let key = '';
+
+                                        if (typeof result === 'object' && result !== null) {
+                                            url = result.url || '';
+                                            key = result.key || '';
+                                        }
+
+                                        if (!url) return;
+
                                         setFormData(prev => ({
                                             ...prev,
                                             screenshots: [...(prev.screenshots || []), url],
@@ -171,7 +194,14 @@ const EditProduct = () => {
                 </div>
                 <div style={{ display: 'flex', gap: '10px' }}>
                     <button type="button" onClick={() => navigate('/founder/products')} className="btn btn-secondary" style={{ flex: 1 }}>Cancel</button>
-                    <button type="submit" className="btn btn-primary" style={{ flex: 1 }}>Save Changes</button>
+                    <button
+                        type="submit"
+                        className="btn btn-primary"
+                        style={{ flex: 1, opacity: isUploading ? 0.7 : 1, cursor: isUploading ? 'not-allowed' : 'pointer' }}
+                        disabled={isUploading}
+                    >
+                        {isUploading ? 'Uploading Images...' : 'Save Changes'}
+                    </button>
                 </div>
             </form>
         </div>

@@ -24,9 +24,14 @@ const CategoryDiscoveryCard = ({ category }) => {
                         {category.icon}
                     </div>
                     {/* Tiny Count Badge */}
-                    <span className="text-[10px] font-medium text-gray-400 bg-gray-50 px-1.5 py-0.5 rounded-md border border-gray-100">
-                        {category.productCount}
-                    </span>
+                    {/* Gradient Border Badge */}
+                    <div className="relative p-[1px] rounded-lg bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 shadow-sm">
+                        <div className="bg-white rounded-[7px] px-2 py-0.5 flex items-center justify-center">
+                            <span className="text-[10px] font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-600 via-purple-600 to-indigo-600 whitespace-nowrap">
+                                {category.productCount} Product{category.productCount !== 1 ? 's' : ''} Found
+                            </span>
+                        </div>
+                    </div>
                 </div>
 
                 {/* Text Content */}

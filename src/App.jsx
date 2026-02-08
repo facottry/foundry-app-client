@@ -60,6 +60,7 @@ import RexPage from './pages/RexPage';
 import { BotProvider } from './context/BotContext';
 import SecuritySettings from './pages/SecuritySettings';
 import AuthCallback from './pages/AuthCallback';
+import AuthPageGuard from './components/AuthPageGuard';
 
 import './index.css';
 
@@ -121,8 +122,18 @@ function App() {
                                         <Route path="/cookies" element={<CookiePolicy />} />
                                         <Route path="/privacy" element={<Privacy />} />
                                         <Route path="/terms" element={<Terms />} />
-                                        <Route path="/login" element={<Login />} />
-                                        <Route path="/signup" element={<Signup />} />
+
+                                        <Route path="/login" element={
+                                            <AuthPageGuard>
+                                                <Login />
+                                            </AuthPageGuard>
+                                        } />
+                                        <Route path="/signup" element={
+                                            <AuthPageGuard>
+                                                <Signup />
+                                            </AuthPageGuard>
+                                        } />
+
                                         <Route path="/founder/:founderId" element={<FounderProfile />} />
 
                                         {/* Protected Routes */}
@@ -205,13 +216,17 @@ function App() {
                                                 <Wallet />
                                             </ProtectedRoute>
                                         } />
-                                        <Route path="/login-otp" element={<LoginOTP />} />
+                                        <Route path="/login-otp" element={
+                                            <AuthPageGuard>
+                                                <LoginOTP />
+                                            </AuthPageGuard>
+                                        } />
                                         <Route path="/change-password" element={
                                             <ProtectedRoute>
                                                 <ChangePassword />
                                             </ProtectedRoute>
                                         } />
-                                        <Route path="/login" element={<Login />} />
+                                        {/* Login route removed (duplicate) */}
                                         <Route path="/auth/callback" element={<AuthCallback />} />
                                         <Route path="/auth/:provider/callback" element={<AuthCallback />} />
                                         <Route path="/settings/security" element={

@@ -14,12 +14,27 @@ const api = axios.create({
 });
 
 // Request Interceptor (Auth Token)
+// Request Interceptor (Auth Token + TOTP)
 api.interceptors.request.use(
-    config => {
+    async config => {
         const token = localStorage.getItem('token');
         if (token) {
             config.headers['x-auth-token'] = token;
         }
+
+        // Inject TOTP Header for Source Validation
+        try {
+            // Lazy load to avoid circular deps if any
+            const { generateTOTP } = await import('./totp');
+            const secret = import.meta.env.VITE_APP_SECRET || 'CLICKTORY_DEFAULT_SECRET';
+            const totp = await generateTOTP(secret);
+            if (totp) {
+                config.headers['X-App-Source'] = totp;
+            }
+        } catch (e) {
+            console.warn('TOTP Generation failed', e);
+        }
+
         return config;
     },
     error => Promise.reject(error)

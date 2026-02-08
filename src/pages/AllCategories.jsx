@@ -17,7 +17,7 @@ const AllCategories = () => {
             />
             <Breadcrumbs items={[
                 { label: 'Home', href: '/' },
-                { label: 'Products' }
+                { label: 'Product' }
             ]} />
 
             <CategoryCollectionTabs />

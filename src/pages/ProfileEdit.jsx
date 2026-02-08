@@ -12,6 +12,7 @@ const ProfileEdit = ({ isEmbedded = false }) => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
+    const [isUploading, setIsUploading] = useState(false);
 
     const [formData, setFormData] = useState({
         name: '',
@@ -19,13 +20,16 @@ const ProfileEdit = ({ isEmbedded = false }) => {
         bio: '',
         company_name: '',
         role_title: '',
-        city: '', // Added city field
+        city: '',
         location: '',
         website: '',
         twitter: '',
         linkedin: '',
         timezone: ''
     });
+
+    const handleUploadStart = () => setIsUploading(true);
+    const handleUploadEnd = () => setIsUploading(false);
 
     useEffect(() => {
         const fetchProfile = async () => {
@@ -62,6 +66,8 @@ const ProfileEdit = ({ isEmbedded = false }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (isUploading) return;
+
         setSaving(true);
         try {
             const res = await updateProfile(formData);
@@ -121,9 +127,15 @@ const ProfileEdit = ({ isEmbedded = false }) => {
                         label="Avatar"
                         type="avatar"
                         currentUrl={formData.avatar_url}
+                        onUploadStart={handleUploadStart}
+                        onUploadEnd={handleUploadEnd}
                         onUpload={(result) => {
-                            const url = result.url || result;
-                            const key = result.key;
+                            let url = result;
+                            let key = '';
+                            if (typeof result === 'object' && result !== null) {
+                                url = result.url || '';
+                                key = result.key || '';
+                            }
                             setFormData({
                                 ...formData,
                                 avatar_url: url,
@@ -261,11 +273,11 @@ const ProfileEdit = ({ isEmbedded = false }) => {
                 <div style={{ marginTop: '32px', display: 'flex', gap: '16px' }}>
                     <button
                         type="submit"
-                        className={`btn btn-primary ${saving ? 'btn-disabled' : ''}`}
-                        disabled={saving}
-                        style={{ flex: 1 }}
+                        className={`btn btn-primary ${saving || isUploading ? 'btn-disabled' : ''}`}
+                        disabled={saving || isUploading}
+                        style={{ flex: 1, opacity: (saving || isUploading) ? 0.7 : 1, cursor: (saving || isUploading) ? 'not-allowed' : 'pointer' }}
                     >
-                        {saving ? 'Saving...' : 'Save Profile'}
+                        {saving ? 'Saving...' : isUploading ? 'Uploading Image...' : 'Save Profile'}
                     </button>
                 </div>
             </form>

@@ -149,7 +149,7 @@ const ProductDetails = () => {
             />
             <Breadcrumbs items={[
                 { label: 'Home', href: '/' },
-                { label: 'Products', href: '/category/all' },
+                { label: 'Product', href: '/category/all' },
                 { label: entityCategory, href: `/category/${entityCategory}` },
                 { label: product.name }
             ]} />

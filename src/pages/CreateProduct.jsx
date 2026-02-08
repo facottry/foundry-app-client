@@ -9,7 +9,11 @@ const CreateProduct = () => {
     });
     const [error, setError] = useState(null);
     const [pendingProducts, setPendingProducts] = useState([]);
+    const [isUploading, setIsUploading] = useState(false);
     const navigate = useNavigate();
+
+    const handleUploadStart = () => setIsUploading(true);
+    const handleUploadEnd = () => setIsUploading(false);
 
     // Fetch user's pending products on mount
     useEffect(() => {
@@ -42,12 +46,16 @@ const CreateProduct = () => {
 
     const onSubmit = async e => {
         e.preventDefault();
+        if (isUploading) return;
+
         setError(null);
         try {
             const payload = {
                 ...formData,
                 categories: [formData.category],
-                screenshots: []
+                // Filter out any empty strings from screenshotKeys to strictly satisfy validation
+                screenshotKeys: (formData.screenshotKeys || []).filter(k => k && k.trim() !== ''),
+                screenshots: (formData.screenshots || []).filter(s => s && s.trim() !== '')
             };
             await api.post('/products', payload);
             navigate('/founder/dashboard');
@@ -108,6 +116,8 @@ const CreateProduct = () => {
                         label="Product Logo"
                         type="product_logo"
                         onUpload={handleLogoUpload}
+                        onUploadStart={handleUploadStart}
+                        onUploadEnd={handleUploadEnd}
                         currentUrl={formData.logo_url}
                     />
                 </div>
@@ -140,9 +150,19 @@ const CreateProduct = () => {
                                     label=""
                                     type="screenshot"
                                     currentUrl=""
+                                    onUploadStart={handleUploadStart}
+                                    onUploadEnd={handleUploadEnd}
                                     onUpload={(result) => {
-                                        const url = result.url || result;
-                                        const key = result.key;
+                                        let url = result;
+                                        let key = '';
+
+                                        if (typeof result === 'object' && result !== null) {
+                                            url = result.url || '';
+                                            key = result.key || '';
+                                        }
+
+                                        if (!url) return;
+
                                         setFormData(prev => ({
                                             ...prev,
                                             screenshots: [...(prev.screenshots || []), url],
@@ -166,7 +186,14 @@ const CreateProduct = () => {
                         <option value="AI">AI</option>
                     </select>
                 </div>
-                <button type="submit" className="btn btn-primary">Submit for Review</button>
+                <button
+                    type="submit"
+                    className="btn btn-primary"
+                    disabled={isUploading}
+                    style={{ opacity: isUploading ? 0.7 : 1, cursor: isUploading ? 'not-allowed' : 'pointer' }}
+                >
+                    {isUploading ? 'Uploading Images...' : 'Submit for Review'}
+                </button>
             </form>
         </div>
     );

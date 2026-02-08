@@ -54,7 +54,7 @@ const DashboardFounder = () => {
                         </p>
                     </div>
                     {/* Primary Action Promoted (+4%) */}
-                    <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                    <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
                         <Link to={`/founder/${data?.user?.slug || data?.user?._id}`} target="_blank" className="btn" style={{
                             padding: '12px 24px',
                             fontSize: '0.95rem',
@@ -89,7 +89,7 @@ const DashboardFounder = () => {
                             action={<Link to="/create-product" className="btn btn-primary">Launch Now</Link>}
                         />
                     ) : (
-                        <div className="card" style={{ padding: '0', overflow: 'hidden', borderTop: '4px solid var(--accent-primary)' }}>
+                        <div className="card" style={{ padding: '0', overflowX: 'auto', borderTop: '4px solid var(--accent-primary)' }}>
                             <table className="data-table">
                                 <thead>
                                     <tr>

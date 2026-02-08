@@ -17,31 +17,68 @@ const AuthContext = createContext({
 
 export const AuthProvider = ({ children }) => {
 
+    // Global Auth State
+    // 'checking'         -> Initial load, contacting server
+    // 'authenticated'    -> Server confirmed user (200 OK)
+    // 'unauthenticated'  -> Server rejected or no token (401/403)
+    const [authStatus, setAuthStatus] = useState('checking');
     const [user, setUser] = useState(null);
-    const [loading, setLoading] = useState(true);
 
+    // Bootstrap: Verify with Server
     useEffect(() => {
-        const loadUser = async () => {
+        const verifyAuth = async () => {
             const token = localStorage.getItem('token');
-            if (token) {
-                try {
-                    const storedUser = localStorage.getItem('user');
-                    if (storedUser) setUser(JSON.parse(storedUser));
-                } catch (err) {
-                    localStorage.removeItem('token');
-                }
+
+            if (!token) {
+                setAuthStatus('unauthenticated');
+                setUser(null);
+                return;
             }
-            setLoading(false);
+
+            try {
+                // The ONLY source of truth: does the server accept this token?
+                const userObj = await api.get('/auth/me');
+
+                if (userObj && (userObj.id || userObj._id)) {
+                    // Polyfill id if missing
+                    if (!userObj.id) userObj.id = userObj._id;
+                    setUser(userObj);
+                    setAuthStatus('authenticated');
+                } else {
+                    throw new Error('Server returned 200 but invalid user data');
+                }
+            } catch (err) {
+                console.error('[Auth] Session restoration failed:', err);
+                localStorage.removeItem('token');
+                localStorage.removeItem('user');
+                setUser(null);
+                setAuthStatus('unauthenticated');
+            }
         };
-        loadUser();
+
+        verifyAuth();
     }, []);
 
+    // Helper to manually refresh auth (e.g. after profile update)
+    const refreshAuth = async () => {
+        try {
+            const userObj = await api.get('/auth/me');
+            if (userObj && (userObj.id || userObj._id)) {
+                if (!userObj.id) userObj.id = userObj._id;
+                setUser(userObj);
+            }
+            // Don't change status, just update data
+        } catch (err) {
+            // If refresh fails, do we logout? ideally yes if 401
+        }
+    };
+
     const login = async (email, password) => {
-        // api.post returns response.data (which is { success, data })
         const res = await api.post('/auth/login', { email, password });
         localStorage.setItem('token', res.data.token);
         localStorage.setItem('user', JSON.stringify(res.data.user));
         setUser(res.data.user);
+        setAuthStatus('authenticated'); // Immediate update
 
         emitEvent({
             name: 'login_completed',
@@ -63,6 +100,7 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem('token', res.data.token);
         localStorage.setItem('user', JSON.stringify(res.data.user));
         setUser(res.data.user);
+        setAuthStatus('authenticated');
 
         emitEvent({
             name: 'login_completed',
@@ -79,6 +117,7 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem('token', res.data.token);
         localStorage.setItem('user', JSON.stringify(res.data.user));
         setUser(res.data.user);
+        setAuthStatus('authenticated');
 
         emitEvent({
             name: 'login_completed',
@@ -95,6 +134,7 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem('token', res.data.token);
         localStorage.setItem('user', JSON.stringify(res.data.user));
         setUser(res.data.user);
+        setAuthStatus('authenticated');
 
         emitEvent({
             name: 'signup_completed',
@@ -111,6 +151,7 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem('token', res.data.accessToken);
         localStorage.setItem('user', JSON.stringify(res.data.user));
         setUser(res.data.user);
+        setAuthStatus('authenticated');
 
         emitEvent({
             name: 'login_completed',
@@ -133,7 +174,6 @@ export const AuthProvider = ({ children }) => {
 
         // Define global callback to ensure Google SDK can reach it
         window.handleGoogleCredentialResponse = async (response) => {
-
             try {
                 const res = await api.post('/auth/sso/google', { idToken: response.credential });
                 const { user, accessToken } = res;
@@ -141,6 +181,7 @@ export const AuthProvider = ({ children }) => {
                 localStorage.setItem('token', accessToken);
                 localStorage.setItem('user', JSON.stringify(user));
                 setUser(user);
+                setAuthStatus('authenticated');
 
                 emitEvent({
                     name: 'login_completed',
@@ -149,10 +190,8 @@ export const AuthProvider = ({ children }) => {
                     properties: { method: 'google' }
                 });
 
-                // User state change will trigger redirects in components
             } catch (err) {
                 console.error('[AuthContext] Google SSO Error', err);
-                // api.js interceptor might return the error string directly
                 const errorMessage = typeof err === 'string' ? err : (err.response?.data?.error || err.message || 'Unknown Error');
                 alert('Google Sign-In Failed: ' + errorMessage);
             }
@@ -160,12 +199,10 @@ export const AuthProvider = ({ children }) => {
 
         const initGSI = () => {
             if (window.google && window.google.accounts) {
-
                 window.google.accounts.id.initialize({
                     client_id: GOOGLE_CLIENT_ID,
-                    callback: window.handleGoogleCredentialResponse, // Use global reference
+                    callback: window.handleGoogleCredentialResponse,
                 });
-
             }
         };
 
@@ -185,8 +222,7 @@ export const AuthProvider = ({ children }) => {
         }
 
         return () => {
-            // Cleanup if necessary, though GSI might need it to remain. 
-            // window.handleGoogleCredentialResponse = null; 
+            // Cleanup if necessary
         };
 
     }, []);
@@ -226,6 +262,7 @@ export const AuthProvider = ({ children }) => {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
         setUser(null);
+        setAuthStatus('unauthenticated');
         window.location.href = '/login';
     };
 
@@ -235,7 +272,19 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     return (
-        <AuthContext.Provider value={{ user, login, loginWithOTP, loginWithPhone, loginWithProvider, signup, logout, loading, updateUser, googleLoginSDK }}>
+        <AuthContext.Provider value={{
+            user,
+            authStatus, // Expose status
+            login,
+            loginWithOTP,
+            loginWithPhone,
+            loginWithProvider,
+            signup,
+            logout,
+            updateUser,
+            refreshAuth,
+            googleLoginSDK
+        }}>
             {children}
         </AuthContext.Provider>
     );

@@ -30,7 +30,7 @@ const REXLink = ({ onClick }) => {
 
 const Navbar = () => {
 
-    const { user, logout } = useAuth();
+    const { user, logout, authStatus } = useAuth();
     const navigate = useNavigate();
     const location = useLocation(); // Hook to detect route changes
     const [isShareModalOpen, setIsShareModalOpen] = useState(false);
@@ -114,39 +114,46 @@ const Navbar = () => {
                 <div style={{ display: 'flex', alignItems: 'center', gap: '16px', justifyContent: 'flex-end', marginLeft: 'auto' }}>
 
                     <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                        {user ? (
-                            <>
-                                <div className="hidden md:flex items-center gap-4">
-                                    {user.role === 'FOUNDER' && (
-                                        <Link to="/founder/dashboard" style={navLinkStyle}>
-                                            <LayoutDashboard size={20} color="#f472b6" strokeWidth={2.5} /> {/* Pink */}
-                                            Dashboard
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                            {/* 1. Loading State -> Show nothing or skeleton */}
+                            {authStatus === 'checking' ? (
+                                <div style={{ width: '32px', height: '32px', borderRadius: '50%', backgroundColor: 'rgba(255,255,255,0.1)' }}></div>
+                            ) : authStatus === 'authenticated' ? (
+                                /* 2. Authenticated State - STRICTLY SHOW USER MENU */
+                                <>
+                                    <div className="hidden md:flex items-center gap-4">
+                                        {user && user.role === 'FOUNDER' && (
+                                            <Link to="/founder/dashboard" style={navLinkStyle}>
+                                                <LayoutDashboard size={20} color="#f472b6" strokeWidth={2.5} /> {/* Pink */}
+                                                Dashboard
+                                            </Link>
+                                        )}
+                                        <Link to="/saved" style={navLinkStyle}>
+                                            <Bookmark size={20} color="#ffffff" strokeWidth={2.5} />
+                                            Saved
                                         </Link>
-                                    )}
-                                    <Link to="/saved" style={navLinkStyle}>
-                                        <Bookmark size={20} color="#ffffff" strokeWidth={2.5} />
-                                        Saved
-                                    </Link>
 
-                                    <div style={{ marginLeft: '12px' }}>
-                                        <ProfileDropdown user={user} logout={handleLogout} />
+                                        <div style={{ marginLeft: '12px' }}>
+                                            {user ? (
+                                                <ProfileDropdown user={user} logout={handleLogout} />
+                                            ) : (
+                                                /* Safety Skeleton if auth is true but user missing */
+                                                <div style={{ width: '32px', height: '32px', borderRadius: '50%', backgroundColor: '#fff' }}></div>
+                                            )}
+                                        </div>
                                     </div>
+                                    <div className="md:hidden">
+                                        {/* Mobile Profile Avatars handled by bottom sheet */}
+                                    </div>
+                                </>
+                            ) : (
+                                /* 3. Unauthenticated State - STRICTLY SHOW LOGIN/SIGNUP */
+                                <div className="flex items-center gap-3">
+                                    <Link to="/login" style={{ fontWeight: '600', color: 'rgba(255,255,255,0.95)', fontSize: '1rem', whiteSpace: 'nowrap' }} className="hidden md:block">Login</Link>
+                                    <Link to="/signup" className="btn btn-primary" style={{ padding: '8px 16px', fontSize: '0.95rem', fontWeight: '600', whiteSpace: 'nowrap' }}>Sign Up</Link>
                                 </div>
-                                {/* Mobile: Only showing Profile Avatar here might be redundant if we have bottom nav, 
-                                    but good for consistent branding. Or we can hide actions on mobile top bar entirely.
-                                    PRD says "Bottom App Navigation... Hidden on desktop".
-                                    Let's keep the Navbar clean on mobile - maybe just Logo.
-                                */}
-                                <div className="md:hidden">
-                                    {/* Intentionally Empty or minimal actions if needed */}
-                                </div>
-                            </>
-                        ) : (
-                            <div className="flex items-center gap-3">
-                                <Link to="/login" style={{ fontWeight: '600', color: 'rgba(255,255,255,0.95)', fontSize: '1rem', whiteSpace: 'nowrap' }} className="hidden md:block">Login</Link>
-                                <Link to="/signup" className="btn btn-primary" style={{ padding: '8px 16px', fontSize: '0.95rem', fontWeight: '600', whiteSpace: 'nowrap' }}>Sign Up</Link>
-                            </div>
-                        )}
+                            )}
+                        </div>
                     </div>
                 </div>
 

@@ -3,17 +3,37 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useUI } from '../../context/UIContext';
 import { useAuth } from '../../context/AuthContext';
 import { useScrollLock } from '../../hooks/useScrollLock';
-import { useNavigate, Link } from 'react-router-dom';
-import {
-    User, Share2, Box, Bookmark, Settings, LogOut,
-    CreditCard, FileText, Info, Mail, Github, Linkedin, Twitter
-} from 'lucide-react';
-import BRAND from '../../config/brand';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
+import { BRAND } from '../../config/brand';
 
+import {
+    User as UserIcon,
+    Share2,
+    Box,
+    Bookmark,
+    Settings,
+    LogOut,
+    CreditCard,
+    FileText,
+    Info,
+    Mail,
+    Github,
+    Linkedin,
+    Twitter
+} from 'lucide-react';
+// ...
 const ProfileBottomSheet = () => {
     const { isProfileSheetOpen, closeProfileSheet } = useUI();
     const { user, logout } = useAuth();
     const navigate = useNavigate();
+    const location = useLocation();
+
+    // Auto-close on navigation
+    React.useEffect(() => {
+        if (isProfileSheetOpen) {
+            closeProfileSheet();
+        }
+    }, [location.pathname]);
 
     // Enforce Modal-Grade Scroll Locking
     useScrollLock(isProfileSheetOpen);
@@ -71,7 +91,7 @@ const ProfileBottomSheet = () => {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={closeProfileSheet}
-                        className="fixed inset-0 bg-black/40 z-[60] md:hidden backdrop-blur-sm"
+                        className="fixed inset-0 bg-black/40 z-[1040] md:hidden backdrop-blur-sm"
                     />
 
                     {/* Sheet */}
@@ -80,7 +100,7 @@ const ProfileBottomSheet = () => {
                         animate={{ y: 0 }}
                         exit={{ y: '100%' }}
                         transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-                        className="fixed bottom-0 left-0 right-0 bg-white rounded-t-[24px] z-[70] md:hidden overflow-hidden flex flex-col max-h-[90vh]"
+                        className="fixed bottom-0 left-0 right-0 bg-white rounded-t-[24px] z-[1050] md:hidden overflow-hidden flex flex-col max-h-[90vh]"
                         style={{
                             boxShadow: '0 -4px 20px rgba(0,0,0,0.1)',
                             width: 'auto' // Prevent fixed positioning bleeding
@@ -101,7 +121,7 @@ const ProfileBottomSheet = () => {
                                             <img src={user.avatar_url} alt={user.name} className="w-full h-full object-cover" />
                                         ) : (
                                             <div className="w-full h-full flex items-center justify-center bg-gray-300 text-gray-500">
-                                                <User size={24} />
+                                                <UserIcon size={24} />
                                             </div>
                                         )}
                                     </div>
@@ -123,7 +143,7 @@ const ProfileBottomSheet = () => {
 
                                     {user.role === 'FOUNDER' && (
                                         <>
-                                            <MenuItem icon={User} label="Public Profile" onClick={() => handleNavigation(`/founder/${user.id}`)} />
+                                            <MenuItem icon={UserIcon} label="Public Profile" onClick={() => handleNavigation(`/founder/${user.id}`)} />
                                             <MenuItem icon={Share2} label="Share Profile" onClick={() => {
                                                 // Trigger share modal logic if accessible, or navigate to share view
                                                 // For now navigate to profile
