@@ -62,7 +62,7 @@ const Login = () => {
         try {
             setLoading(true);
             const res = await api.post('/auth/sso/google', { idToken: response.credential });
-            const { user, accessToken } = res.data;
+            const { user, accessToken } = res;
 
             localStorage.setItem('token', accessToken);
             updateUser(user);

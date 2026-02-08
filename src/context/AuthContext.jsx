@@ -75,9 +75,9 @@ export const AuthProvider = ({ children }) => {
 
     const login = async (email, password) => {
         const res = await api.post('/auth/login', { email, password });
-        localStorage.setItem('token', res.data.token);
-        localStorage.setItem('user', JSON.stringify(res.data.user));
-        setUser(res.data.user);
+        localStorage.setItem('token', res.accessToken);
+        localStorage.setItem('user', JSON.stringify(res.user));
+        setUser(res.user);
         setAuthStatus('authenticated'); // Immediate update
 
         emitEvent({
@@ -97,70 +97,70 @@ export const AuthProvider = ({ children }) => {
 
     const loginWithOTP = async (email, otp) => {
         const res = await api.post('/auth/login-otp', { email, otp });
-        localStorage.setItem('token', res.data.token);
-        localStorage.setItem('user', JSON.stringify(res.data.user));
-        setUser(res.data.user);
+        localStorage.setItem('token', res.accessToken);
+        localStorage.setItem('user', JSON.stringify(res.user));
+        setUser(res.user);
         setAuthStatus('authenticated');
 
         emitEvent({
             name: 'login_completed',
             category: 'user',
-            actor: { type: 'user', id: res.data.user.id },
+            actor: { type: 'user', id: res.user.id },
             properties: { method: 'otp' }
         });
 
-        return res.data.user;
+        return res.user;
     };
 
     const loginWithPhone = async (phone, otp) => {
         const res = await api.post('/auth/login-phone', { phone, otp });
-        localStorage.setItem('token', res.data.token);
-        localStorage.setItem('user', JSON.stringify(res.data.user));
-        setUser(res.data.user);
+        localStorage.setItem('token', res.accessToken);
+        localStorage.setItem('user', JSON.stringify(res.user));
+        setUser(res.user);
         setAuthStatus('authenticated');
 
         emitEvent({
             name: 'login_completed',
             category: 'user',
-            actor: { type: 'user', id: res.data.user.id },
+            actor: { type: 'user', id: res.user.id },
             properties: { method: 'phone' }
         });
 
-        return res.data.user;
+        return res.user;
     };
 
     const signup = async (name, email, password, role) => {
         const res = await api.post('/auth/signup', { name, email, password, role });
-        localStorage.setItem('token', res.data.token);
-        localStorage.setItem('user', JSON.stringify(res.data.user));
-        setUser(res.data.user);
+        localStorage.setItem('token', res.accessToken);
+        localStorage.setItem('user', JSON.stringify(res.user));
+        setUser(res.user);
         setAuthStatus('authenticated');
 
         emitEvent({
             name: 'signup_completed',
             category: 'user',
-            actor: { type: 'user', id: res.data.user.id },
+            actor: { type: 'user', id: res.user.id },
             properties: { role }
         });
 
-        return res.data.user;
+        return res.user;
     };
 
     const loginWithProvider = async (provider, profile) => {
         const res = await api.post('/auth/sso/login/provider', { provider, profile });
-        localStorage.setItem('token', res.data.accessToken);
-        localStorage.setItem('user', JSON.stringify(res.data.user));
-        setUser(res.data.user);
+        localStorage.setItem('token', res.accessToken);
+        localStorage.setItem('user', JSON.stringify(res.user));
+        setUser(res.user);
         setAuthStatus('authenticated');
 
         emitEvent({
             name: 'login_completed',
             category: 'user',
-            actor: { type: 'user', id: res.data.user.id },
+            actor: { type: 'user', id: res.user.id },
             properties: { method: provider }
         });
 
-        return res.data.user;
+        return res.user;
     };
 
     // --- Google SDK Logic (Route Independent) ---

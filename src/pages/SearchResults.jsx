@@ -464,6 +464,31 @@ const SearchResults = () => {
                             </div>
                         </section>
                     )}
+
+                    {/* No Results Fallback */}
+                    {!loading && !hasResults && query.length >= 2 && (
+                        <div style={{ textAlign: 'center', padding: '100px 20px', animation: 'fadeIn 0.5s ease-out' }}>
+                            <div style={{ fontSize: '4rem', marginBottom: '20px' }}>🔍</div>
+                            <h3 style={{ fontSize: '1.5rem', fontWeight: '700', marginBottom: '12px' }}>No matches for "{query}"</h3>
+                            <p style={{ color: 'var(--text-tertiary)', maxWidth: '500px', margin: '0 auto 32px' }}>
+                                We couldn't find exactly what you're looking for. Try adjusting your search or explore one of our trending categories.
+                            </p>
+                            <div style={{ display: 'flex', gap: '12px', justifyContent: 'center' }}>
+                                <button
+                                    onClick={() => { setInputValue(''); navigate('/search'); }}
+                                    style={{ padding: '12px 24px', borderRadius: '12px', background: '#f3f4f6', border: 'none', fontWeight: '600', cursor: 'pointer' }}
+                                >
+                                    Clear Search
+                                </button>
+                                <button
+                                    onClick={() => navigate('/category/all')}
+                                    style={{ padding: '12px 24px', borderRadius: '12px', background: 'var(--text-primary)', color: 'white', border: 'none', fontWeight: '600', cursor: 'pointer' }}
+                                >
+                                    Browse All
+                                </button>
+                            </div>
+                        </div>
+                    )}
                 </div>
             </div >
         </div >
