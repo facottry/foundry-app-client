@@ -195,7 +195,12 @@ const CategoryPage = ({ staticSlug }) => {
             </div>
 
             {/* Product Grid */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '24px' }}>
+            <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 280px), 1fr))',
+                gap: '24px',
+                justifyContent: 'center'
+            }}>
                 {organic.map((product, index) => (
                     <div
                         key={product._id}

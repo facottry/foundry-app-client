@@ -79,7 +79,7 @@ function Layout({ children }) {
     return (
         <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
             {!isSearchPage && <Navbar />}
-            <div className={isSearchPage ? "" : "container"} style={{ flex: 1, paddingBottom: '80px' }}>
+            <div className={isSearchPage ? "" : "container mx-auto"} style={{ flex: 1, paddingBottom: '80px' }}>
                 {children}
             </div>
             <Footer />

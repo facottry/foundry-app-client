@@ -33,8 +33,9 @@ const AllCategories = () => {
 
             <div style={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
-                gap: '24px'
+                gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 260px), 1fr))',
+                gap: '24px',
+                justifyContent: 'center'
             }}>
                 {categories.map(slug => (
                     <Link
