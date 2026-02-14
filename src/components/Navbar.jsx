@@ -7,7 +7,7 @@ import { useBot } from '../context/BotContext';
 import BRAND from '../config/brand';
 import { Home, Box, Layers, Tag, LayoutDashboard, Bookmark, LogOut, User } from 'lucide-react';
 
-import ShareProfileModal from './ShareProfileModal';
+
 
 const REXLink = ({ onClick }) => {
     const { isEligible } = useBot();
@@ -33,7 +33,6 @@ const Navbar = () => {
     const { user, logout, authStatus } = useAuth();
     const navigate = useNavigate();
     const location = useLocation(); // Hook to detect route changes
-    const [isShareModalOpen, setIsShareModalOpen] = useState(false);
 
     // Close mobile menu whenever the route changes
     useEffect(() => {
@@ -160,13 +159,7 @@ const Navbar = () => {
                 {/* Mobile Menu Dropdown REMOVED - Using Bottom Nav */}
             </div>
 
-            {user && (
-                <ShareProfileModal
-                    isOpen={isShareModalOpen}
-                    onClose={() => setIsShareModalOpen(false)}
-                    user={user}
-                />
-            )}
+            {/* Share Profile Modal removed - now handled in ProfileDropdown */}
         </nav>
     );
 };

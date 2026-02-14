@@ -6,6 +6,7 @@ import LoadingState from '../components/common/LoadingState';
 import ErrorState from '../components/common/ErrorState';
 import EmptyState from '../components/common/EmptyState';
 import EditTeamModal from '../components/products/EditTeamModal';
+import ShareModal from '../components/common/ShareModal';
 
 import ProductVerificationModal from '../components/products/ProductVerificationModal';
 
@@ -14,6 +15,7 @@ const FounderProductsPage = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [verifyingProduct, setVerifyingProduct] = useState(null); // Product being verified
+    const [shareModalData, setShareModalData] = useState(null);
 
     const navigate = useNavigate();
 
@@ -54,6 +56,16 @@ const FounderProductsPage = () => {
     const handleVerificationSuccess = (productId) => {
         // Refetch or update local state
         setProducts(products.map(p => p._id === productId ? { ...p, verified_status: 'verified' } : p));
+    };
+
+    const openShareModal = (product) => {
+        setShareModalData({
+            title: product.name,
+            text: `Check out ${product.name} on Clicktory`,
+            url: `https://www.clicktory.in/product/${product._id}`,
+            imageUrl: getImageUrl(product.logoKey || product.logo_url),
+            subline: product.tagline || 'Clicktory Product'
+        });
     };
 
     if (loading) return <LoadingState />;
@@ -110,11 +122,7 @@ const FounderProductsPage = () => {
                                                 <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
                                                     <a href={`/product/${product._id}`} target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.85rem', color: '#3b82f6', textDecoration: 'none' }}>View Public Page</a>
                                                     <button
-                                                        onClick={() => {
-                                                            const url = `https://www.clicktory.in/product/${product._id}`;
-                                                            navigator.clipboard.writeText(url);
-                                                            alert('Product URL copied to clipboard!');
-                                                        }}
+                                                        onClick={() => openShareModal(product)}
                                                         style={{ background: 'none', border: 'none', color: '#6366f1', fontSize: '0.85rem', cursor: 'pointer', padding: 0, textDecoration: 'none' }}
                                                     >
                                                         Share
@@ -181,6 +189,12 @@ const FounderProductsPage = () => {
                     onSuccess={handleVerificationSuccess}
                 />
             )}
+
+            <ShareModal
+                isOpen={!!shareModalData}
+                onClose={() => setShareModalData(null)}
+                data={shareModalData}
+            />
         </div>
     );
 };

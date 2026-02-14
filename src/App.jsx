@@ -75,10 +75,11 @@ import ProfileBottomSheet from './components/mobile/ProfileBottomSheet';
 function Layout({ children }) {
     const location = useLocation();
     const isSearchPage = location.pathname === '/search';
+    const isVisitPage = location.pathname.startsWith('/visit/');
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-            {!isSearchPage && <Navbar />}
+            {!isSearchPage && !isVisitPage && <Navbar />}
             <div className={isSearchPage ? "" : "container mx-auto"} style={{ flex: 1, paddingBottom: '80px' }}>
                 {children}
             </div>

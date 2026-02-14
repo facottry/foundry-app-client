@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-import ShareProfileModal from './ShareProfileModal';
+import ShareModal from './common/ShareModal';
 
 const ProfileDropdown = ({ user, logout }) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -29,6 +29,16 @@ const ProfileDropdown = ({ user, logout }) => {
     const handleLogout = () => {
         logout();
         navigate('/');
+    };
+
+    // Prepare share data
+    const shareData = {
+        title: user.name || 'Founder Profile',
+        text: `Check out my profile on Clicktory`,
+        url: `https://www.clicktory.in/founder/${user._id || user.id}`,
+        type: 'profile',
+        imageUrl: null, // Could add user avatar URL if available
+        subline: 'Clicktory Profile'
     };
 
     return (
@@ -138,10 +148,10 @@ const ProfileDropdown = ({ user, logout }) => {
                 </div>
             )}
 
-            <ShareProfileModal
+            <ShareModal
                 isOpen={isShareModalOpen}
                 onClose={() => setIsShareModalOpen(false)}
-                user={user}
+                data={shareData}
             />
         </div>
     );

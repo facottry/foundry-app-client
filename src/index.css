@@ -678,3 +678,30 @@ textarea:focus {
     padding: 12px;
   }
 }
+
+/* Custom Animations for VisitRedirect */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+@keyframes progressBar {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+
+.animate-progressBar {
+  animation: progressBar 1.2s ease-in-out forwards;
+}
+
+/* Glassmorphism Utilities fallback */
+.backdrop-blur-sm {
+  backdrop-filter: blur(4px);
+}
+.backdrop-blur-md {
+  backdrop-filter: blur(12px);
+}
