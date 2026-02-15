@@ -43,21 +43,7 @@ const AudienceAnalytics = ({ data, onFilter }) => {
 
     return (
         <div>
-            {/* High Level Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                {[
-                    { label: 'Total Views', value: summary.views },
-                    { label: 'Outbound Clicks', value: summary.clicks },
-                    { label: 'Ratings', value: summary.ratings },
-                    { label: 'Reviews', value: summary.reviews }
-                ].map((stat, idx) => (
-                    <div key={idx} style={{ background: '#fff', padding: '16px', borderRadius: '8px', border: '1px solid #e5e7eb' }}>
-                        <div style={{ fontSize: '0.875rem', color: '#6b7280', marginBottom: '4px' }}>{stat.label}</div>
-                        <div style={{ fontSize: '1.5rem', fontWeight: '700', color: '#111827' }}>{stat.value}</div>
-                    </div>
-                ))}
-            </div>
-
+            {/* Audience Breakdowns */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <DistributionTable title="Views by Country" data={distributions.views.country} label="Country" filterKey="country" />
                 <DistributionTable title="Views by City" data={distributions.views.city} label="City" filterKey="city" />

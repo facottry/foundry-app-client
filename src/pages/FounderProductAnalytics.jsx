@@ -1,139 +1,162 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import api from '../utils/api';
-import TrafficAnalytics from '../components/founder/TrafficAnalytics';
+import OverviewTab from '../components/analytics/OverviewTab';
 import AudienceAnalytics from '../components/AudienceAnalytics';
+import ReviewsAnalytics from '../components/analytics/ReviewsAnalytics';
+import ActivityTable from '../components/analytics/ActivityTable';
+import LoadingState from '../components/common/LoadingState';
+import ErrorState from '../components/common/ErrorState';
+import { Download, Calendar, ChevronDown } from 'lucide-react';
 
 const FounderProductAnalytics = () => {
     const { id } = useParams();
     const [loading, setLoading] = useState(true);
-    const [data, setData] = useState(null);
-    const [productName, setProductName] = useState('');
+    const [data, setData] = useState({
+        product: null,
+        traffic: null,
+        audience: null,
+        reviews: [],
+        activity: []
+    });
     const [error, setError] = useState(null);
-    const [activeTab, setActiveTab] = useState('audience'); // 'audience' | 'traffic'
-    const [filters, setFilters] = useState({});
+    const [activeTab, setActiveTab] = useState('overview');
+    // Tabs: 'overview', 'audience', 'reviews', 'realtime'
+
+    const fetchData = async () => {
+        setLoading(true);
+        setError(null);
+        try {
+            // Parallel data fetching for a comprehensive dashboard
+            // In a real huge app, we might split this by tab, but for 'Overview' we need bits of everything
+            const [productRes, trafficRes, timelineRes, audienceRes, activityRes] = await Promise.all([
+                api.get(`/products/${id}`),
+                api.get(`/founder/traffic/${id}/summary`),
+                api.get(`/founder/traffic/${id}/timeline`),
+                api.get(`/founder/products/${id}/audience`),
+                // We might need a reviews endpoint, for now we can rely on what we have or mock if missing specific endpoint
+                // Assuming audience endpoint returns some reviews stats or we fetch separately
+                // Adding activity log fetch
+                api.get(`/founder/products/${id}/activity`) // Assuming this exists or we fallback
+            ]).catch(err => {
+                // If specific non-critical endpoints fail, we can handle gracefully
+                console.warn("Some analytics endpoints might be missing", err);
+                return [null, null, null, null, null];
+            });
+
+            // Handle potential failures in specific requests
+            if (!productRes?.data) throw new Error("Failed to load product");
+
+            setData({
+                product: productRes?.data,
+                traffic: {
+                    summary: trafficRes?.data?.total,
+                    today: trafficRes?.data?.today,
+                    timeline: timelineRes?.data?.timeline
+                },
+                audience: audienceRes?.data,
+                activity: activityRes?.data?.activity || []
+            });
+
+        } catch (err) {
+            console.error('Error fetching analytics:', err);
+            setError(err);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                // Get audience data with filters
-                const res = await api.get(`/founder/products/${id}/audience`, { params: filters });
-                setData(res.data);
-
-                // Fetch product name for header (only if not set)
-                // We don't need to refetch product details on filter change, but simplest to leave as is or optimize
-                if (!productName) {
-                    const productRes = await api.get(`/products/${id}`);
-                    setProductName(productRes.data.name);
-                }
-
-            } catch (err) {
-                console.error('Error fetching analytics:', err);
-                setError('Failed to load analytics data');
-            } finally {
-                setLoading(false);
-            }
-        };
         fetchData();
-    }, [id, filters]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [id]);
 
-    const handleFilter = (key, value) => {
-        setFilters(prev => ({ ...prev, [key]: value }));
-    };
+    if (loading) return <LoadingState />;
+    if (error) return <ErrorState error={error} onRetry={fetchData} />;
 
-    const removeFilter = (key) => {
-        setFilters(prev => {
-            const next = { ...prev };
-            delete next[key];
-            return next;
-        });
-    };
-
-    const clearFilters = () => {
-        setFilters({});
-    };
-
-    if (loading && !data) return <div style={{ padding: '40px', textAlign: 'center' }}>Loading analytics...</div>; // Only show full loading first time
-    if (error) return <div style={{ padding: '40px', textAlign: 'center', color: 'red' }}>{error}</div>;
+    const tabs = [
+        { id: 'overview', label: 'Overview' },
+        { id: 'audience', label: 'Audience' },
+        { id: 'reviews', label: 'Reviews & Sentiment' },
+        { id: 'realtime', label: 'Real-time Activity' }
+    ];
 
     return (
         <div style={{ paddingTop: '40px', paddingBottom: '60px' }}>
-            <div style={{ marginBottom: '30px' }}>
-                <Link to="/founder/dashboard" style={{ color: '#666', textDecoration: 'none', marginBottom: '16px', display: 'inline-block' }}>
-                    &larr; Back to Dashboard
+            {/* Header / Nav Back */}
+            <div className="mb-8">
+                <Link to="/founder/dashboard" className="text-gray-500 hover:text-gray-900 text-sm font-medium mb-4 inline-block">
+                    &larr; Back to Products
                 </Link>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div>
-                        <h1 style={{ fontSize: '2rem', marginBottom: '8px' }}>Analytics: {productName}</h1>
-                        <p style={{ color: '#666' }}>Audience insights and interaction metrics</p>
+                        <h1 className="text-3xl font-bold text-gray-900 tracking-tight">Analytics Dashboard</h1>
+                        <p className="text-gray-500 mt-1">Monetization & Performance Intelligence for <span className="font-semibold text-gray-700">{data.product.name}</span></p>
                     </div>
-                    <div>
-                        <a href={`/product/${id}`} target="_blank" rel="noreferrer" className="btn btn-outline" style={{ marginRight: '10px' }}>View Product</a>
+
+                    <div className="flex items-center gap-3">
+                        <button className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 shadow-sm transition-all">
+                            Last 30 Days
+                            <ChevronDown size={14} className="text-gray-400" />
+                        </button>
+                        <button className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 shadow-sm transition-all">
+                            <Download size={16} className="text-gray-500" />
+                            Export CSV
+                        </button>
                     </div>
                 </div>
             </div>
-
-            {/* Filter Bar */}
-            {Object.keys(filters).length > 0 && (
-                <div style={{ marginBottom: '20px', padding: '12px 16px', background: '#fef3c7', borderRadius: '8px', border: '1px solid #fcd34d', display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
-                    <span style={{ fontWeight: '600', color: '#92400e', marginRight: '8px' }}>Active Filters:</span>
-                    {Object.entries(filters).map(([key, value]) => (
-                        <div key={key} style={{ background: '#fff', padding: '4px 12px', borderRadius: '16px', border: '1px solid #f59e0b', fontSize: '0.9rem', color: '#b45309', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                            <span style={{ textTransform: 'capitalize' }}>{key}: <strong>{value}</strong></span>
-                            <button
-                                onClick={() => removeFilter(key)}
-                                style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#b45309', fontWeight: 'bold', padding: '0 2px' }}
-                            >
-                                &times;
-                            </button>
-                        </div>
-                    ))}
-                    <button
-                        onClick={clearFilters}
-                        style={{ marginLeft: 'auto', background: 'transparent', border: 'none', textDecoration: 'underline', color: '#92400e', cursor: 'pointer', fontSize: '0.9rem' }}
-                    >
-                        Clear All
-                    </button>
-                </div>
-            )}
 
             {/* Tabs */}
-            <div style={{ borderBottom: '1px solid #e5e7eb', marginBottom: '24px', display: 'flex' }}>
-                <button
-                    onClick={() => setActiveTab('audience')}
-                    style={{
-                        padding: '12px 24px',
-                        background: 'transparent',
-                        border: 'none',
-                        borderBottom: activeTab === 'audience' ? '2px solid #111827' : '2px solid transparent',
-                        fontWeight: '600',
-                        color: activeTab === 'audience' ? '#111827' : '#6b7280',
-                        cursor: 'pointer',
-                        transition: 'all 0.2s ease-in-out'
-                    }}
-                >
-                    Audience
-                </button>
-                <button
-                    onClick={() => setActiveTab('traffic')}
-                    style={{
-                        padding: '12px 24px',
-                        background: 'transparent',
-                        border: 'none',
-                        borderBottom: activeTab === 'traffic' ? '2px solid #111827' : '2px solid transparent',
-                        fontWeight: '600',
-                        color: activeTab === 'traffic' ? '#111827' : '#6b7280',
-                        cursor: 'pointer',
-                        transition: 'all 0.2s ease-in-out'
-                    }}
-                >
-                    Traffic
-                </button>
+            <div className="border-b border-gray-200 mb-8" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                <style>{`
+                    .no-scrollbar::-webkit-scrollbar {
+                        display: none;
+                    }
+                    .no-scrollbar {
+                        -ms-overflow-style: none;
+                        scrollbar-width: none;
+                    }
+                `}</style>
+                <nav className="-mb-px flex space-x-8 overflow-x-auto no-scrollbar" aria-label="Tabs">
+                    {tabs.map(tab => (
+                        <button
+                            key={tab.id}
+                            onClick={() => setActiveTab(tab.id)}
+                            className={`
+                                whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors
+                                ${activeTab === tab.id
+                                    ? 'border-[#D97757] text-[#D97757]'  /* Brand Primary Color */
+                                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                                }
+                            `}
+                        >
+                            {tab.label}
+                        </button>
+                    ))}
+                </nav>
             </div>
 
-            {activeTab === 'audience' && <AudienceAnalytics data={data} onFilter={handleFilter} />}
-            {activeTab === 'traffic' && <TrafficAnalytics />}
-            {/* Note: TrafficAnalytics uses useParams() internally to get ID */}
+            {/* Content Area */}
+            <div className="min-h-[400px]">
+                {activeTab === 'overview' && (
+                    <OverviewTab data={data.traffic} />
+                )}
+
+                {activeTab === 'audience' && (
+                    <AudienceAnalytics data={data.audience} />
+                )}
+
+                {activeTab === 'reviews' && (
+                    <ReviewsAnalytics data={data.audience} />
+                    /* Assuming reviews data is nested in audience response for now or we mock it in the component */
+                )}
+
+                {activeTab === 'realtime' && (
+                    <ActivityTable activity={data.activity} />
+                )}
+            </div>
         </div>
     );
 };

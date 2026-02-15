@@ -5,7 +5,7 @@ import SearchBox from './SearchBox';
 import ProfileDropdown from './ProfileDropdown';
 import { useBot } from '../context/BotContext';
 import BRAND from '../config/brand';
-import { Home, Box, Layers, Tag, LayoutDashboard, Bookmark, LogOut, User } from 'lucide-react';
+import { Home, Box, Layers, Tag, LayoutDashboard, Bookmark, LogOut, User, Package } from 'lucide-react';
 
 
 
@@ -126,6 +126,15 @@ const Navbar = () => {
                                                 <LayoutDashboard size={20} color="#f472b6" strokeWidth={2.5} /> {/* Pink */}
                                                 Dashboard
                                             </Link>
+                                        )}
+                                        {user && user.role === 'FOUNDER' && (
+                                            <Link to="/founder/products" style={navLinkStyle}>
+                                                <Package size={20} color="#fb923c" strokeWidth={2.5} /> {/* Orange */}
+                                                My Products
+                                            </Link>
+                                        )}
+                                        {user && user.role === 'FOUNDER' && (
+                                            <REXLink />
                                         )}
                                         <Link to="/saved" style={navLinkStyle}>
                                             <Bookmark size={20} color="#ffffff" strokeWidth={2.5} />

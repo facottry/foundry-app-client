@@ -61,6 +61,8 @@ import { BotProvider } from './context/BotContext';
 import SecuritySettings from './pages/SecuritySettings';
 import AuthCallback from './pages/AuthCallback';
 import AuthPageGuard from './components/AuthPageGuard';
+import StaffiumLanding from './pages/StaffiumLanding';
+import StaffiumMarquee from './components/StaffiumMarquee';
 
 import './index.css';
 
@@ -79,6 +81,7 @@ function Layout({ children }) {
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+            <StaffiumMarquee />
             {!isSearchPage && !isVisitPage && <Navbar />}
             <div className={isSearchPage ? "" : "container mx-auto"} style={{ flex: 1, paddingBottom: '80px' }}>
                 {children}
@@ -240,6 +243,8 @@ function App() {
                                         <Route path="/newsletter/:slug" element={<NewsletterPage />} />
                                         <Route path="/newsletter/confirm" element={<NewsletterConfirm />} />
                                         <Route path="/newsletter/unsubscribe" element={<Unsubscribe />} />
+
+                                        <Route path="/staffium" element={<StaffiumLanding />} />
 
                                         <Route path="/visit/:id" element={<VisitRedirect />} />
 

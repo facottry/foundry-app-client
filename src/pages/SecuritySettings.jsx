@@ -105,6 +105,59 @@ const SecuritySettings = () => {
                                 </button>
                             </div>
                         </li>
+                        <li className="px-4 py-4 sm:px-6 flex items-center justify-between">
+                            <div className="flex items-center">
+                                <div>
+                                    <span className="font-medium text-gray-900">Staffium Integration</span>
+                                    {user?.staffiumExpiresAt && new Date(user.staffiumExpiresAt) > new Date() ? (
+                                        <span className="ml-2 px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                            Active
+                                        </span>
+                                    ) : (
+                                        <span className="ml-2 px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">
+                                            Inactive
+                                        </span>
+                                    )}
+                                    <p className="text-sm text-gray-500">
+                                        {user?.staffiumExpiresAt && new Date(user.staffiumExpiresAt) > new Date()
+                                            ? `Subscription expires on ${new Date(user.staffiumExpiresAt).toLocaleDateString()}`
+                                            : 'Enable Staffium from the dashboard to access.'}
+                                    </p>
+                                </div>
+                            </div>
+                            <div>
+                                {user?.staffiumExpiresAt && new Date(user.staffiumExpiresAt) > new Date() ? (
+                                    <button
+                                        onClick={async () => {
+                                            if (!window.confirm('Disable Staffium integration? Your subscription will remain active until expiration.')) return;
+                                            // Optional: allow disabling the flag even if active? 
+                                            // For now, let's just use the flag to disable specific access if user wants to "turn it off" without cancelling sub?
+                                            // The backend logic respects flag IF set to false explicitly, but auto-enables on purchase.
+                                            // Let's support the toggle for "Pausing" access if they want.
+
+                                            const newStatus = !user?.staffiumEnabled;
+                                            try {
+                                                await axios.put(`${apiUrl}/api/profile/me`, { staffiumEnabled: newStatus }, getAuthHeaders());
+                                                window.location.reload();
+                                            } catch (err) {
+                                                alert('Failed to update setting');
+                                            }
+                                        }}
+                                        className={`${user?.staffiumEnabled ? 'bg-indigo-600' : 'bg-gray-200'} relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
+                                    >
+                                        <span className="sr-only">Use setting</span>
+                                        <span
+                                            aria-hidden="true"
+                                            className={`${user?.staffiumEnabled ? 'translate-x-5' : 'translate-x-0'} pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200`}
+                                        />
+                                    </button>
+                                ) : (
+                                    <a href="/dashboard/staffium" className="text-indigo-600 hover:text-indigo-900 text-sm font-medium">
+                                        Activate in Dashboard
+                                    </a>
+                                )}
+                            </div>
+                        </li>
                     </ul>
                 </div>
             </div>

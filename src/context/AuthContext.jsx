@@ -37,7 +37,8 @@ export const AuthProvider = ({ children }) => {
 
             try {
                 // The ONLY source of truth: does the server accept this token?
-                const userObj = await api.get('/auth/me');
+                const response = await api.get('/auth/me');
+                const userObj = response.data || response; // Handle API response format
 
                 if (userObj && (userObj.id || userObj._id)) {
                     // Polyfill id if missing
@@ -62,7 +63,8 @@ export const AuthProvider = ({ children }) => {
     // Helper to manually refresh auth (e.g. after profile update)
     const refreshAuth = async () => {
         try {
-            const userObj = await api.get('/auth/me');
+            const response = await api.get('/auth/me');
+            const userObj = response.data || response; // Handle API response format
             if (userObj && (userObj.id || userObj._id)) {
                 if (!userObj.id) userObj.id = userObj._id;
                 setUser(userObj);
@@ -74,8 +76,9 @@ export const AuthProvider = ({ children }) => {
     };
 
     const login = async (email, password) => {
-        const res = await api.post('/auth/login', { email, password });
-        localStorage.setItem('token', res.accessToken);
+        const response = await api.post('/auth/login', { email, password });
+        const res = response.data || response; // Handle API response format
+        localStorage.setItem('token', res.token);
         localStorage.setItem('user', JSON.stringify(res.user));
         setUser(res.user);
         setAuthStatus('authenticated'); // Immediate update
@@ -83,11 +86,11 @@ export const AuthProvider = ({ children }) => {
         emitEvent({
             name: 'login_completed',
             category: 'user',
-            actor: { type: 'user', id: res.data.user.id },
+            actor: { type: 'user', id: res.user.id },
             properties: { method: 'password' }
         });
 
-        return res.data.user;
+        return res.user;
     };
 
     const updateUser = (userData) => {
@@ -96,8 +99,9 @@ export const AuthProvider = ({ children }) => {
     };
 
     const loginWithOTP = async (email, otp) => {
-        const res = await api.post('/auth/login-otp', { email, otp });
-        localStorage.setItem('token', res.accessToken);
+        const response = await api.post('/auth/login-otp', { email, otp });
+        const res = response.data || response; // Handle API response format
+        localStorage.setItem('token', res.token);
         localStorage.setItem('user', JSON.stringify(res.user));
         setUser(res.user);
         setAuthStatus('authenticated');
@@ -113,8 +117,9 @@ export const AuthProvider = ({ children }) => {
     };
 
     const loginWithPhone = async (phone, otp) => {
-        const res = await api.post('/auth/login-phone', { phone, otp });
-        localStorage.setItem('token', res.accessToken);
+        const response = await api.post('/auth/login-phone', { phone, otp });
+        const res = response.data || response; // Handle API response format
+        localStorage.setItem('token', res.token);
         localStorage.setItem('user', JSON.stringify(res.user));
         setUser(res.user);
         setAuthStatus('authenticated');
@@ -130,8 +135,9 @@ export const AuthProvider = ({ children }) => {
     };
 
     const signup = async (name, email, password, role) => {
-        const res = await api.post('/auth/signup', { name, email, password, role });
-        localStorage.setItem('token', res.accessToken);
+        const response = await api.post('/auth/signup', { name, email, password, role });
+        const res = response.data || response; // Handle API response format
+        localStorage.setItem('token', res.token);
         localStorage.setItem('user', JSON.stringify(res.user));
         setUser(res.user);
         setAuthStatus('authenticated');
@@ -147,8 +153,9 @@ export const AuthProvider = ({ children }) => {
     };
 
     const loginWithProvider = async (provider, profile) => {
-        const res = await api.post('/auth/sso/login/provider', { provider, profile });
-        localStorage.setItem('token', res.accessToken);
+        const response = await api.post('/auth/sso/login/provider', { provider, profile });
+        const res = response.data || response; // Handle API response format
+        localStorage.setItem('token', res.token);
         localStorage.setItem('user', JSON.stringify(res.user));
         setUser(res.user);
         setAuthStatus('authenticated');
@@ -175,10 +182,11 @@ export const AuthProvider = ({ children }) => {
         // Define global callback to ensure Google SDK can reach it
         window.handleGoogleCredentialResponse = async (response) => {
             try {
-                const res = await api.post('/auth/sso/google', { idToken: response.credential });
-                const { user, accessToken } = res;
+                const apiResponse = await api.post('/auth/sso/google', { idToken: response.credential });
+                const res = apiResponse.data || apiResponse; // Handle API response format
+                const { user, token } = res;
 
-                localStorage.setItem('token', accessToken);
+                localStorage.setItem('token', token);
                 localStorage.setItem('user', JSON.stringify(user));
                 setUser(user);
                 setAuthStatus('authenticated');

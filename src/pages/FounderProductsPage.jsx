@@ -10,6 +10,28 @@ import ShareModal from '../components/common/ShareModal';
 
 import ProductVerificationModal from '../components/products/ProductVerificationModal';
 
+const ProductLogo = ({ product }) => {
+    const [error, setError] = useState(false);
+    const imageUrl = getImageUrl(product.logoKey || product.logo_url);
+
+    if (imageUrl && !error) {
+        return (
+            <img
+                src={imageUrl}
+                alt=""
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                onError={() => setError(true)}
+            />
+        );
+    }
+
+    return (
+        <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', color: '#9ca3af', textTransform: 'uppercase' }}>
+            {product.name.charAt(0)}
+        </div>
+    );
+};
+
 const FounderProductsPage = () => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -106,11 +128,7 @@ const FounderProductsPage = () => {
                                     <td style={{ padding: '16px 24px' }}>
                                         <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
                                             <div style={{ width: '48px', height: '48px', borderRadius: '8px', background: '#f3f4f6', overflow: 'hidden' }}>
-                                                {getImageUrl(product.logoKey || product.logo_url) ? (
-                                                    <img src={getImageUrl(product.logoKey || product.logo_url)} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                                                ) : (
-                                                    <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', color: '#9ca3af' }}>{product.name.charAt(0)}</div>
-                                                )}
+                                                <ProductLogo product={product} />
                                             </div>
                                             <div>
                                                 <div style={{ fontWeight: '600', color: '#111827', display: 'flex', alignItems: 'center', gap: '6px' }}>
