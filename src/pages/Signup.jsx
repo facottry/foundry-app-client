@@ -6,7 +6,7 @@ import LoadingState from '../components/common/LoadingState';
 import SEO from '../components/SEO';
 
 const Signup = () => {
-    const [formData, setFormData] = useState({ name: '', email: '', password: '', role: 'CUSTOMER' });
+    const [formData, setFormData] = useState({ name: '', email: '', password: '', role: 'FOUNDER' });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const { signup, loginWithProvider, user: authUser, googleLoginSDK } = useContext(AuthContext);
@@ -26,8 +26,7 @@ const Signup = () => {
     // Redirect if authenticated (e.g. from Google SDK)
     useEffect(() => {
         if (authUser) {
-            if (authUser.role === 'FOUNDER') navigate('/founder/dashboard');
-            else navigate('/dashboard/customer');
+            navigate('/founder/dashboard');
         }
     }, [authUser, navigate]);
 
@@ -55,8 +54,7 @@ const Signup = () => {
         setError(null);
         try {
             const user = await signup(name, email, password, role);
-            if (user.role === 'FOUNDER') navigate('/founder/dashboard');
-            else navigate('/dashboard/customer');
+            navigate('/founder/dashboard');
         } catch (err) {
             setError(err);
         }
@@ -128,9 +126,8 @@ const Signup = () => {
                 </div>
                 <div style={{ marginBottom: '15px' }}>
                     <label>I am a:</label>
-                    <select name="role" value={role} onChange={onChange} style={{ width: '100%', padding: '8px' }}>
-                        <option value="CUSTOMER">Customer (I want to discover tools)</option>
-                        <option value="FOUNDER">Founder (I want to list a product)</option>
+                    <select name="role" value={role} disabled style={{ width: '100%', padding: '8px', background: '#f5f5f5', cursor: 'not-allowed' }}>
+                        <option value="FOUNDER">Founder (Listing a Product)</option>
                     </select>
                 </div>
                 <button type="submit" className="btn btn-primary" style={{ width: '100%' }}>Sign Up</button>

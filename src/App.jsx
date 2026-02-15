@@ -62,7 +62,9 @@ import SecuritySettings from './pages/SecuritySettings';
 import AuthCallback from './pages/AuthCallback';
 import AuthPageGuard from './components/AuthPageGuard';
 import StaffiumLanding from './pages/StaffiumLanding';
-import StaffiumMarquee from './components/StaffiumMarquee';
+// import StaffiumMarquee from './components/StaffiumMarquee';
+import GlobalMarquee from './components/GlobalMarquee';
+import PromotionalPopup from './components/PromotionalPopup';
 
 import './index.css';
 
@@ -81,7 +83,8 @@ function Layout({ children }) {
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-            <StaffiumMarquee />
+            <GlobalMarquee />
+            <PromotionalPopup />
             {!isSearchPage && !isVisitPage && <Navbar />}
             <div className={isSearchPage ? "" : "container mx-auto"} style={{ flex: 1, paddingBottom: '80px' }}>
                 {children}
@@ -142,7 +145,7 @@ function App() {
 
                                         {/* Protected Routes */}
                                         <Route path="/founder/dashboard" element={
-                                            <ProtectedRoute allowedRoles={['FOUNDER']}>
+                                            <ProtectedRoute allowedRoles={['FOUNDER', 'CUSTOMER']}>
                                                 <DashboardFounder />
                                             </ProtectedRoute>
                                         } />
@@ -185,17 +188,17 @@ function App() {
                                         <Route path="/product/:slug" element={<ProductDetails />} />
                                         <Route path="/product/:slug/reviews" element={<ProductReviewsPage />} />
                                         <Route path="/create-product" element={
-                                            <ProtectedRoute allowedRoles={['FOUNDER']}>
+                                            <ProtectedRoute allowedRoles={['FOUNDER', 'CUSTOMER']}>
                                                 <CreateProduct />
                                             </ProtectedRoute>
                                         } />
                                         <Route path="/founder/products/:id/edit" element={
-                                            <ProtectedRoute allowedRoles={['FOUNDER']}>
+                                            <ProtectedRoute allowedRoles={['FOUNDER', 'CUSTOMER']}>
                                                 <EditProduct />
                                             </ProtectedRoute>
                                         } />
                                         <Route path="/founder/products" element={
-                                            <ProtectedRoute allowedRoles={['FOUNDER']}>
+                                            <ProtectedRoute allowedRoles={['FOUNDER', 'CUSTOMER']}>
                                                 <FounderProductsPage />
                                             </ProtectedRoute>
                                         } />
@@ -206,17 +209,17 @@ function App() {
                                         } />
 
                                         <Route path="/analytics/product/:id" element={
-                                            <ProtectedRoute allowedRoles={['FOUNDER']}>
+                                            <ProtectedRoute allowedRoles={['FOUNDER', 'CUSTOMER']}>
                                                 <ProductAnalyticsPage />
                                             </ProtectedRoute>
                                         } />
                                         <Route path="/boost/:productId" element={
-                                            <ProtectedRoute allowedRoles={['FOUNDER']}>
+                                            <ProtectedRoute allowedRoles={['FOUNDER', 'CUSTOMER']}>
                                                 <BoostProduct />
                                             </ProtectedRoute>
                                         } />
                                         <Route path="/wallet" element={
-                                            <ProtectedRoute allowedRoles={['FOUNDER']}>
+                                            <ProtectedRoute allowedRoles={['FOUNDER', 'CUSTOMER']}>
                                                 <Wallet />
                                             </ProtectedRoute>
                                         } />
@@ -251,7 +254,7 @@ function App() {
                                         {/* Catch-all 404 */}
                                         <Route path="*" element={<NotFound />} />
                                         <Route path="/founder/rex" element={
-                                            <ProtectedRoute allowedRoles={['FOUNDER']}>
+                                            <ProtectedRoute allowedRoles={['FOUNDER', 'CUSTOMER']}>
                                                 <RexPage />
                                             </ProtectedRoute>
                                         } />

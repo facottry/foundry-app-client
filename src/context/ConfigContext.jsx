@@ -5,10 +5,12 @@ const ConfigContext = createContext();
 
 export const ConfigProvider = ({ children }) => {
     const [config, setConfig] = useState({
-        trackServerBaseUrl: import.meta.env.VITE_TRACK_SERVER_URL || null
+        trackServerBaseUrl: import.meta.env.VITE_TRACK_SERVER_URL || null,
+        popup: null,
+        marquee: null
     });
     // Loading is effectively false for tracking purposes if we have the env var
-    const [loading, setLoading] = useState(!import.meta.env.VITE_TRACK_SERVER_URL);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchConfig = async () => {

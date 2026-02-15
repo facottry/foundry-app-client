@@ -50,10 +50,19 @@ export const AuthProvider = ({ children }) => {
                 }
             } catch (err) {
                 console.error('[Auth] Session restoration failed:', err);
-                localStorage.removeItem('token');
-                localStorage.removeItem('user');
-                setUser(null);
-                setAuthStatus('unauthenticated');
+
+                // Only wipe token if server explicitly rejected it (401/403)
+                // If server is down (500, Network Error), keep token to retry later
+                if (err.response && (err.response.status === 401 || err.response.status === 403)) {
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('user');
+                    setUser(null);
+                    setAuthStatus('unauthenticated');
+                } else {
+                    console.warn('[Auth] Server unreachable or error, preserving session for retry.');
+                    // Optionally set a 'offline' status or just keep 'checking' if you want to block
+                    // For now, we'll leave user as null but keep token, so next refresh might work
+                }
             }
         };
 
