@@ -10,7 +10,7 @@ const Login = () => {
     const [formData, setFormData] = useState({ email: '', password: '' });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-    const { login, updateUser } = useContext(AuthContext);
+    const { login, updateUser, googleLoginSDK } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const GOOGLE_AUTH_MODE = import.meta.env.VITE_GOOGLE_AUTH_MODE || 'REDIRECT';
@@ -23,76 +23,10 @@ const Login = () => {
     // Production Visibility: Now purely based on Env Var
     const showGoogleAuth = ENABLE_GOOGLE_AUTH;
 
-    // SDK Lazy Loader & Initialization
-    // SDK Lazy Loader & Initialization
-    useEffect(() => {
-        // 1. Strict Mode Check: If not SDK, do absolutely nothing.
-        if (GOOGLE_AUTH_MODE !== 'SDK') {
-            return;
-        }
-
-        const initGSI = () => {
-            if (window.google && window.google.accounts) {
-                window.google.accounts.id.initialize({
-                    client_id: GOOGLE_CLIENT_ID,
-                    callback: handleGoogleCredentialResponse,
-                });
-            }
-        };
-
-        const scriptUrl = 'https://accounts.google.com/gsi/client';
-        const existingScript = document.querySelector(`script[src="${scriptUrl}"]`);
-
-        if (existingScript) {
-            if (window.google) initGSI();
-            else existingScript.addEventListener('load', initGSI);
-        } else {
-            const script = document.createElement('script');
-            script.src = scriptUrl;
-            script.async = true;
-            script.defer = true;
-            script.onload = initGSI;
-            document.body.appendChild(script);
-        }
-
-        // Cleanup: We generally don't remove the script on unmount to avoid re-downloading
-    }, [GOOGLE_AUTH_MODE, GOOGLE_CLIENT_ID]);
-
-    const handleGoogleCredentialResponse = async (response) => {
-        try {
-            setLoading(true);
-            const res = await api.post('/auth/sso/google', { idToken: response.credential });
-            const { user, accessToken } = res;
-
-            localStorage.setItem('token', accessToken);
-            updateUser(user);
-
-            if (user.role === 'ADMIN') navigate('/dashboard/admin');
-            else navigate('/founder/dashboard');
-
-        } catch (err) {
-            console.error('[GoogleAuth] Backend Exchange Error', err);
-            setError(err.response?.data?.error || 'Google Sign-In failed');
-            setLoading(false);
-        }
-    };
-
-    const loginWithGoogleSDK = () => {
-        if (window.google && window.google.accounts) {
-            window.google.accounts.id.prompt((notification) => {
-                if (notification.isNotDisplayed()) {
-                    if (notification.getNotDisplayedReason() === 'suppressed_by_user') {
-                        alert('Google Sign-In was suppressed. Please check your browser settings or try Incognito.');
-                    }
-                }
-            });
-        }
-    };
-
     const handleSocial = (provider) => {
         if (provider === 'google') {
             if (GOOGLE_AUTH_MODE === 'SDK') {
-                loginWithGoogleSDK();
+                googleLoginSDK();
             } else {
                 // REDIRECT MODE
                 const apiUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';

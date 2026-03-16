@@ -14,19 +14,7 @@
 }
 
 /* Premium Typography System */
-@font-face {
-  font-family: 'InterVariable';
-  src: url('/fonts/inter/Inter-Variable.woff2') format('woff2');
-  font-weight: 100 900;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Manrope';
-  src: url('/fonts/manrope/Manrope-Variable.woff2') format('woff2');
-  font-weight: 200 800;
-  font-display: swap;
-}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Manrope:wght@200..800&display=swap');
 
 :root {
   /* Warm/Earth Palette */
@@ -56,7 +44,7 @@
   --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.03);
 
   /* Typography Tokens */
-  --font-ui: 'InterVariable', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-ui: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   --font-display: 'Manrope', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 
   --radius-md: 12px;

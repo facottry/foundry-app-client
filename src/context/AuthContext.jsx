@@ -219,6 +219,7 @@ export const AuthProvider = ({ children }) => {
                 window.google.accounts.id.initialize({
                     client_id: GOOGLE_CLIENT_ID,
                     callback: window.handleGoogleCredentialResponse,
+                    use_fedcm_for_prompt: true,
                 });
             }
         };
