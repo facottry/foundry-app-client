@@ -193,7 +193,8 @@ export const AuthProvider = ({ children }) => {
             try {
                 const apiResponse = await api.post('/auth/sso/google', { idToken: response.credential });
                 const res = apiResponse.data || apiResponse; // Handle API response format
-                const { user, token } = res;
+                const { user } = res;
+                const token = res.token || res.accessToken;
 
                 localStorage.setItem('token', token);
                 localStorage.setItem('user', JSON.stringify(user));
