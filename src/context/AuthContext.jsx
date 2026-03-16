@@ -30,12 +30,14 @@ export const AuthProvider = ({ children }) => {
             const token = localStorage.getItem('token');
 
             if (!token) {
+                if (window.APP_DEBUG_MODE) console.info('[AuthContext] No token found in localStorage. Checking auth as unauthenticated.');
                 setAuthStatus('unauthenticated');
                 setUser(null);
                 return;
             }
 
             try {
+                if (window.APP_DEBUG_MODE) console.info('[AuthContext] Token found. Verifying session with backend...');
                 // The ONLY source of truth: does the server accept this token?
                 const response = await api.get('/auth/me');
                 const userObj = response.data || response; // Handle API response format
@@ -43,6 +45,11 @@ export const AuthProvider = ({ children }) => {
                 if (userObj && (userObj.id || userObj._id)) {
                     // Polyfill id if missing
                     if (!userObj.id) userObj.id = userObj._id;
+                    if (window.APP_DEBUG_MODE) {
+                        console.groupCollapsed('[AuthContext] Session Restored 🟢');
+                        console.debug('User:', userObj);
+                        console.groupEnd();
+                    }
                     setUser(userObj);
                     setAuthStatus('authenticated');
                 } else {
@@ -91,6 +98,13 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem('user', JSON.stringify(res.user));
         setUser(res.user);
         setAuthStatus('authenticated'); // Immediate update
+        
+        if (window.APP_DEBUG_MODE) {
+            console.groupCollapsed('[AuthContext] Login Successful 🟢');
+            console.debug('Email:', email);
+            console.debug('User:', res.user);
+            console.groupEnd();
+        }
 
         emitEvent({
             name: 'login_completed',
@@ -201,6 +215,12 @@ export const AuthProvider = ({ children }) => {
                 setUser(user);
                 setAuthStatus('authenticated');
 
+                if (window.APP_DEBUG_MODE) {
+                    console.groupCollapsed('[AuthContext] Google SSO Successful 🟢');
+                    console.debug('User:', user);
+                    console.groupEnd();
+                }
+
                 emitEvent({
                     name: 'login_completed',
                     category: 'user',
@@ -282,6 +302,7 @@ export const AuthProvider = ({ children }) => {
         localStorage.removeItem('user');
         setUser(null);
         setAuthStatus('unauthenticated');
+        if (window.APP_DEBUG_MODE) console.info('[AuthContext] Logged out. Redirecting to /login');
         window.location.href = '/login';
     };
 

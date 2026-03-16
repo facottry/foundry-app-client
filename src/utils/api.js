@@ -35,6 +35,14 @@ api.interceptors.request.use(
             console.warn('TOTP Generation failed', e);
         }
 
+        if (window.APP_DEBUG_MODE) {
+            console.groupCollapsed(`[API Request] ${config.method.toUpperCase()} ${config.url}`);
+            console.debug('Headers:', config.headers);
+            console.debug('Params:', config.params);
+            console.debug('Data:', config.data);
+            console.groupEnd();
+        }
+
         return config;
     },
     error => Promise.reject(error)
@@ -50,6 +58,11 @@ export const registerLogoutHandler = (fn) => {
 // Response Interceptor (Error Handling)
 api.interceptors.response.use(
     response => {
+        if (window.APP_DEBUG_MODE) {
+            console.groupCollapsed(`[API Response] ${response.config.method.toUpperCase()} ${response.config.url} - ${response.status}`);
+            console.debug('Data:', response.data);
+            console.groupEnd();
+        }
         // Return data directly if success, strictly following the new generic format
         // Backend returns { success: true, data: ... }
         return response.data; // This will return { success, data }
@@ -79,10 +92,17 @@ api.interceptors.response.use(
         // Backend returned strictly formatted error: { success: false, error: { code, message } }
         const backendError = error.response.data?.error;
 
+        if (window.APP_DEBUG_MODE) {
+            console.groupCollapsed(`[API Error] ${error.config?.method?.toUpperCase()} ${error.config?.url} - ${error.response?.status || 'Network Error'}`);
+            console.error('Response Data:', error.response?.data);
+            console.error('Parsed Error:', backendError || 'Unknown Format');
+            console.groupEnd();
+        }
+
         // Fallback if backend didn't return standard format (e.g. 404 HTML)
         if (!backendError) {
             return Promise.reject({
-                code: error.response.status === 404 ? 'NOT_FOUND' : 'UNKNOWN_ERROR',
+                code: error.response?.status === 404 ? 'NOT_FOUND' : 'UNKNOWN_ERROR',
                 message: 'An unexpected error occurred'
             });
         }

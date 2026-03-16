@@ -81,6 +81,12 @@ function Layout({ children }) {
     const isSearchPage = location.pathname === '/search';
     const isVisitPage = location.pathname.startsWith('/visit/');
 
+    React.useEffect(() => {
+        if (window.APP_DEBUG_MODE) {
+            console.info(`[Router] Navigated to: ${location.pathname}${location.search}${location.hash}`);
+        }
+    }, [location]);
+
     return (
         <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
             <GlobalMarquee />

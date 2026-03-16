@@ -29,11 +29,15 @@ export function emitEvent(event) {
 
         if (!rule) {
             // Unknown event -> Drop it to prevent pollution
-            console.log(`[EventManager] Dropped unclassified event: ${canonicalEvent.name}`);
+            if (window.APP_DEBUG_MODE) console.info(`[EventManager] Dropped unclassified event: ${canonicalEvent.name}`);
             return;
         }
 
-        console.log(`[EventManager] Processing event: ${canonicalEvent.name}`, canonicalEvent);
+        if (window.APP_DEBUG_MODE) {
+            console.groupCollapsed(`[EventManager] Processing event: ${canonicalEvent.name}`);
+            console.debug('Payload:', canonicalEvent);
+            console.groupEnd();
+        }
 
         // 3. Dispatch to GA (Tier 2)
         if (rule.ga) {

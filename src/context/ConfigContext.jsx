@@ -16,14 +16,22 @@ export const ConfigProvider = ({ children }) => {
         const fetchConfig = async () => {
             try {
                 // We use a direct fetch or axio for initial config.
-                // Assuming api.js is configured for /api base.
                 const configData = await api.get('/app/initial-config');
 
                 if (configData) {
+                    if (window.APP_DEBUG_MODE) {
+                        console.groupCollapsed('[ConfigContext] Initial Config Loaded 🟢');
+                        console.debug('Config Data:', configData);
+                        console.groupEnd();
+                    }
                     setConfig(configData);
                 }
             } catch (err) {
-                console.error('Failed to load initial config', err);
+                if (window.APP_DEBUG_MODE) {
+                    console.error('[ConfigContext] Failed to load initial config', err);
+                } else {
+                    console.error('Failed to load initial config', err);
+                }
                 // Fallback? Or remain null?
                 // Per instructions: "If config missing: trackServerBaseUrl = null"
             } finally {
